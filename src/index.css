@@ -1,0 +1,141 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 240 24% 15%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 240 24% 15%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 24% 15%;
+
+    --primary: 240 5% 20%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 200 95% 45%;
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 240 5% 96%;
+    --muted-foreground: 240 5% 65%;
+
+    --accent: 200 95% 45%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 240 5% 90%;
+    --input: 240 5% 85%;
+    --ring: 240 5% 20%;
+
+    --radius: 0.5rem;
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    --background: 240 24% 10%;
+    --foreground: 0 0% 98%;
+
+    --card: 240 24% 15%;
+    --card-foreground: 0 0% 98%;
+
+    --popover: 240 24% 15%;
+    --popover-foreground: 0 0% 98%;
+
+    --primary: 0 0% 98%;
+    --primary-foreground: 240 5% 20%;
+
+    --secondary: 200 95% 45%;
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 240 18% 25%;
+    --muted-foreground: 240 5% 75%;
+
+    --accent: 200 95% 45%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 62.8% 50.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 240 18% 25%;
+    --input: 240 18% 25%;
+    --ring: 0 0% 98%;
+
+    --sidebar-background: 240 24% 12%;
+    --sidebar-foreground: 0 0% 98%;
+    --sidebar-primary: 0 0% 98%;
+    --sidebar-primary-foreground: 240 5% 20%;
+    --sidebar-accent: 240 18% 25%;
+    --sidebar-accent-foreground: 0 0% 98%;
+    --sidebar-border: 240 18% 25%;
+    --sidebar-ring: 0 0% 98%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+@layer components {
+  .sgc-container {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full;
+  }
+  
+  .sgc-button-primary {
+    @apply bg-sgc-purple hover:bg-sgc-purple-dark text-white font-medium py-2 px-6 rounded-md transition-colors;
+  }
+  
+  .sgc-button-secondary {
+    @apply bg-sgc-blue hover:bg-sgc-blue-dark text-white font-medium py-2 px-6 rounded-md transition-colors;
+  }
+  
+  .sgc-button-outline {
+    @apply border border-sgc-purple text-sgc-purple hover:bg-sgc-purple hover:text-white font-medium py-2 px-6 rounded-md transition-colors;
+  }
+  
+  .sgc-input {
+    @apply w-full p-3 border border-muted rounded-md focus:outline-none focus:ring-2 focus:ring-sgc-purple;
+  }
+  
+  .sgc-card {
+    @apply bg-white shadow-md rounded-lg overflow-hidden border border-border hover:shadow-lg transition-shadow duration-300;
+  }
+  
+  .sgc-section {
+    @apply py-12 md:py-16;
+  }
+  
+  .sgc-heading-1 {
+    @apply text-3xl md:text-5xl font-bold leading-tight text-sgc-neutral-dark;
+  }
+  
+  .sgc-heading-2 {
+    @apply text-2xl md:text-4xl font-bold leading-tight text-sgc-neutral-dark;
+  }
+  
+  .sgc-heading-3 {
+    @apply text-xl md:text-2xl font-bold leading-tight text-sgc-neutral-dark;
+  }
+  
+  .sgc-feature-card {
+    @apply p-6 rounded-xl bg-gradient-to-br from-white to-sgc-purple-light border border-sgc-purple/10;
+  }
+}

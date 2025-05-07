@@ -1,4 +1,3 @@
-
 import type { Config } from "tailwindcss";
 
 export default {
@@ -66,19 +65,19 @@ export default {
 				// Custom colors for Safe Ground Connect
 				sgc: {
 					purple: {
-						light: '#E5DEFF',
-						DEFAULT: '#8B5CF6',
-						dark: '#6E59A5'
+						light: '#F5F5F5',
+						DEFAULT: '#333333',
+						dark: '#1A1A1A'
 					},
 					blue: {
-						light: '#D3E4FD',
-						DEFAULT: '#0EA5E9',
-						dark: '#0369A1'
+						light: '#F0F7FF',
+						DEFAULT: '#0066CC',
+						dark: '#004C99'
 					},
 					neutral: {
-						light: '#F1F0FB',
-						DEFAULT: '#8E9196',
-						dark: '#1A1F2C'
+						light: '#F8F9FA',
+						DEFAULT: '#6C757D',
+						dark: '#212529'
 					}
 				}
 			},
