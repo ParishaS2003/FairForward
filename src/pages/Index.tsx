@@ -25,7 +25,7 @@ const Index = () => {
                 Empowering Communities Through Safety & Knowledge
               </h1>
               <p className="text-lg text-sgc-neutral mb-8">
-                SafeGround Connect provides legal support, safety resources, and education to marginalized communities—powered by AI, local networks, and open data.
+                FairForward provides legal support, safety resources, and education to marginalized communities—powered by AI, local networks, and open data.
               </p>
               <div className="flex flex-wrap gap-4">
                 <Button
@@ -95,7 +95,7 @@ const Index = () => {
           <div className="text-center max-w-3xl mx-auto mb-12">
             <h2 className="sgc-heading-2 mb-4">Our Core Features</h2>
             <p className="text-sgc-neutral">
-              SafeGround Connect offers a comprehensive set of tools to help you navigate legal challenges, 
+              FairForward offers a comprehensive set of tools to help you navigate legal challenges, 
               find safety, and build valuable skills for personal and professional growth.
             </p>
           </div>
@@ -147,7 +147,7 @@ const Index = () => {
           <div className="text-center max-w-3xl mx-auto mb-12">
             <h2 className="sgc-heading-2 mb-4">How It Works</h2>
             <p className="text-sgc-neutral">
-              SafeGround Connect is designed to be intuitive and accessible for all users, 
+              FairForward is designed to be intuitive and accessible for all users, 
               with multiple pathways to get the support you need.
             </p>
           </div>
@@ -231,7 +231,7 @@ const Index = () => {
           <div className="text-center max-w-3xl mx-auto mb-12">
             <h2 className="sgc-heading-2 mb-4">Community Impact</h2>
             <p className="text-sgc-neutral">
-              Read stories from our community members who have found support, safety, and empowerment through SafeGround Connect.
+              Read stories from our community members who have found support, safety, and empowerment through FairForward.
             </p>
           </div>
           
@@ -261,7 +261,7 @@ const Index = () => {
         <div className="sgc-container text-center">
           <h2 className="text-3xl md:text-4xl font-bold mb-6">Ready to Get Started?</h2>
           <p className="text-white/80 max-w-2xl mx-auto mb-8">
-            SafeGround Connect is free to use and accessible to everyone. Join our community today and access the resources you need.
+            FairForward is free to use and accessible to everyone. Join our community today and access the resources you need.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <Button size="lg" className="bg-white text-sgc-purple hover:bg-white/90">
@@ -274,7 +274,7 @@ const Index = () => {
           
           <div className="mt-12 pt-12 border-t border-white/20 grid md:grid-cols-4 gap-6 text-left">
             <div>
-              <h3 className="font-bold text-lg mb-3">SafeGround Connect</h3>
+              <h3 className="font-bold text-lg mb-3">FairForward</h3>
               <p className="text-white/70 text-sm">
                 A multilingual platform providing legal support, safety resources, and education to marginalized communities.
               </p>
