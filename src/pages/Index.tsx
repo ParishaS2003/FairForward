@@ -12,6 +12,10 @@ const Index = () => {
     navigate('/signup');
   };
 
+  const handleLearnMoreClick = () => {
+    navigate('/learn');
+  };
+
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />
@@ -34,7 +38,12 @@ const Index = () => {
                 >
                   Find Help Now
                 </Button>
-                <Button size="lg" variant="outline" className="border-sgc-purple text-sgc-purple hover:bg-sgc-purple hover:text-white">
+                <Button 
+                  size="lg" 
+                  variant="outline" 
+                  className="border-sgc-purple text-sgc-purple hover:bg-sgc-purple hover:text-white"
+                  onClick={handleLearnMoreClick}
+                >
                   Learn More
                 </Button>
               </div>
@@ -267,7 +276,12 @@ const Index = () => {
             <Button size="lg" className="bg-white text-sgc-purple hover:bg-white/90">
               Find Help Now
             </Button>
-            <Button size="lg" variant="outline" className="border-white text-white hover:bg-white/20">
+            <Button 
+              size="lg" 
+              variant="outline" 
+              className="border-white text-white hover:bg-white/20"
+              onClick={handleLearnMoreClick}
+            >
               Learn More
             </Button>
           </div>
