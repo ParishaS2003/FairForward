@@ -1,0 +1,150 @@
+import React, { useState } from 'react';
+import { Send, User, Bot } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
+import { Textarea } from '@/components/ui/textarea';
+
+// Mock legal questions and answers for demonstration
+const legalResponses = {
+  "harassment": "Harassment is any unwelcome conduct based on a protected characteristic. You have the right to file a complaint with local authorities or your workplace HR. Would you like information on how to report?",
+  "domestic violence": "If you're experiencing domestic violence, your safety is the priority. There are shelters and support services available. Would you like to see safe spaces near you?",
+  "discrimination": "Discrimination in employment, housing, or public services based on gender, race, or other protected characteristics is illegal in most regions. You can file a complaint with the appropriate commission.",
+  "rights": "Everyone has basic human rights that cannot be violated. These include the right to safety, equality, and dignity. Specific legal rights vary by country and region.",
+  "default": "I'm here to help with basic legal guidance. Please ask about harassment, discrimination, your rights, or other legal concerns. Remember, I provide information but not formal legal advice."
+};
+
+type Message = {
+  id: number;
+  content: string;
+  isUser: boolean;
+};
+
+const LegalBot = () => {
+  const [messages, setMessages] = useState<Message[]>([
+    {
+      id: 1,
+      content: "Hello! I'm your LegalBot assistant. How can I help you today? You can ask me about harassment, discrimination, or your basic rights.",
+      isUser: false
+    }
+  ]);
+  const [input, setInput] = useState('');
+  const [isThinking, setIsThinking] = useState(false);
+
+  const handleSend = () => {
+    if (!input.trim()) return;
+    
+    // Add user message
+    const userMessage: Message = {
+      id: messages.length + 1,
+      content: input,
+      isUser: true
+    };
+    
+    setMessages(prev => [...prev, userMessage]);
+    setInput('');
+    setIsThinking(true);
+    
+    // Simulate bot thinking
+    setTimeout(() => {
+      // Generate response based on keywords
+      let botResponse = legalResponses.default;
+      
+      const lowerInput = input.toLowerCase();
+      
+      if (lowerInput.includes('harassment')) {
+        botResponse = legalResponses.harassment;
+      } else if (lowerInput.includes('domestic') || lowerInput.includes('violence') || lowerInput.includes('abuse')) {
+        botResponse = legalResponses["domestic violence"];
+      } else if (lowerInput.includes('discrimination') || lowerInput.includes('discriminate')) {
+        botResponse = legalResponses.discrimination;
+      } else if (lowerInput.includes('right') || lowerInput.includes('rights')) {
+        botResponse = legalResponses.rights;
+      }
+      
+      const botMessage: Message = {
+        id: messages.length + 2,
+        content: botResponse,
+        isUser: false
+      };
+      
+      setMessages(prev => [...prev, botMessage]);
+      setIsThinking(false);
+    }, 1500);
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      handleSend();
+    }
+  };
+
+  return (
+    <div className="flex flex-col h-[calc(100vh-6rem)]">
+      <div className="flex-1 overflow-y-auto p-4 space-y-4">
+        {messages.map((message) => (
+          <MessageBubble key={message.id} message={message} />
+        ))}
+        
+        {isThinking && (
+          <div className="flex items-center space-x-2 text-sgc-neutral">
+            <span className="bg-sgc-purple-light p-2 rounded-full">
+              <Bot size={18} className="text-sgc-purple" />
+            </span>
+            <div className="flex space-x-1">
+              <span className="h-2 w-2 bg-sgc-purple rounded-full animate-bounce"></span>
+              <span className="h-2 w-2 bg-sgc-purple rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></span>
+              <span className="h-2 w-2 bg-sgc-purple rounded-full animate-bounce" style={{ animationDelay: '0.4s' }}></span>
+            </div>
+          </div>
+        )}
+      </div>
+      
+      <div className="p-4 border-t border-border bg-white">
+        <div className="flex items-end space-x-2">
+          <Textarea
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            onKeyDown={handleKeyDown}
+            placeholder="Ask a legal question..."
+            className="min-h-[60px] resize-none"
+          />
+          <Button 
+            onClick={handleSend} 
+            disabled={!input.trim() || isThinking}
+            size="icon"
+            className="bg-sgc-purple hover:bg-sgc-purple-dark h-[60px] w-[60px]"
+          >
+            <Send size={20} />
+          </Button>
+        </div>
+        <p className="text-xs text-muted-foreground mt-2">
+          Note: This chatbot provides general information only and not formal legal advice.
+        </p>
+      </div>
+    </div>
+  );
+};
+
+const MessageBubble = ({ message }: { message: Message }) => {
+  return (
+    <div className={`flex ${message.isUser ? 'justify-end' : 'justify-start'}`}>
+      <div className={`flex max-w-[80%] ${message.isUser ? 'flex-row-reverse' : 'flex-row'}`}>
+        <div className={`flex-shrink-0 h-8 w-8 rounded-full flex items-center justify-center ${message.isUser ? 'bg-sgc-blue-light ml-2' : 'bg-sgc-purple-light mr-2'}`}>
+          {message.isUser ? (
+            <User size={16} className="text-sgc-blue" />
+          ) : (
+            <Bot size={16} className="text-sgc-purple" />
+          )}
+        </div>
+        <Card className={`${message.isUser ? 'bg-sgc-blue text-white' : 'bg-white'}`}>
+          <CardContent className="p-3">
+            <p className="text-sm">{message.content}</p>
+          </CardContent>
+        </Card>
+      </div>
+    </div>
+  );
+};
+
+export default LegalBot;
