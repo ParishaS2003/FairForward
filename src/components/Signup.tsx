@@ -32,7 +32,7 @@ const Signup = () => {
       });
 
       // Redirect to dashboard
-      navigate('/dashboard');
+      navigate('/app');
     } catch (error) {
       toast({
         title: "Error",
