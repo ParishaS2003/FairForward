@@ -19,7 +19,7 @@ const Index = () => {
                 Empowering Communities Through Safety & Knowledge
               </h1>
               <p className="text-lg text-sgc-neutral mb-8">
-                SafeGround Connect provides legal support, safety resources, and education to marginalized communities—powered by AI, local networks, and open data.
+                Fairforward provides legal support, safety resources, and education to marginalized communities—powered by AI, local networks, and open data.
               </p>
               <div className="flex flex-wrap gap-4">
                 <Button size="lg" className="sgc-button-primary">
@@ -141,7 +141,7 @@ const Index = () => {
       </section>
       
       {/* How It Works Section */}
-      <section className="sgc-section bg-sgc-neutral-light">
+      <section id="how-it-works" className="sgc-section bg-sgc-neutral-light">
         <div className="sgc-container">
           <div className="text-center max-w-3xl mx-auto mb-12">
             <h2 className="sgc-heading-2 mb-4">How It Works</h2>
@@ -266,7 +266,14 @@ const Index = () => {
             <Button size="lg" className="bg-white text-sgc-purple hover:bg-white/90">
               Find Help Now
             </Button>
-            <Button size="lg" variant="outline" className="border-white text-white hover:bg-white/20">
+            <Button 
+              size="lg" 
+              variant="outline" 
+              className="border-white text-white hover:bg-white/20"
+              onClick={() => {
+                document.getElementById('how-it-works')?.scrollIntoView({ behavior: 'smooth' });
+              }}
+            >
               Learn More
             </Button>
           </div>

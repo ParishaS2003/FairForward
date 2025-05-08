@@ -48,7 +48,7 @@ const Signup = () => {
         <CardHeader>
           <CardTitle className="text-2xl text-center">Create an Account</CardTitle>
           <CardDescription className="text-center">
-            Join SafeGround Connect to access safety resources and support
+            Join FairForward to access safety resources and support
           </CardDescription>
         </CardHeader>
         <form onSubmit={handleSubmit}>

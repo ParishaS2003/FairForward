@@ -103,7 +103,7 @@ const Dashboard = () => {
                     <Shield className="text-sgc-purple" />
                   </div>
                   <div>
-                    <p className="font-medium">Welcome to SafeGround Connect</p>
+                    <p className="font-medium">Welcome to FairForward</p>
                     <p className="text-sm text-sgc-neutral">Your account was created successfully</p>
                   </div>
                 </div>
