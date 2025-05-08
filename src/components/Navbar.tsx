@@ -26,6 +26,7 @@ const Navbar = () => {
             <NavLink to="/map" icon={<MapPin size={18} />} text="Safe Spaces" />
             <NavLink to="/report" icon={<FileText size={18} />} text="Report" />
             <NavLink to="/learn" icon={<BookOpen size={18} />} text="Learn" />
+            <NavLink to="/legal-tools" icon={<FileText size={18} />} text="Legal Tools" />
             
             <div className="pl-4 border-l border-border">
               <Button className="sgc-button-primary">
@@ -53,6 +54,7 @@ const Navbar = () => {
             <MobileNavLink to="/map" icon={<MapPin size={18} />} text="Safe Spaces" onClick={toggleMenu} />
             <MobileNavLink to="/report" icon={<FileText size={18} />} text="Report" onClick={toggleMenu} />
             <MobileNavLink to="/learn" icon={<BookOpen size={18} />} text="Learn" onClick={toggleMenu} />
+            <MobileNavLink to="/legal-tools" icon={<FileText size={18} />} text="Legal Tools" onClick={toggleMenu} />
             
             <div className="pt-4 border-t border-border">
               <Button className="w-full sgc-button-primary">
