@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { BookOpen, Code, CreditCard, FileText, CheckCircle, User, Users, AlertCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -126,7 +125,7 @@ const LiteracyHub = () => {
       </div>
       
       {/* Featured Courses Banner */}
-      <div className="mb-10 relative overflow-hidden rounded-xl bg-gradient-to-r from-sgc-purple to-sgc-blue text-white p-8">
+      <div className="mb-10 relative overflow-hidden rounded-xl bg-sgc-purple text-white p-8">
         <div className="relative z-10 max-w-xl">
           <Badge className="bg-white/20 mb-4 hover:bg-white/30">Featured</Badge>
           <h2 className="text-3xl font-bold mb-2">Empowering Education</h2>

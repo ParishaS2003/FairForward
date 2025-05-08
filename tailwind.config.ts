@@ -65,19 +65,19 @@ export default {
 				// Custom colors for Safe Ground Connect
 				sgc: {
 					purple: {
-						light: '#F5F5F5',
-						DEFAULT: '#333333',
-						dark: '#1A1A1A'
+						light: '#F3F0FF',
+						DEFAULT: '#6B46C1',
+						dark: '#5e17eb'
 					},
 					blue: {
-						light: '#F0F7FF',
-						DEFAULT: '#0066CC',
-						dark: '#004C99'
+						light: '#EBF8FF',
+						DEFAULT: '#3182CE',
+						dark: '#5e17eb'
 					},
 					neutral: {
-						light: '#F8F9FA',
-						DEFAULT: '#6C757D',
-						dark: '#212529'
+						light: '#F7FAFC',
+						DEFAULT: '#4A5568',
+						dark: '#2D3748'
 					}
 				}
 			},

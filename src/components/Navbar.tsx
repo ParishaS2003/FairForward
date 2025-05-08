@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Menu, X, Home, MessageCircle, MapPin, FileText, BookOpen } from 'lucide-react';
+import { Menu, X, Home, MessageCircle, MapPin, FileText, BookOpen, Shield } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 const Navbar = () => {
@@ -15,7 +15,9 @@ const Navbar = () => {
       <div className="sgc-container py-3">
         <div className="flex items-center justify-between">
           <Link to="/" className="flex items-center space-x-2">
-            <img src="/logo.png" alt="Logo" className="h-12 w-12 object-contain bg-white" />
+            <div className="h-10 w-10 rounded-full bg-sgc-purple flex items-center justify-center">
+              <Shield className="text-white" />
+            </div>
             <span className="font-bold text-xl hidden sm:block text-sgc-neutral-dark">FairForward</span>
           </Link>
           

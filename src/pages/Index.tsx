@@ -34,7 +34,14 @@ const Index = () => {
                 >
                   Find Help Now
                 </Button>
-                <Button size="lg" variant="outline" className="border-sgc-purple text-sgc-purple hover:bg-sgc-purple hover:text-white">
+                <Button 
+                  size="lg" 
+                  variant="outline" 
+                  className="border-sgc-purple text-sgc-purple hover:bg-sgc-purple hover:text-white"
+                  onClick={() => {
+                    document.getElementById('how-it-works')?.scrollIntoView({ behavior: 'smooth' });
+                  }}
+                >
                   Learn More
                 </Button>
               </div>
@@ -58,22 +65,22 @@ const Index = () => {
                 <h2 className="text-xl font-bold mb-4 text-center">How can we help you today?</h2>
                 <div className="grid grid-cols-2 gap-4">
                   <Link to="/chat" className="sgc-feature-card hover:shadow-md transition-all">
-                    <MessageCircle className="mb-2 text-sgc-purple" />
+                    <MessageCircle className="mb-2 text-sgc-purple" size={24} />
                     <h3 className="font-medium">LegalBot</h3>
                     <p className="text-sm text-sgc-neutral">Get legal guidance</p>
                   </Link>
                   <Link to="/map" className="sgc-feature-card hover:shadow-md transition-all">
-                    <MapPin className="mb-2 text-sgc-purple" />
+                    <MapPin className="mb-2 text-sgc-purple" size={24} />
                     <h3 className="font-medium">Safe Spaces</h3>
                     <p className="text-sm text-sgc-neutral">Find nearby help</p>
                   </Link>
                   <Link to="/report" className="sgc-feature-card hover:shadow-md transition-all">
-                    <FileText className="mb-2 text-sgc-purple" />
+                    <FileText className="mb-2 text-sgc-purple" size={24} />
                     <h3 className="font-medium">Report</h3>
                     <p className="text-sm text-sgc-neutral">Document an incident</p>
                   </Link>
                   <Link to="/learn" className="sgc-feature-card hover:shadow-md transition-all">
-                    <BookOpen className="mb-2 text-sgc-purple" />
+                    <BookOpen className="mb-2 text-sgc-purple" size={24} />
                     <h3 className="font-medium">Learn</h3>
                     <p className="text-sm text-sgc-neutral">Free courses</p>
                   </Link>
@@ -152,71 +159,83 @@ const Index = () => {
             </p>
           </div>
           
-          <div className="relative">
-            {/* Connection lines */}
-            <div className="hidden md:block absolute left-1/2 top-12 bottom-0 w-0.5 bg-sgc-purple/20 -translate-x-1/2 z-0"></div>
+          <div className="relative max-w-4xl mx-auto">
+            {/* Vertical line */}
+            <div className="absolute left-1/2 top-0 bottom-0 w-0.5 bg-sgc-purple/20 -translate-x-1/2 z-0"></div>
             
-            <div className="grid md:grid-cols-2 gap-8 md:gap-12">
+            <div className="space-y-16">
               {/* Step 1 */}
-              <div className="md:text-right">
-                <h3 className="text-xl font-bold text-sgc-purple mb-3">1. Identify Your Needs</h3>
-                <p className="text-sgc-neutral mb-4">
-                  Whether you're seeking legal guidance, a safe space, or want to report an incident, 
-                  start by selecting the appropriate feature from our homepage.
-                </p>
-              </div>
-              <div className="relative">
-                <div className="md:absolute md:left-0 md:top-0 md:-translate-x-1/2 bg-white rounded-full p-4 shadow-md z-10 inline-flex">
-                  <div className="h-12 w-12 rounded-full bg-sgc-purple flex items-center justify-center text-white font-bold">
-                    1
+              <div className="relative flex items-center">
+                <div className="w-1/2 pr-12 text-right">
+                  <div className="inline-flex items-center gap-4">
+                    <div className="h-12 w-12 rounded-full bg-sgc-purple flex items-center justify-center text-white font-bold shadow-md">
+                      1
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-bold text-sgc-purple mb-2">Identify Your Needs</h3>
+                      <p className="text-sgc-neutral">
+                        Whether you're seeking legal guidance, a safe space, or want to report an incident, 
+                        start by selecting the appropriate feature from our homepage.
+                      </p>
+                    </div>
                   </div>
                 </div>
+                <div className="w-1/2"></div>
               </div>
               
               {/* Step 2 */}
-              <div className="md:order-2">
-                <h3 className="text-xl font-bold text-sgc-purple mb-3">2. Access Resources</h3>
-                <p className="text-sgc-neutral mb-4">
-                  Use our AI LegalBot for instant guidance, browse the map to find nearby safe spaces, 
-                  or file a report through our secure form.
-                </p>
-              </div>
-              <div className="relative md:order-1">
-                <div className="md:absolute md:right-0 md:top-0 md:translate-x-1/2 bg-white rounded-full p-4 shadow-md z-10 inline-flex">
-                  <div className="h-12 w-12 rounded-full bg-sgc-purple flex items-center justify-center text-white font-bold">
-                    2
+              <div className="relative flex items-center">
+                <div className="w-1/2"></div>
+                <div className="w-1/2 pl-12">
+                  <div className="inline-flex items-center gap-4">
+                    <div className="h-12 w-12 rounded-full bg-sgc-purple flex items-center justify-center text-white font-bold shadow-md">
+                      2
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-bold text-sgc-purple mb-2">Access Resources</h3>
+                      <p className="text-sgc-neutral">
+                        Use our AI LegalBot for instant guidance, browse the map to find nearby safe spaces, 
+                        or file a report through our secure form.
+                      </p>
+                    </div>
                   </div>
                 </div>
               </div>
               
               {/* Step 3 */}
-              <div className="md:text-right">
-                <h3 className="text-xl font-bold text-sgc-purple mb-3">3. Get Support</h3>
-                <p className="text-sgc-neutral mb-4">
-                  Connect with verified organizations, legal aid providers, or community allies 
-                  who can provide the specific support you need.
-                </p>
-              </div>
-              <div className="relative">
-                <div className="md:absolute md:left-0 md:top-0 md:-translate-x-1/2 bg-white rounded-full p-4 shadow-md z-10 inline-flex">
-                  <div className="h-12 w-12 rounded-full bg-sgc-purple flex items-center justify-center text-white font-bold">
-                    3
+              <div className="relative flex items-center">
+                <div className="w-1/2 pr-12 text-right">
+                  <div className="inline-flex items-center gap-4">
+                    <div className="h-12 w-12 rounded-full bg-sgc-purple flex items-center justify-center text-white font-bold shadow-md">
+                      3
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-bold text-sgc-purple mb-2">Get Support</h3>
+                      <p className="text-sgc-neutral">
+                        Connect with verified organizations, legal aid providers, or community allies 
+                        who can provide the specific support you need.
+                      </p>
+                    </div>
                   </div>
                 </div>
+                <div className="w-1/2"></div>
               </div>
               
               {/* Step 4 */}
-              <div className="md:order-2">
-                <h3 className="text-xl font-bold text-sgc-purple mb-3">4. Learn & Empower</h3>
-                <p className="text-sgc-neutral mb-4">
-                  Build your knowledge and skills through our free educational courses
-                  and become more confident in advocating for yourself and others.
-                </p>
-              </div>
-              <div className="relative md:order-1">
-                <div className="md:absolute md:right-0 md:top-0 md:translate-x-1/2 bg-white rounded-full p-4 shadow-md z-10 inline-flex">
-                  <div className="h-12 w-12 rounded-full bg-sgc-purple flex items-center justify-center text-white font-bold">
-                    4
+              <div className="relative flex items-center">
+                <div className="w-1/2"></div>
+                <div className="w-1/2 pl-12">
+                  <div className="inline-flex items-center gap-4">
+                    <div className="h-12 w-12 rounded-full bg-sgc-purple flex items-center justify-center text-white font-bold shadow-md">
+                      4
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-bold text-sgc-purple mb-2">Learn & Empower</h3>
+                      <p className="text-sgc-neutral">
+                        Build your knowledge and skills through our free educational courses
+                        and become more confident in advocating for yourself and others.
+                      </p>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -257,17 +276,27 @@ const Index = () => {
       </section>
       
       {/* CTA Section */}
-      <section className="py-16 bg-gradient-to-r from-sgc-purple to-sgc-blue text-white">
+      <section className="py-16 bg-sgc-purple text-white">
         <div className="sgc-container text-center">
           <h2 className="text-3xl md:text-4xl font-bold mb-6">Ready to Get Started?</h2>
           <p className="text-white/80 max-w-2xl mx-auto mb-8">
             FairForward is free to use and accessible to everyone. Join our community today and access the resources you need.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
-            <Button size="lg" className="bg-white text-sgc-purple hover:bg-white/90">
+            <Button 
+              size="lg" 
+              className="bg-white text-sgc-purple hover:bg-white/90 px-8 py-3 rounded-full text-lg"
+            >
               Find Help Now
             </Button>
-            <Button size="lg" variant="outline" className="border-white text-white hover:bg-white/20">
+            <Button 
+              size="lg" 
+              variant="outline" 
+              className="bg-white text-sgc-purple hover:bg-sgc-purple hover:text-white px-8 py-3 rounded-full text-lg"
+              onClick={() => {
+                document.getElementById('how-it-works')?.scrollIntoView({ behavior: 'smooth' });
+              }}
+            >
               Learn More
             </Button>
           </div>
