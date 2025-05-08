@@ -30,27 +30,30 @@ const Index = () => {
       <Navbar />
       
       {/* Welcome Section with Impact Stats */}
-      <section className="pt-8 pb-6 bg-gradient-to-r from-sgc-purple to-sgc-purple-dark text-white">
+      <section className="pt-8 pb-6 bg-gradient-to-r from-sgc-neutral-light to-white text-sgc-neutral-dark">
         <div className="sgc-container">
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
             <div>
-              <h1 className="text-2xl md:text-3xl font-bold mb-2">
-                Empowering Equality & Justice
-              </h1>
-              <p className="text-white/80">Your journey towards gender equality and reduced inequalities</p>
+              <div className="flex items-center gap-3">
+                <h1 className="text-2xl md:text-3xl font-bold mb-2">
+                  Empowering Communities Through Safety & Knowledge
+                </h1>
+                <img src="/mr-hootsworth.png" alt="Mr. Hootsworth the Owl" className="w-10 h-10 md:w-14 md:h-14 ml-2" />
+              </div>
+              <p className="text-sgc-neutral-dark/80">Your journey towards gender equality and reduced inequalities</p>
             </div>
             <div className="flex gap-4">
               <Button variant="outline" className="gap-2 bg-white/10 hover:bg-white/20 text-white border-white/20">
                 <Bell size={16} />
                 Alerts
-              </Button>
+                </Button>
               <Button variant="outline" className="gap-2 bg-white/10 hover:bg-white/20 text-white border-white/20">
                 <Clock size={16} />
                 Timeline
-              </Button>
+                </Button>
             </div>
-          </div>
-          
+              </div>
+              
           {/* Impact Stats Grid */}
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mt-6">
             <Card className="bg-white/10 backdrop-blur-sm border-white/20">
@@ -59,7 +62,7 @@ const Index = () => {
                   <div>
                     <p className="text-sm opacity-80">Gender Equality Score</p>
                     <h3 className="text-2xl font-bold mt-1">85%</h3>
-                  </div>
+                    </div>
                   <Scale className="opacity-80" size={20} />
                 </div>
                 <Progress value={85} className="mt-4 bg-white/20" />
@@ -71,7 +74,7 @@ const Index = () => {
                   <div>
                     <p className="text-sm opacity-80">Safe Spaces</p>
                     <h3 className="text-2xl font-bold mt-1">24</h3>
-                  </div>
+              </div>
                   <MapPin className="opacity-80" size={20} />
                 </div>
                 <Progress value={80} className="mt-4 bg-white/20" />
@@ -95,9 +98,9 @@ const Index = () => {
                   <div>
                     <p className="text-sm opacity-80">Equality Goals</p>
                     <h3 className="text-2xl font-bold mt-1">12/15</h3>
-                  </div>
+              </div>
                   <Target className="opacity-80" size={20} />
-                </div>
+            </div>
                 <Progress value={80} className="mt-4 bg-white/20" />
               </CardContent>
             </Card>
@@ -171,8 +174,8 @@ const Index = () => {
                     </div>
                   </CardContent>
                 </Card>
-              </div>
-
+          </div>
+          
               {/* Featured Initiatives */}
               <div className="mt-8">
                 <h2 className="text-2xl font-bold mb-6">Featured Initiatives</h2>
@@ -183,8 +186,8 @@ const Index = () => {
                       <div className="absolute bottom-4 left-4 text-white">
                         <Badge className="bg-white/20 text-white mb-2">SDG 5</Badge>
                         <h3 className="text-xl font-bold">Women in Tech</h3>
-                      </div>
-                    </div>
+          </div>
+        </div>
                     <CardContent className="p-6">
                       <p className="text-sgc-neutral mb-4">Empowering women through technology education and career opportunities.</p>
                       <div className="flex items-center justify-between">
@@ -221,7 +224,7 @@ const Index = () => {
                         <Button variant="ghost" size="sm" className="text-blue-600">
                           Join Campaign
                         </Button>
-                      </div>
+          </div>
                     </CardContent>
                   </Card>
 
@@ -241,16 +244,16 @@ const Index = () => {
                             <AvatarFallback>SS</AvatarFallback>
                           </Avatar>
                           <span className="text-sm">2.5K Members</span>
-                        </div>
+              </div>
                         <Button variant="ghost" size="sm" className="text-green-600">
                           Join Network
                         </Button>
-                      </div>
+                  </div>
                     </CardContent>
                   </Card>
                 </div>
               </div>
-
+              
               {/* Recent Activity & Upcoming Events */}
               <div className="grid md:grid-cols-2 gap-6">
                 <Card>
@@ -271,11 +274,11 @@ const Index = () => {
                               <div>
                                 <h4 className="font-medium">{item.title}</h4>
                                 <p className="text-sm text-sgc-neutral">{item.desc}</p>
-                              </div>
+              </div>
                               <span className="text-xs text-sgc-neutral">{item.time}</span>
-                            </div>
-                          </div>
-                        </div>
+                  </div>
+                </div>
+              </div>
                       ))}
                     </div>
                   </CardContent>
@@ -299,11 +302,11 @@ const Index = () => {
                               <div>
                                 <h4 className="font-medium">{item.title}</h4>
                                 <p className="text-sm text-sgc-neutral">{item.desc}</p>
-                              </div>
+              </div>
                               <Badge variant="secondary">{item.time}</Badge>
-                            </div>
-                          </div>
-                        </div>
+                  </div>
+                </div>
+              </div>
                       ))}
                     </div>
                   </CardContent>
@@ -369,8 +372,8 @@ const Index = () => {
                           <span className="text-sm text-sgc-neutral">82%</span>
                         </div>
                         <Progress value={82} className="h-2" />
-                      </div>
-                    </div>
+                  </div>
+                </div>
                   </CardContent>
                 </Card>
               </div>
@@ -426,12 +429,12 @@ const Index = () => {
                                   <Share2 size={16} />
                                   Share
                                 </Button>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
+              </div>
+            </div>
+          </div>
+        </div>
                       ))}
-                    </div>
+          </div>
                   </CardContent>
                 </Card>
 
@@ -465,11 +468,11 @@ const Index = () => {
                           <div className="flex items-center justify-between text-sm text-sgc-neutral">
                             <span>{event.date}</span>
                             <span>{event.attendees} attending</span>
-                          </div>
+          </div>
                           <Button variant="outline" size="sm" className="w-full mt-3">
                             Join Event
-                          </Button>
-                        </div>
+            </Button>
+          </div>
                       ))}
                     </div>
                   </CardContent>
@@ -520,8 +523,8 @@ const Index = () => {
                             </div>
                           </CardContent>
                         </Card>
-                      </div>
-                    </div>
+            </div>
+            </div>
                   </CardContent>
                 </Card>
 
@@ -541,12 +544,12 @@ const Index = () => {
                         <div key={i} className="flex items-center gap-4 p-3 rounded-lg bg-sgc-neutral-light/30">
                           <div className="h-10 w-10 rounded-full bg-white flex items-center justify-center">
                             {achievement.icon}
-                          </div>
-                          <div>
+            </div>
+            <div>
                             <h4 className="font-medium">{achievement.title}</h4>
                             <p className="text-sm text-sgc-neutral">{achievement.desc}</p>
-                          </div>
-                        </div>
+            </div>
+          </div>
                       ))}
                     </div>
                   </CardContent>
