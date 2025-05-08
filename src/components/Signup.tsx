@@ -28,7 +28,7 @@ const Signup = () => {
       
       toast({
         title: "Account created successfully!",
-        description: "Welcome to SafeGround Connect.",
+        description: "Welcome to FairForward.",
       });
 
       // Redirect to dashboard

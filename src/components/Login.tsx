@@ -48,7 +48,7 @@ const Login = () => {
         <CardHeader>
           <CardTitle className="text-2xl text-center">Welcome Back</CardTitle>
           <CardDescription className="text-center">
-            Sign in to access your SafeGround Connect account
+            Sign in to access your FairForward account
           </CardDescription>
         </CardHeader>
         <form onSubmit={handleSubmit}>

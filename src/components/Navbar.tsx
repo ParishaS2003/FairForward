@@ -16,10 +16,10 @@ const Navbar = () => {
       <div className="sgc-container py-3">
         <div className="flex items-center justify-between">
           <Link to="/" className="flex items-center space-x-2">
-            <div className="h-10 w-10 rounded-full bg-gradient-to-r from-sgc-purple to-sgc-blue flex items-center justify-center">
-              <span className="text-white font-bold text-lg">SG</span>
+            <div className="h-10 w-10 flex items-center justify-center overflow-hidden">
+              <img src="/logo.png" alt="FairForward Logo" className="h-full w-full object-contain" />
             </div>
-            <span className="font-bold text-xl hidden sm:block text-sgc-neutral-dark">SafeGround</span>
+            <span className="font-bold text-xl hidden sm:block text-sgc-neutral-dark">FairForward</span>
           </Link>
           
           {/* Desktop Navigation */}
