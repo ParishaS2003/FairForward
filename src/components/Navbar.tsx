@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Menu, X, Home, MessageCircle, MapPin, FileText, BookOpen, Shield } from 'lucide-react';
+import { Menu, X, Home, MessageCircle, MapPin, FileText, BookOpen } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import EmergencyButton from './EmergencyButton';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -15,10 +16,10 @@ const Navbar = () => {
       <div className="sgc-container py-3">
         <div className="flex items-center justify-between">
           <Link to="/" className="flex items-center space-x-2">
-            <div className="h-10 w-10 rounded-full bg-sgc-purple flex items-center justify-center">
-              <Shield className="text-white" />
+            <div className="h-10 w-10 rounded-full bg-gradient-to-r from-sgc-purple to-sgc-blue flex items-center justify-center">
+              <span className="text-white font-bold text-lg">SG</span>
             </div>
-            <span className="font-bold text-xl hidden sm:block text-sgc-neutral-dark">FairForward</span>
+            <span className="font-bold text-xl hidden sm:block text-sgc-neutral-dark">SafeGround</span>
           </Link>
           
           {/* Desktop Navigation */}
@@ -30,9 +31,7 @@ const Navbar = () => {
             <NavLink to="/learn" icon={<BookOpen size={18} />} text="Learn" />
             
             <div className="pl-4 border-l border-border">
-              <Button className="sgc-button-primary">
-                Emergency
-              </Button>
+              <EmergencyButton variant="navbar" />
             </div>
           </div>
           
@@ -57,9 +56,7 @@ const Navbar = () => {
             <MobileNavLink to="/learn" icon={<BookOpen size={18} />} text="Learn" onClick={toggleMenu} />
             
             <div className="pt-4 border-t border-border">
-              <Button className="w-full sgc-button-primary">
-                Emergency
-              </Button>
+              <EmergencyButton variant="inline" />
             </div>
           </div>
         </div>
