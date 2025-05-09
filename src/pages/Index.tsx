@@ -18,6 +18,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Separator } from '@/components/ui/separator';
 import Navbar from '@/components/Navbar';
 import EmergencyButton from '@/components/EmergencyButton';
+import { useToast } from '@/components/ui/use-toast';
 
 const API_BASE_URL = 'http://localhost:5001';
 
@@ -67,6 +68,9 @@ const Index = () => {
   const [statsRef, statsInView] = useInView({ triggerOnce: true });
   const [featuresRef, featuresInView] = useInView({ triggerOnce: true });
 
+  const { toast } = useToast();
+  const [joinedInitiatives, setJoinedInitiatives] = useState<string[]>([]);
+
   useEffect(() => {
     const timer = setTimeout(() => setProgress(66), 500);
     return () => clearTimeout(timer);
@@ -82,6 +86,16 @@ const Index = () => {
 
   const handleFindHelpClick = () => {
     navigate('/signup');
+  };
+
+  const handleJoinInitiative = (initiativeTitle: string) => {
+    if (!joinedInitiatives.includes(initiativeTitle)) {
+      setJoinedInitiatives(prev => [...prev, initiativeTitle]);
+      toast({
+        title: 'Joined Initiative!',
+        description: `You have joined the "${initiativeTitle}" initiative. Welcome aboard!`,
+      });
+    }
   };
 
   // Animation variants
@@ -314,9 +328,20 @@ const Index = () => {
                               </Avatar>
                               <span className="text-sm">{initiative.members} Members</span>
                             </div>
-                            <Button variant="ghost" size="sm" className="text-sgc-purple">
-                              Join Initiative
-                            </Button>
+                            {joinedInitiatives.includes(initiative.title) ? (
+                              <Button variant="secondary" size="sm" disabled className="text-green-700 bg-green-100 hover:bg-green-100 cursor-default gap-2">
+                                <CheckCircle size={16} /> Joined
+                              </Button>
+                            ) : (
+                              <Button 
+                                variant="ghost" 
+                                size="sm" 
+                                className="text-sgc-purple gap-2"
+                                onClick={() => handleJoinInitiative(initiative.title)}
+                              >
+                                Join Initiative
+                              </Button>
+                            )}
                           </div>
                         </CardContent>
                       </Card>
@@ -680,16 +705,6 @@ const Index = () => {
           </Tabs>
         </div>
       </section>
-
-      {/* Emergency Button */}
-      <motion.div 
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 1 }}
-        className="fixed bottom-6 right-6 z-50"
-      >
-        <EmergencyButton variant="floating" />
-      </motion.div>
     </div>
   );
 };

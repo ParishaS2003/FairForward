@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Menu, X, Home, MessageCircle, MapPin, Users, LogOut } from 'lucide-react';
+import { Menu, X, Home, MessageCircle, MapPin, Users, LogOut, User } from 'lucide-react';
 import { Button } from './ui/button';
 import EmergencyButton from './EmergencyButton';
 
@@ -40,10 +40,7 @@ const Navbar = () => {
               <EmergencyButton variant="navbar" />
             </div>
             {isAuthenticated && (
-              <Button variant="outline" className="ml-4 flex items-center gap-2" onClick={handleSignOut}>
-                <LogOut size={16} />
-                Sign Out
-              </Button>
+              <NavLink to="/account" icon={<User size={18} />} text="Account" />
             )}
           </div>
           
@@ -66,10 +63,7 @@ const Navbar = () => {
             <MobileNavLink to="/map" icon={<MapPin size={18} />} text="Safe Spaces" onClick={toggleMenu} />
             <MobileNavLink to="/community" icon={<Users size={18} />} text="Community" onClick={toggleMenu} />
             {isAuthenticated && (
-              <Button variant="outline" className="w-full flex items-center gap-2 mt-2" onClick={() => { handleSignOut(); toggleMenu(); }}>
-                <LogOut size={16} />
-                Sign Out
-              </Button>
+              <MobileNavLink to="/account" icon={<User size={18} />} text="Account" onClick={toggleMenu} />
             )}
             <div className="pt-4 border-t border-border">
               <EmergencyButton variant="inline" />
