@@ -11,10 +11,19 @@ import { Separator } from '@/components/ui/separator';
 import Navbar from '@/components/Navbar';
 import EmergencyButton from '@/components/EmergencyButton';
 
+const API_BASE_URL = 'http://localhost:5001';
+
 const Index = () => {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('overview');
   const [progress, setProgress] = useState(0);
+
+  // Chatbot state
+  const [chatInput, setChatInput] = useState('');
+  const [chatMessages, setChatMessages] = useState([
+    { sender: 'bot', text: "Hello! I'm Mr. Hootsworth. How can I help you today?" }
+  ]);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const timer = setTimeout(() => setProgress(66), 500);
@@ -23,6 +32,26 @@ const Index = () => {
 
   const handleFindHelpClick = () => {
     navigate('/signup');
+  };
+
+  // Chatbot send handler
+  const sendMessage = async () => {
+    if (!chatInput.trim()) return;
+    setChatMessages([...chatMessages, { sender: 'user', text: chatInput }]);
+    setIsLoading(true);
+    try {
+      const res = await fetch(`${API_BASE_URL}/api/chat`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: chatInput }),
+      });
+      const data = await res.json();
+      setChatMessages(msgs => [...msgs, { sender: 'bot', text: data.response }]);
+    } catch (e) {
+      setChatMessages(msgs => [...msgs, { sender: 'bot', text: "Sorry, I couldn't connect to the assistant." }]);
+    }
+    setIsLoading(false);
+    setChatInput('');
   };
 
   return (
@@ -36,11 +65,11 @@ const Index = () => {
             <div>
               <div className="flex items-center gap-3">
                 <h1 className="text-2xl md:text-3xl font-bold mb-2">
-                  Empowering Communities Through Safety & Knowledge
-                </h1>
-                <img src="/mr-hootsworth.png" alt="Mr. Hootsworth the Owl" className="w-10 h-10 md:w-14 md:h-14 ml-2" />
+                Empowering Communities Through Safety & Knowledge
+              </h1>
+                <img src="/mr-hootsworth.png" alt="Mr. Hootsworth the Owl" className="w-10 h-10 md:w-14 md:h-14 ml-1" />
               </div>
-              <p className="text-sgc-neutral-dark/80">Your journey towards gender equality and reduced inequalities</p>
+              <p className="text-sgc-neutral mt-1">Your journey towards gender equality and reduced inequalities</p>
             </div>
             <div className="flex gap-4">
               <Button variant="outline" className="gap-2 bg-white/10 hover:bg-white/20 text-white border-white/20">
@@ -557,6 +586,36 @@ const Index = () => {
               </div>
             </TabsContent>
           </Tabs>
+        </div>
+      </section>
+
+      {/* Chatbot Section */}
+      <section className="py-8">
+        <div className="sgc-container max-w-lg mx-auto bg-white rounded-lg shadow p-6">
+          <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
+            <img src="/mr-hootsworth.png" alt="Mr. Hootsworth" className="w-8 h-8" />
+            Chat with Mr. Hootsworth
+          </h2>
+          <div className="space-y-2 mb-4 h-48 overflow-y-auto bg-sgc-neutral-light rounded p-2">
+            {chatMessages.map((msg, i) => (
+              <div key={i} className={msg.sender === 'user' ? 'text-right' : 'text-left'}>
+                <span className={msg.sender === 'user' ? 'bg-blue-100 text-blue-800' : 'bg-purple-100 text-purple-800'} style={{ borderRadius: 8, padding: '4px 8px', display: 'inline-block', margin: 2 }}>
+                  {msg.text}
+                </span>
+              </div>
+            ))}
+            {isLoading && <div className="text-sgc-neutral">Mr. Hootsworth is typing...</div>}
+          </div>
+          <div className="flex gap-2">
+            <input
+              className="flex-1 border rounded p-2"
+              value={chatInput}
+              onChange={e => setChatInput(e.target.value)}
+              onKeyDown={e => e.key === 'Enter' && sendMessage()}
+              placeholder="Type your question..."
+            />
+            <Button onClick={sendMessage} disabled={isLoading || !chatInput.trim()}>Send</Button>
+          </div>
         </div>
       </section>
 
