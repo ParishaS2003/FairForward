@@ -1,8 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { Send, User, Bot } from 'lucide-react';
+import React, { useState, useEffect, useRef } from 'react';
+import { Send, User, Bot, AlertCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Textarea } from '@/components/ui/textarea';
+import { motion, AnimatePresence } from 'framer-motion';
+import { format } from 'date-fns';
 
 // Mock legal questions and answers for demonstration
 const legalResponses = {
@@ -18,6 +20,7 @@ type Message = {
   content: string;
   isUser: boolean;
   type?: 'normal' | 'suggestions' | 'error';
+  timestamp: Date;
 };
 
 const LegalBot = () => {
@@ -26,12 +29,22 @@ const LegalBot = () => {
       id: 1,
       content: "Hello! I'm your AI Legal Assistant. I can help you with questions about Canadian legal rights, workplace issues, discrimination, and more. How can I assist you today?",
       isUser: false,
-      type: 'normal'
+      type: 'normal',
+      timestamp: new Date()
     }
   ]);
   const [input, setInput] = useState('');
   const [isThinking, setIsThinking] = useState(false);
   const [isApiConnected, setIsApiConnected] = useState(false);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
 
   // Test API connection on component mount
   useEffect(() => {
@@ -56,12 +69,12 @@ const LegalBot = () => {
   const handleSend = async () => {
     if (!input.trim()) return;
     
-    // Add user message
     const userMessage: Message = {
       id: messages.length + 1,
       content: input,
       isUser: true,
-      type: 'normal'
+      type: 'normal',
+      timestamp: new Date()
     };
     
     setMessages(prev => [...prev, userMessage]);
@@ -69,8 +82,7 @@ const LegalBot = () => {
     setIsThinking(true);
     
     try {
-      console.log('Sending message to API:', input);
-      const response = await fetch('http://localhost:5000/api/chat', {
+      const response = await fetch('http://localhost:5001/api/chat', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -78,34 +90,29 @@ const LegalBot = () => {
         body: JSON.stringify({ message: input }),
       });
 
-      console.log('API Response status:', response.status);
-      const responseText = await response.text();
-      console.log('API Response text:', responseText);
-
       if (!response.ok) {
-        throw new Error(`API error: ${response.status} ${responseText}`);
+        throw new Error(`API error: ${response.status}`);
       }
 
-      const data = JSON.parse(responseText);
-      console.log('Parsed API response:', data);
+      const data = await response.json();
       
-      // Add the main response
       const botMessage: Message = {
         id: messages.length + 2,
         content: data.response,
         isUser: false,
-        type: 'normal'
+        type: 'normal',
+        timestamp: new Date()
       };
       
       setMessages(prev => [...prev, botMessage]);
 
-      // Add topic suggestions if available
       if (data.suggestions && Array.isArray(data.suggestions) && data.suggestions.length > 0) {
         const suggestionsMessage: Message = {
           id: messages.length + 3,
           content: data.suggestions.join('\n'),
           isUser: false,
-          type: 'suggestions'
+          type: 'suggestions',
+          timestamp: new Date()
         };
         setMessages(prev => [...prev, suggestionsMessage]);
       }
@@ -113,9 +120,10 @@ const LegalBot = () => {
       console.error('Error in handleSend:', error);
       const errorMessage: Message = {
         id: messages.length + 2,
-        content: `I apologize, but I'm having trouble connecting to my knowledge base. Error: ${error.message}`,
+        content: `I apologize, but I'm having trouble connecting to my knowledge base. Please try again in a moment.`,
         isUser: false,
-        type: 'error'
+        type: 'error',
+        timestamp: new Date()
       };
       setMessages(prev => [...prev, errorMessage]);
     } finally {
@@ -131,20 +139,48 @@ const LegalBot = () => {
   };
 
   return (
-    <div className="flex flex-col h-[calc(100vh-6rem)]">
-      {!isApiConnected && (
-        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
-          <strong className="font-bold">Warning: </strong>
-          <span className="block sm:inline">Unable to connect to the AI assistant. Please make sure the backend server is running.</span>
-        </div>
-      )}
+    <div className="flex flex-col h-[calc(100vh-6rem)] bg-gray-50">
+      <AnimatePresence>
+        {!isApiConnected && (
+          <motion.div 
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative m-4"
+            role="alert"
+          >
+            <div className="flex items-center">
+              <AlertCircle className="h-5 w-5 mr-2" />
+              <div>
+                <strong className="font-bold">Connection Error: </strong>
+                <span className="block sm:inline">Unable to connect to the AI assistant. Please make sure the backend server is running.</span>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       <div className="flex-1 overflow-y-auto p-4 space-y-4">
-        {messages.map((message) => (
-          <MessageBubble key={message.id} message={message} />
-        ))}
+        <AnimatePresence>
+          {messages.map((message) => (
+            <motion.div
+              key={message.id}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.3 }}
+            >
+              <MessageBubble message={message} />
+            </motion.div>
+          ))}
+        </AnimatePresence>
         
         {isThinking && (
-          <div className="flex items-center space-x-2 text-sgc-neutral">
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="flex items-center space-x-2 text-sgc-neutral"
+          >
             <span className="bg-sgc-purple-light p-2 rounded-full">
               <Bot size={18} className="text-sgc-purple" />
             </span>
@@ -153,24 +189,25 @@ const LegalBot = () => {
               <span className="h-2 w-2 bg-sgc-purple rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></span>
               <span className="h-2 w-2 bg-sgc-purple rounded-full animate-bounce" style={{ animationDelay: '0.4s' }}></span>
             </div>
-          </div>
+          </motion.div>
         )}
+        <div ref={messagesEndRef} />
       </div>
       
-      <div className="p-4 border-t border-border bg-white">
+      <div className="p-4 border-t border-border bg-white shadow-lg">
         <div className="flex items-end space-x-2">
           <Textarea
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={handleKeyDown}
             placeholder="Ask about Canadian legal rights, workplace issues, discrimination..."
-            className="min-h-[60px] resize-none"
+            className="min-h-[60px] resize-none focus:ring-2 focus:ring-sgc-purple"
           />
           <Button 
             onClick={handleSend} 
             disabled={!input.trim() || isThinking || !isApiConnected}
             size="icon"
-            className="bg-sgc-purple hover:bg-sgc-purple-dark h-[60px] w-[60px]"
+            className="bg-sgc-purple hover:bg-sgc-purple-dark h-[60px] w-[60px] transition-all duration-200 transform hover:scale-105"
           >
             <Send size={20} />
           </Button>
@@ -187,32 +224,47 @@ const MessageBubble = ({ message }: { message: Message }) => {
   return (
     <div className={`flex ${message.isUser ? 'justify-end' : 'justify-start'}`}>
       <div className={`flex max-w-[80%] ${message.isUser ? 'flex-row-reverse' : 'flex-row'}`}>
-        <div className={`flex-shrink-0 h-8 w-8 rounded-full flex items-center justify-center ${message.isUser ? 'bg-sgc-blue-light ml-2' : 'bg-sgc-purple-light mr-2'}`}>
+        <div className={`flex-shrink-0 h-8 w-8 rounded-full flex items-center justify-center ${
+          message.isUser ? 'bg-sgc-blue-light ml-2' : 'bg-sgc-purple-light mr-2'
+        }`}>
           {message.isUser ? (
             <User size={16} className="text-sgc-blue" />
           ) : (
             <Bot size={16} className="text-sgc-purple" />
           )}
         </div>
-        <Card className={`${
-          message.isUser ? 'bg-sgc-blue text-white' : 
-          message.type === 'suggestions' ? 'bg-sgc-purple-light' :
-          message.type === 'error' ? 'bg-red-100 text-red-700' :
-          'bg-white'
-        }`}>
-          <CardContent className="p-3">
-            {message.type === 'suggestions' ? (
-              <>
-                <p className="text-sm font-semibold mb-2">You might also be interested in:</p>
-                {message.content.split('\n').map((suggestion, index) => (
-                  <p key={index} className="text-sm py-1">• {suggestion}</p>
-                ))}
-              </>
-            ) : (
-              <p className="text-sm whitespace-pre-line">{message.content}</p>
-            )}
-          </CardContent>
-        </Card>
+        <div className="flex flex-col">
+          <Card className={`${
+            message.isUser ? 'bg-sgc-blue text-white' : 
+            message.type === 'suggestions' ? 'bg-sgc-purple-light' :
+            message.type === 'error' ? 'bg-red-100 text-red-700' :
+            'bg-white'
+          } shadow-md hover:shadow-lg transition-shadow duration-200`}>
+            <CardContent className="p-3">
+              {message.type === 'suggestions' ? (
+                <>
+                  <p className="text-sm font-semibold mb-2">You might also be interested in:</p>
+                  <div className="space-y-1">
+                    {message.content.split('\n').map((suggestion, index) => (
+                      <motion.p 
+                        key={index} 
+                        className="text-sm py-1 hover:bg-sgc-purple/10 rounded px-2 cursor-pointer transition-colors duration-200"
+                        whileHover={{ x: 5 }}
+                      >
+                        • {suggestion}
+                      </motion.p>
+                    ))}
+                  </div>
+                </>
+              ) : (
+                <p className="text-sm whitespace-pre-line">{message.content}</p>
+              )}
+            </CardContent>
+          </Card>
+          <span className="text-xs text-gray-500 mt-1 px-2">
+            {format(message.timestamp, 'h:mm a')}
+          </span>
+        </div>
       </div>
     </div>
   );

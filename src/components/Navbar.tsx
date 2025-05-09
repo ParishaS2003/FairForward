@@ -1,14 +1,21 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { Menu, X, Home, MessageCircle, MapPin, FileText, BookOpen } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { Link, useNavigate } from 'react-router-dom';
+import { Menu, X, Home, MessageCircle, MapPin, Users, LogOut, User } from 'lucide-react';
+import { Button } from './ui/button';
 import EmergencyButton from './EmergencyButton';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const navigate = useNavigate();
+  const isAuthenticated = typeof window !== 'undefined' && localStorage.getItem('user');
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
+  };
+
+  const handleSignOut = () => {
+    localStorage.removeItem('user');
+    navigate('/');
   };
 
   return (
@@ -24,15 +31,17 @@ const Navbar = () => {
           
           {/* Desktop Navigation */}
           <div className="hidden md:flex space-x-6 items-center">
-            <NavLink to="/" icon={<Home size={18} />} text="Home" />
+            <NavLink to="/app" icon={<Home size={18} />} text="Home" />
             <NavLink to="/chat" icon={<MessageCircle size={18} />} text="LegalBot" />
             <NavLink to="/map" icon={<MapPin size={18} />} text="Safe Spaces" />
-            <NavLink to="/report" icon={<FileText size={18} />} text="Report" />
-            <NavLink to="/learn" icon={<BookOpen size={18} />} text="Learn" />
+            <NavLink to="/community" icon={<Users size={18} />} text="Community" />
             
             <div className="pl-4 border-l border-border">
               <EmergencyButton variant="navbar" />
             </div>
+            {isAuthenticated && (
+              <NavLink to="/account" icon={<User size={18} />} text="Account" />
+            )}
           </div>
           
           {/* Mobile Menu Button */}
@@ -49,12 +58,13 @@ const Navbar = () => {
       {isMenuOpen && (
         <div className="md:hidden bg-white border-t border-border animate-fade-in-up">
           <div className="sgc-container py-4 space-y-4">
-            <MobileNavLink to="/" icon={<Home size={18} />} text="Home" onClick={toggleMenu} />
+            <MobileNavLink to="/app" icon={<Home size={18} />} text="Home" onClick={toggleMenu} />
             <MobileNavLink to="/chat" icon={<MessageCircle size={18} />} text="LegalBot" onClick={toggleMenu} />
             <MobileNavLink to="/map" icon={<MapPin size={18} />} text="Safe Spaces" onClick={toggleMenu} />
-            <MobileNavLink to="/report" icon={<FileText size={18} />} text="Report" onClick={toggleMenu} />
-            <MobileNavLink to="/learn" icon={<BookOpen size={18} />} text="Learn" onClick={toggleMenu} />
-            
+            <MobileNavLink to="/community" icon={<Users size={18} />} text="Community" onClick={toggleMenu} />
+            {isAuthenticated && (
+              <MobileNavLink to="/account" icon={<User size={18} />} text="Account" onClick={toggleMenu} />
+            )}
             <div className="pt-4 border-t border-border">
               <EmergencyButton variant="inline" />
             </div>
