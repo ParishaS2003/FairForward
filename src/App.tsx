@@ -10,7 +10,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import LegalBot from "./components/LegalBot";
-import SafeMap from "./components/SafeMap";
+import SafeSpaces from "./components/SafeSpaces";
 import ReportForm from "./components/ReportForm";
 import LiteracyHub from "./components/LiteracyHub";
 import Dashboard from "./components/Dashboard";
@@ -30,12 +30,12 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
 
 const App = () => {
   return (
-    <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner />
+  <QueryClientProvider client={queryClient}>
+    <TooltipProvider>
+      <Toaster />
+      <Sonner />
         <Router>
-          <Routes>
+        <Routes>
             <Route path="/" element={<Homepage />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
@@ -47,17 +47,17 @@ const App = () => {
                 </ProtectedRoute>
               } 
             />
-            <Route path="/chat" element={<LegalBot />} />
-            <Route path="/map" element={<SafeMap />} />
-            <Route path="/report" element={<ReportForm />} />
-            <Route path="/learn" element={<LiteracyHub />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
+          <Route path="/chat" element={<LegalBot />} />
+          <Route path="/map" element={<SafeSpaces />} />
+          <Route path="/report" element={<ReportForm />} />
+          <Route path="/learn" element={<LiteracyHub />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
         </Router>
-      </TooltipProvider>
-    </QueryClientProvider>
-  );
+    </TooltipProvider>
+  </QueryClientProvider>
+);
 };
 
 export default App;
