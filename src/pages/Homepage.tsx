@@ -161,7 +161,7 @@ const Homepage = () => {
   ];
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-sgc-neutral-light p-4">
       {/* Hero Section */}
       <section className="relative pt-16 pb-32 overflow-hidden bg-gradient-to-b from-white to-sgc-neutral-light">
         <div className="absolute inset-0 bg-grid-pattern opacity-5"></div>
@@ -173,45 +173,63 @@ const Homepage = () => {
             transition={{ duration: 0.6 }}
             className="grid md:grid-cols-2 gap-12 items-center"
           >
-            <div className="max-w-lg">
-              <motion.h1 
-                initial={{ opacity: 0, y: 20 }}
-                animate={heroInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.6, delay: 0.2 }}
-                className="text-4xl md:text-5xl font-bold mb-6 text-sgc-neutral-dark"
-              >
-                Welcome to FairForward
-              </motion.h1>
-              <motion.p 
-                initial={{ opacity: 0, y: 20 }}
-                animate={heroInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.6, delay: 0.4 }}
-                className="text-lg text-sgc-neutral mb-8"
-              >
-                Your trusted platform for legal support, safety resources, and education. 
-                Join our community to access comprehensive tools and support.
-              </motion.p>
-              <motion.div 
-                initial={{ opacity: 0, y: 20 }}
-                animate={heroInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.6, delay: 0.6 }}
-                className="flex flex-wrap gap-4"
-              >
-                <Link to="/signup">
-                  <Button className="bg-sgc-purple hover:bg-sgc-purple-dark text-white px-8 py-3 rounded-full text-lg transform transition-all duration-300 hover:scale-105 hover:shadow-lg">
-                    Get Started
-                  </Button>
-                </Link>
-                <Link to="/login">
-                  <Button 
-                    size="lg" 
-                    variant="outline" 
-                    className="border-sgc-purple text-sgc-purple hover:bg-sgc-purple hover:text-white transform transition-all duration-300 hover:scale-105"
-                  >
-                    Sign In
-                  </Button>
-                </Link>
-              </motion.div>
+            <div className="max-w-lg flex items-center gap-6">
+              {/* Mascot with side-to-side animation */}
+              <img 
+                src="/mr-hootsworth.png" 
+                alt="Mascot" 
+                className="h-24 w-24 md:h-32 md:w-32 animate-sway"
+                style={{ animation: 'sway 2.5s ease-in-out infinite' }}
+              />
+              <style>{`
+                @keyframes sway {
+                  0% { transform: translateX(0) rotate(-3deg); }
+                  25% { transform: translateX(10px) rotate(3deg); }
+                  50% { transform: translateX(0) rotate(-3deg); }
+                  75% { transform: translateX(-10px) rotate(3deg); }
+                  100% { transform: translateX(0) rotate(-3deg); }
+                }
+              `}</style>
+              <div>
+                <motion.h1 
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={heroInView ? { opacity: 1, y: 0 } : {}}
+                  transition={{ duration: 0.6, delay: 0.2 }}
+                  className="text-4xl md:text-5xl font-bold mb-6 text-sgc-neutral-dark"
+                >
+                  Welcome to FairForward
+                </motion.h1>
+                <motion.p 
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={heroInView ? { opacity: 1, y: 0 } : {}}
+                  transition={{ duration: 0.6, delay: 0.4 }}
+                  className="text-lg text-sgc-neutral mb-8"
+                >
+                  Your trusted platform for legal support, safety resources, and education. 
+                  Join our community to access comprehensive tools and support.
+                </motion.p>
+                <motion.div 
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={heroInView ? { opacity: 1, y: 0 } : {}}
+                  transition={{ duration: 0.6, delay: 0.6 }}
+                  className="flex flex-wrap gap-4"
+                >
+                  <Link to="/signup">
+                    <Button className="bg-sgc-purple hover:bg-sgc-purple-dark text-white px-8 py-3 rounded-full text-lg transform transition-all duration-300 hover:scale-105 hover:shadow-lg">
+                      Get Started
+                    </Button>
+                  </Link>
+                  <Link to="/login">
+                    <Button 
+                      size="lg" 
+                      variant="outline" 
+                      className="border-sgc-purple text-sgc-purple hover:bg-sgc-purple hover:text-white transform transition-all duration-300 hover:scale-105"
+                    >
+                      Sign In
+                    </Button>
+                  </Link>
+                </motion.div>
+              </div>
             </div>
             
             <motion.div 

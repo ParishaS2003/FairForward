@@ -15,6 +15,7 @@ import ReportForm from "./components/ReportForm";
 import LiteracyHub from "./components/LiteracyHub";
 import Dashboard from "./components/Dashboard";
 import LegalHelp from '@/pages/LegalHelp';
+import Community from '@/pages/Community';
 
 const queryClient = new QueryClient();
 
@@ -54,6 +55,7 @@ const App = () => {
             <Route path="/learn" element={<LiteracyHub />} />
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/legal-help" element={<LegalHelp />} />
+            <Route path="/community" element={<Community />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Router>

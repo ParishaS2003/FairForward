@@ -7,7 +7,7 @@ import {
   ChevronRight, Star, Heart, Clock, Bell, Calendar, Scale, Globe, Target, Award, TrendingUp, 
   BarChart, Bookmark, Share2, ThumbsUp, MessageSquare, AlertCircle, GraduationCap, Briefcase, 
   Home, Building2, Gavel, BriefcaseIcon, PhoneCall, Mail, CheckCircle2, XCircle,
-  Sparkles, Lightbulb, Megaphone, Handshake
+  Sparkles, Lightbulb, Megaphone, Handshake, MessageCircle
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/card';
@@ -26,6 +26,41 @@ const Index = () => {
   const [activeTab, setActiveTab] = useState('overview');
   const [progress, setProgress] = useState(0);
   const [activeFeature, setActiveFeature] = useState(0);
+  const [communityPosts, setCommunityPosts] = useState([
+    {
+      id: 1,
+      author: "Sarah K.",
+      avatar: "SK",
+      role: "Community Member",
+      content: "As a woman in tech, I've faced many challenges. But through this community, I found strength and support. Let's keep lifting each other up!",
+      likes: 124,
+      comments: 23,
+      tags: ["Women in Tech", "Career Growth"],
+      timestamp: "2h ago"
+    },
+    {
+      id: 2,
+      author: "Maria L.",
+      avatar: "ML",
+      role: "Community Organizer",
+      content: "The safe spaces network helped me find support during a difficult time. Now I'm giving back by organizing community events.",
+      likes: 89,
+      comments: 15,
+      tags: ["Safe Spaces", "Community Support"],
+      timestamp: "5h ago"
+    },
+    {
+      id: 3,
+      author: "Alex T.",
+      avatar: "AT",
+      role: "Student",
+      content: "Navigating college as a first-generation student has its challenges, but this community has been my rock. Grateful for all the advice and support!",
+      likes: 67,
+      comments: 12,
+      tags: ["Education", "First Gen"],
+      timestamp: "1d ago"
+    }
+  ]);
 
   // Intersection Observer hooks for animations
   const [heroRef, heroInView] = useInView({ triggerOnce: true });
@@ -184,10 +219,14 @@ const Index = () => {
                 className="grid md:grid-cols-2 lg:grid-cols-4 gap-4"
               >
                 {[
-                  { icon: <Scale />, title: 'Legal Rights', desc: 'Know your rights', color: 'purple' },
-                  { icon: <MapPin />, title: 'Safe Spaces', desc: 'Find support nearby', color: 'blue' },
-                  { icon: <Award />, title: 'Empowerment', desc: 'Build your skills', color: 'green' },
-                  { icon: <TrendingUp />, title: 'Advocacy', desc: 'Make your voice heard', color: 'orange' }
+                  { icon: <Scale />, title: 'Legal Rights', desc: 'Know your rights', color: 'purple', link: '/legal-help' },
+                  { icon: <MapPin />, title: 'Safe Spaces', desc: 'Find support nearby', color: 'blue', link: '/map' },
+                  { icon: <FileText />, title: 'Report', desc: 'File a report', color: 'red', link: '/report' },
+                  { icon: <BookOpen />, title: 'Learn', desc: 'Educational resources', color: 'green', link: '/learn' },
+                  { icon: <MessageCircle />, title: 'LegalBot', desc: 'Get legal advice', color: 'orange', link: '/chat' },
+                  { icon: <Users />, title: 'Community', desc: 'Connect with others', color: 'indigo', link: '/community' },
+                  { icon: <Award />, title: 'Empowerment', desc: 'Build your skills', color: 'teal', link: '/app' },
+                  { icon: <TrendingUp />, title: 'Advocacy', desc: 'Make your voice heard', color: 'pink', link: '/app' }
                 ].map((feature, index) => (
                   <motion.div
                     key={feature.title}
@@ -195,23 +234,25 @@ const Index = () => {
                     whileHover={{ scale: 1.02, y: -5 }}
                     className="relative"
                   >
-                    <Card className={`hover:shadow-lg transition-all duration-300 cursor-pointer group border-${feature.color}-200`}>
-                      <CardContent className="p-6">
-                        <div className="flex items-center gap-4">
-                          <motion.div 
-                            className={`h-12 w-12 rounded-full bg-${feature.color}-100 flex items-center justify-center text-${feature.color}-600 group-hover:scale-110 transition-transform`}
-                            whileHover={{ rotate: 360 }}
-                            transition={{ duration: 0.5 }}
-                          >
-                            {feature.icon}
-                          </motion.div>
-                          <div>
-                            <h3 className="font-semibold">{feature.title}</h3>
-                            <p className="text-sm text-sgc-neutral">{feature.desc}</p>
+                    <Link to={feature.link}>
+                      <Card className={`hover:shadow-lg transition-all duration-300 cursor-pointer group border-${feature.color}-200`}>
+                        <CardContent className="p-6">
+                          <div className="flex items-center gap-4">
+                            <motion.div 
+                              className={`h-12 w-12 rounded-full bg-${feature.color}-100 flex items-center justify-center text-${feature.color}-600 group-hover:scale-110 transition-transform`}
+                              whileHover={{ rotate: 360 }}
+                              transition={{ duration: 0.5 }}
+                            >
+                              {feature.icon}
+                            </motion.div>
+                            <div>
+                              <h3 className="font-semibold">{feature.title}</h3>
+                              <p className="text-sm text-sgc-neutral">{feature.desc}</p>
+                            </div>
                           </div>
-                        </div>
-                      </CardContent>
-                    </Card>
+                        </CardContent>
+                      </Card>
+                    </Link>
                   </motion.div>
                 ))}
               </motion.div>
@@ -431,95 +472,128 @@ const Index = () => {
                 {/* Community Stories */}
                 <Card className="md:col-span-2">
                   <CardHeader>
-                    <CardTitle>Community Stories</CardTitle>
-                    <CardDescription>Share and read experiences from our community members</CardDescription>
+                    <CardTitle>Community Support Hub</CardTitle>
+                    <CardDescription>Share your experiences and connect with others who understand</CardDescription>
                   </CardHeader>
                   <CardContent>
                     <div className="space-y-6">
-                      {[
-                        {
-                          name: "Sarah K.",
-                          role: "Tech Lead",
-                          story: "Through FairForward's mentorship program, I was able to break through the glass ceiling and become a tech lead at my company.",
-                          likes: 124,
-                          comments: 23
-                        },
-                        {
-                          name: "Maria L.",
-                          role: "Community Organizer",
-                          story: "The safe spaces network helped me find support during a difficult time. Now I'm giving back by organizing community events.",
-                          likes: 89,
-                          comments: 15
-                        }
-                      ].map((story, i) => (
-                        <div key={i} className="p-4 rounded-lg border">
+                      {/* New Post Button */}
+                      <motion.div
+                        whileHover={{ scale: 1.02 }}
+                        className="mb-6"
+                      >
+                        <Button 
+                          className="w-full bg-gradient-to-r from-sgc-purple to-sgc-purple-dark text-white hover:from-sgc-purple-dark hover:to-sgc-purple"
+                          onClick={() => navigate('/new-post')}
+                        >
+                          <MessageSquare className="mr-2 h-4 w-4" />
+                          Share Your Story
+                        </Button>
+                      </motion.div>
+
+                      {/* Community Posts */}
+                      {communityPosts.map((post) => (
+                        <motion.div
+                          key={post.id}
+                          initial={{ opacity: 0, y: 20 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          whileHover={{ scale: 1.01 }}
+                          className="p-6 rounded-lg border bg-white shadow-sm hover:shadow-md transition-shadow"
+                        >
                           <div className="flex items-start gap-4">
-                            <Avatar>
-                              <AvatarFallback>{story.name.split(' ').map(n => n[0]).join('')}</AvatarFallback>
+                            <Avatar className="h-10 w-10">
+                              <AvatarFallback>{post.avatar}</AvatarFallback>
                             </Avatar>
                             <div className="flex-1">
                               <div className="flex items-center gap-2 mb-2">
-                                <h4 className="font-medium">{story.name}</h4>
-                                <Badge variant="secondary">{story.role}</Badge>
+                                <h4 className="font-medium">{post.author}</h4>
+                                <Badge variant="secondary">{post.role}</Badge>
+                                <span className="text-sm text-sgc-neutral ml-auto">{post.timestamp}</span>
                               </div>
-                              <p className="text-sgc-neutral mb-4">{story.story}</p>
+                              <p className="text-sgc-neutral-dark mb-4">{post.content}</p>
+                              <div className="flex flex-wrap gap-2 mb-4">
+                                {post.tags.map((tag) => (
+                                  <Badge key={tag} variant="outline" className="bg-sgc-purple-light/20 text-sgc-purple">
+                                    {tag}
+                                  </Badge>
+                                ))}
+                              </div>
                               <div className="flex items-center gap-4">
                                 <Button variant="ghost" size="sm" className="gap-2">
                                   <ThumbsUp size={16} />
-                                  {story.likes}
+                                  {post.likes}
                                 </Button>
                                 <Button variant="ghost" size="sm" className="gap-2">
                                   <MessageSquare size={16} />
-                                  {story.comments}
+                                  {post.comments}
                                 </Button>
                                 <Button variant="ghost" size="sm" className="gap-2">
                                   <Share2 size={16} />
                                   Share
                                 </Button>
+                                <Button variant="ghost" size="sm" className="gap-2">
+                                  <Heart size={16} />
+                                  Support
+                                </Button>
                               </div>
                             </div>
                           </div>
-                        </div>
+                        </motion.div>
                       ))}
                     </div>
                   </CardContent>
                 </Card>
 
-                {/* Community Events */}
+                {/* Community Resources */}
                 <Card>
                   <CardHeader>
-                    <CardTitle>Upcoming Events</CardTitle>
-                    <CardDescription>Join our community events and workshops</CardDescription>
+                    <CardTitle>Support Resources</CardTitle>
+                    <CardDescription>Find help and connect with support groups</CardDescription>
                   </CardHeader>
                   <CardContent>
                     <div className="space-y-4">
                       {[
                         {
-                          title: "Women in Tech Meetup",
-                          date: "Tomorrow, 6 PM",
-                          attendees: 45
+                          title: "Mental Health Support",
+                          desc: "24/7 counseling and peer support",
+                          icon: <Heart className="text-pink-500" />,
+                          link: "/mental-health"
                         },
                         {
-                          title: "Equality Workshop",
-                          date: "Next Week",
-                          attendees: 32
+                          title: "Career Development",
+                          desc: "Mentorship and career guidance",
+                          icon: <Briefcase className="text-blue-500" />,
+                          link: "/career"
                         },
                         {
-                          title: "Community Support Group",
-                          date: "Every Thursday",
-                          attendees: 28
+                          title: "Education Support",
+                          desc: "Scholarships and academic resources",
+                          icon: <GraduationCap className="text-green-500" />,
+                          link: "/education"
+                        },
+                        {
+                          title: "Legal Assistance",
+                          desc: "Free legal consultation and support",
+                          icon: <Scale className="text-purple-500" />,
+                          link: "/legal-help"
                         }
-                      ].map((event, i) => (
-                        <div key={i} className="p-4 rounded-lg border">
-                          <h4 className="font-medium mb-2">{event.title}</h4>
-                          <div className="flex items-center justify-between text-sm text-sgc-neutral">
-                            <span>{event.date}</span>
-                            <span>{event.attendees} attending</span>
+                      ].map((resource, i) => (
+                        <motion.div
+                          key={resource.title}
+                          whileHover={{ x: 10 }}
+                          className="p-4 rounded-lg border hover:bg-sgc-neutral-light/50 transition-colors cursor-pointer"
+                          onClick={() => navigate(resource.link)}
+                        >
+                          <div className="flex items-center gap-4">
+                            <div className="h-10 w-10 rounded-full bg-sgc-neutral-light flex items-center justify-center">
+                              {resource.icon}
+                            </div>
+                            <div>
+                              <h4 className="font-medium">{resource.title}</h4>
+                              <p className="text-sm text-sgc-neutral">{resource.desc}</p>
+                            </div>
                           </div>
-                          <Button variant="outline" size="sm" className="w-full mt-3">
-                            Join Event
-                          </Button>
-                        </div>
+                        </motion.div>
                       ))}
                     </div>
                   </CardContent>

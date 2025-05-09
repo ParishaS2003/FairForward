@@ -209,13 +209,24 @@ const LegalBot = () => {
         {isThinking && (
           <div className="flex items-center space-x-2 text-sgc-neutral">
             <span className="bg-sgc-purple-light p-2 rounded-full">
-              <Bot size={18} className="text-sgc-purple" />
+              <img 
+                src="/mr-hootsworth.png" 
+                alt="Mr. Hootsworth" 
+                className="h-6 w-6 rounded-full animate-bounce-bot"
+                style={{ animation: 'bounce-bot 1.2s infinite' }}
+              />
             </span>
             <div className="flex space-x-1">
               <span className="h-2 w-2 bg-sgc-purple rounded-full animate-bounce"></span>
               <span className="h-2 w-2 bg-sgc-purple rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></span>
               <span className="h-2 w-2 bg-sgc-purple rounded-full animate-bounce" style={{ animationDelay: '0.4s' }}></span>
             </div>
+            <style>{`
+              @keyframes bounce-bot {
+                0%, 100% { transform: translateY(0); }
+                50% { transform: translateY(-8px); }
+              }
+            `}</style>
           </div>
         )}
       </div>
@@ -251,7 +262,12 @@ const MessageBubble = ({ message }: { message: Message }) => {
           {message.isUser ? (
             <User size={16} className="text-sgc-blue" />
           ) : (
-            <Bot size={16} className="text-sgc-purple" />
+            <img 
+              src="/mr-hootsworth.png" 
+              alt="Mr. Hootsworth" 
+              className="h-8 w-8 rounded-full animate-bounce-bot"
+              style={{ animation: 'bounce-bot 1.2s infinite' }}
+            />
           )}
         </div>
         <Card className={`${

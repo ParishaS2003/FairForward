@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Phone, Shield, X, AlertTriangle, MapPin, Volume2, VolumeX } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { Button } from './ui/button';
 import {
   Dialog,
   DialogContent,
@@ -8,7 +8,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@/components/ui/dialog';
+} from './ui/dialog';
 
 interface EmergencyButtonProps {
   variant?: 'navbar' | 'floating' | 'inline';

@@ -43,7 +43,21 @@ const Signup = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-sgc-neutral-light p-4">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-sgc-neutral-light p-4">
+      {/* Mascot with animation */}
+      <img 
+        src="/mr-hootsworth.png" 
+        alt="Mascot" 
+        className="h-24 w-24 mb-4 animate-float"
+        style={{ animation: 'float 2.5s ease-in-out infinite' }}
+      />
+      <style>{`
+        @keyframes float {
+          0% { transform: translateY(0); }
+          50% { transform: translateY(-16px); }
+          100% { transform: translateY(0); }
+        }
+      `}</style>
       <Card className="w-full max-w-md">
         <CardHeader>
           <CardTitle className="text-2xl text-center">Create an Account</CardTitle>
