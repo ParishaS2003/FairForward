@@ -10,11 +10,13 @@ const SafeSpaces = () => {
   useEffect(() => {
     const loadSheltersData = async () => {
       try {
+        console.log('Attempting to fetch shelters data...');
         const response = await fetch('/data/shelters1.csv');
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
         const text = await response.text();
+        console.log('Received CSV data:', text.slice(0, 200) + '...');
         
         // Split by newlines and remove empty lines
         const rows = text.split('\n')

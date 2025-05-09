@@ -1,15 +1,21 @@
 from flask import Flask, render_template, request, jsonify
+from flask_cors import CORS
 from chatbot import Chatbot, TOPIC_SUGGESTIONS
 import json
 
 app = Flask(__name__)
+CORS(app)  # Enable CORS for all routes
 chatbot = Chatbot()
 
 @app.route('/')
 def home():
     return render_template('index.html')
 
-@app.route('/chat', methods=['POST'])
+@app.route('/api/test', methods=['GET'])
+def test_api():
+    return jsonify({'status': 'ok'}), 200
+
+@app.route('/api/chat', methods=['POST'])
 def chat():
     user_message = request.json.get('message', '')
     if not user_message:
@@ -23,4 +29,4 @@ def get_topics():
     return jsonify({'topics': TOPIC_SUGGESTIONS})
 
 if __name__ == '__main__':
-    app.run(debug=True) 
+    app.run(debug=True, port=5000) 

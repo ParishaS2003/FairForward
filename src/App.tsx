@@ -14,50 +14,52 @@ import SafeSpaces from "./components/SafeSpaces";
 import ReportForm from "./components/ReportForm";
 import LiteracyHub from "./components/LiteracyHub";
 import Dashboard from "./components/Dashboard";
+import LegalHelp from '@/pages/LegalHelp';
+import Community from '@/pages/Community';
 
 const queryClient = new QueryClient();
 
-// Protected Route component
-const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
-  const isAuthenticated = localStorage.getItem('user') !== null;
-  
-  if (!isAuthenticated) {
-    return <Navigate to="/login" replace />;
-  }
+interface ProtectedRouteProps {
+  children: React.ReactNode;
+}
 
-  return <>{children}</>;
+const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
+  const isAuthenticated = localStorage.getItem('token');
+  return isAuthenticated ? children : <Navigate to="/login" />;
 };
 
 const App = () => {
   return (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
+    <QueryClientProvider client={queryClient}>
+      <TooltipProvider>
+        <Toaster />
+        <Sonner />
         <Router>
-        <Routes>
+          <Routes>
             <Route path="/" element={<Homepage />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
             <Route 
-              path="/app/*" 
+              path="/dashboard" 
               element={
                 <ProtectedRoute>
-                  <Index />
+                  <Dashboard />
                 </ProtectedRoute>
               } 
             />
-          <Route path="/chat" element={<LegalBot />} />
-          <Route path="/map" element={<SafeSpaces />} />
-          <Route path="/report" element={<ReportForm />} />
-          <Route path="/learn" element={<LiteracyHub />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+            <Route path="/chat" element={<LegalBot />} />
+            <Route path="/map" element={<SafeSpaces />} />
+            <Route path="/report" element={<ReportForm />} />
+            <Route path="/learn" element={<LiteracyHub />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/legal-help" element={<LegalHelp />} />
+            <Route path="/community" element={<Community />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
         </Router>
-    </TooltipProvider>
-  </QueryClientProvider>
-);
+      </TooltipProvider>
+    </QueryClientProvider>
+  );
 };
 
 export default App;
