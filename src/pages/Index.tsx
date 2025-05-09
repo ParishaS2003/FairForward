@@ -1,6 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Shield, MapPin, MessageCircle, FileText, BookOpen, Users, ArrowRight, CheckCircle, User, ChevronRight, Star, Heart, Clock, Bell, Calendar, Scale, Globe, Target, Award, TrendingUp, BarChart, Bookmark, Share2, ThumbsUp, MessageSquare, AlertCircle, GraduationCap, Briefcase, Home, Building2 } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { useInView } from 'react-intersection-observer';
+import { 
+  Shield, MapPin, FileText, BookOpen, Users, ArrowRight, CheckCircle, User, 
+  ChevronRight, Star, Heart, Clock, Bell, Calendar, Scale, Globe, Target, Award, TrendingUp, 
+  BarChart, Bookmark, Share2, ThumbsUp, MessageSquare, AlertCircle, GraduationCap, Briefcase, 
+  Home, Building2, Gavel, BriefcaseIcon, PhoneCall, Mail, CheckCircle2, XCircle,
+  Sparkles, Lightbulb, Megaphone, Handshake
+} from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
@@ -17,41 +25,44 @@ const Index = () => {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('overview');
   const [progress, setProgress] = useState(0);
+  const [activeFeature, setActiveFeature] = useState(0);
 
-  // Chatbot state
-  const [chatInput, setChatInput] = useState('');
-  const [chatMessages, setChatMessages] = useState([
-    { sender: 'bot', text: "Hello! I'm Mr. Hootsworth. How can I help you today?" }
-  ]);
-  const [isLoading, setIsLoading] = useState(false);
+  // Intersection Observer hooks for animations
+  const [heroRef, heroInView] = useInView({ triggerOnce: true });
+  const [statsRef, statsInView] = useInView({ triggerOnce: true });
+  const [featuresRef, featuresInView] = useInView({ triggerOnce: true });
 
   useEffect(() => {
     const timer = setTimeout(() => setProgress(66), 500);
     return () => clearTimeout(timer);
   }, []);
 
+  // Auto-rotate features
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveFeature((prev) => (prev + 1) % 3);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, []);
+
   const handleFindHelpClick = () => {
     navigate('/signup');
   };
 
-  // Chatbot send handler
-  const sendMessage = async () => {
-    if (!chatInput.trim()) return;
-    setChatMessages([...chatMessages, { sender: 'user', text: chatInput }]);
-    setIsLoading(true);
-    try {
-      const res = await fetch(`${API_BASE_URL}/api/chat`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: chatInput }),
-      });
-      const data = await res.json();
-      setChatMessages(msgs => [...msgs, { sender: 'bot', text: data.response }]);
-    } catch (e) {
-      setChatMessages(msgs => [...msgs, { sender: 'bot', text: "Sorry, I couldn't connect to the assistant." }]);
+  // Animation variants
+  const fadeInUp = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0 }
+  };
+
+  const staggerContainer = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1
+      }
     }
-    setIsLoading(false);
-    setChatInput('');
   };
 
   return (
@@ -59,83 +70,98 @@ const Index = () => {
       <Navbar />
       
       {/* Welcome Section with Impact Stats */}
-      <section className="pt-8 pb-6 bg-gradient-to-r from-sgc-neutral-light to-white text-sgc-neutral-dark">
+      <motion.section 
+        ref={heroRef}
+        initial="hidden"
+        animate={heroInView ? "visible" : "hidden"}
+        variants={staggerContainer}
+        className="pt-8 pb-6 bg-gradient-to-r from-sgc-neutral-light to-white text-sgc-neutral-dark"
+      >
         <div className="sgc-container">
-          <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+          <motion.div 
+            variants={fadeInUp}
+            className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6"
+          >
             <div>
-              <div className="flex items-center gap-3">
+              <motion.div 
+                variants={fadeInUp}
+                className="flex items-center gap-3"
+              >
                 <h1 className="text-2xl md:text-3xl font-bold mb-2">
-                Empowering Communities Through Safety & Knowledge
-              </h1>
-                <img src="/mr-hootsworth.png" alt="Mr. Hootsworth the Owl" className="w-10 h-10 md:w-14 md:h-14 ml-1" />
-              </div>
-              <p className="text-sgc-neutral mt-1">Your journey towards gender equality and reduced inequalities</p>
+                  Empowering Communities Through Safety & Knowledge
+                </h1>
+                <motion.img 
+                  src="/mr-hootsworth.png" 
+                  alt="Mr. Hootsworth the Owl" 
+                  className="w-10 h-10 md:w-14 md:h-14 ml-1"
+                  animate={{ rotate: [0, 10, 0] }}
+                  transition={{ duration: 2, repeat: Infinity }}
+                />
+              </motion.div>
+              <motion.p 
+                variants={fadeInUp}
+                className="text-sgc-neutral mt-1"
+              >
+                Your journey towards gender equality and reduced inequalities
+              </motion.p>
             </div>
-            <div className="flex gap-4">
+            <motion.div 
+              variants={fadeInUp}
+              className="flex gap-4"
+            >
               <Button variant="outline" className="gap-2 bg-white/10 hover:bg-white/20 text-white border-white/20">
                 <Bell size={16} />
                 Alerts
-                </Button>
+              </Button>
               <Button variant="outline" className="gap-2 bg-white/10 hover:bg-white/20 text-white border-white/20">
                 <Clock size={16} />
                 Timeline
-                </Button>
-            </div>
-              </div>
-              
+              </Button>
+            </motion.div>
+          </motion.div>
+          
           {/* Impact Stats Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mt-6">
-            <Card className="bg-white/10 backdrop-blur-sm border-white/20">
-              <CardContent className="p-4">
-                <div className="flex justify-between items-start">
-                  <div>
-                    <p className="text-sm opacity-80">Gender Equality Score</p>
-                    <h3 className="text-2xl font-bold mt-1">85%</h3>
+          <motion.div 
+            ref={statsRef}
+            initial="hidden"
+            animate={statsInView ? "visible" : "hidden"}
+            variants={staggerContainer}
+            className="grid grid-cols-1 md:grid-cols-4 gap-4 mt-6"
+          >
+            {[
+              { title: 'Gender Equality Score', value: '85%', icon: <Scale />, color: 'from-purple-500 to-purple-600' },
+              { title: 'Safe Spaces', value: '24', icon: <MapPin />, color: 'from-blue-500 to-blue-600' },
+              { title: 'Community Impact', value: '1.2K', icon: <Globe />, color: 'from-green-500 to-green-600' },
+              { title: 'Equality Goals', value: '12/15', icon: <Target />, color: 'from-orange-500 to-orange-600' }
+            ].map((stat, index) => (
+              <motion.div
+                key={stat.title}
+                variants={fadeInUp}
+                whileHover={{ scale: 1.02 }}
+                className="relative"
+              >
+                <Card className={`bg-gradient-to-r ${stat.color} text-white border-0`}>
+                  <CardContent className="p-4">
+                    <div className="flex justify-between items-start">
+                      <div>
+                        <p className="text-sm opacity-80">{stat.title}</p>
+                        <h3 className="text-2xl font-bold mt-1">{stat.value}</h3>
+                      </div>
+                      <motion.div
+                        animate={{ rotate: [0, 10, 0] }}
+                        transition={{ duration: 2, repeat: Infinity }}
+                      >
+                        {stat.icon}
+                      </motion.div>
                     </div>
-                  <Scale className="opacity-80" size={20} />
-                </div>
-                <Progress value={85} className="mt-4 bg-white/20" />
-              </CardContent>
-            </Card>
-            <Card className="bg-white/10 backdrop-blur-sm border-white/20">
-              <CardContent className="p-4">
-                <div className="flex justify-between items-start">
-                  <div>
-                    <p className="text-sm opacity-80">Safe Spaces</p>
-                    <h3 className="text-2xl font-bold mt-1">24</h3>
-              </div>
-                  <MapPin className="opacity-80" size={20} />
-                </div>
-                <Progress value={80} className="mt-4 bg-white/20" />
-              </CardContent>
-            </Card>
-            <Card className="bg-white/10 backdrop-blur-sm border-white/20">
-              <CardContent className="p-4">
-                <div className="flex justify-between items-start">
-                  <div>
-                    <p className="text-sm opacity-80">Community Impact</p>
-                    <h3 className="text-2xl font-bold mt-1">1.2K</h3>
-                  </div>
-                  <Globe className="opacity-80" size={20} />
-                </div>
-                <Progress value={70} className="mt-4 bg-white/20" />
-              </CardContent>
-            </Card>
-            <Card className="bg-white/10 backdrop-blur-sm border-white/20">
-              <CardContent className="p-4">
-                <div className="flex justify-between items-start">
-                  <div>
-                    <p className="text-sm opacity-80">Equality Goals</p>
-                    <h3 className="text-2xl font-bold mt-1">12/15</h3>
-              </div>
-                  <Target className="opacity-80" size={20} />
-            </div>
-                <Progress value={80} className="mt-4 bg-white/20" />
-              </CardContent>
-            </Card>
-          </div>
+                    <Progress value={parseInt(stat.value)} className="mt-4 bg-white/20" />
+                  </CardContent>
+                </Card>
+              </motion.div>
+            ))}
+          </motion.div>
         </div>
-      </section>
+      </motion.section>
       
       {/* Main Content */}
       <section className="flex-1 py-8">
@@ -150,197 +176,189 @@ const Index = () => {
             
             <TabsContent value="overview" className="space-y-6">
               {/* Quick Actions */}
-              <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
-                <Card className="hover:shadow-lg transition-all duration-300 cursor-pointer group border-sgc-purple/20">
-                  <CardContent className="p-6">
-                    <div className="flex items-center gap-4">
-                      <div className="h-12 w-12 rounded-full bg-sgc-purple-light flex items-center justify-center text-sgc-purple group-hover:scale-110 transition-transform">
-                        <Scale size={24} />
-                      </div>
-                      <div>
-                        <h3 className="font-semibold">Legal Rights</h3>
-                        <p className="text-sm text-sgc-neutral">Know your rights</p>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-                <Card className="hover:shadow-lg transition-all duration-300 cursor-pointer group border-blue-200">
-                  <CardContent className="p-6">
-                    <div className="flex items-center gap-4">
-                      <div className="h-12 w-12 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 group-hover:scale-110 transition-transform">
-                        <MapPin size={24} />
-                      </div>
-                      <div>
-                        <h3 className="font-semibold">Safe Spaces</h3>
-                        <p className="text-sm text-sgc-neutral">Find support nearby</p>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-                <Card className="hover:shadow-lg transition-all duration-300 cursor-pointer group border-green-200">
-                  <CardContent className="p-6">
-                    <div className="flex items-center gap-4">
-                      <div className="h-12 w-12 rounded-full bg-green-100 flex items-center justify-center text-green-600 group-hover:scale-110 transition-transform">
-                        <Award size={24} />
-                      </div>
-                      <div>
-                        <h3 className="font-semibold">Empowerment</h3>
-                        <p className="text-sm text-sgc-neutral">Build your skills</p>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-                <Card className="hover:shadow-lg transition-all duration-300 cursor-pointer group border-orange-200">
-                  <CardContent className="p-6">
-                    <div className="flex items-center gap-4">
-                      <div className="h-12 w-12 rounded-full bg-orange-100 flex items-center justify-center text-orange-600 group-hover:scale-110 transition-transform">
-                        <TrendingUp size={24} />
-                      </div>
-                      <div>
-                        <h3 className="font-semibold">Advocacy</h3>
-                        <p className="text-sm text-sgc-neutral">Make your voice heard</p>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-          </div>
-          
+              <motion.div 
+                ref={featuresRef}
+                initial="hidden"
+                animate={featuresInView ? "visible" : "hidden"}
+                variants={staggerContainer}
+                className="grid md:grid-cols-2 lg:grid-cols-4 gap-4"
+              >
+                {[
+                  { icon: <Scale />, title: 'Legal Rights', desc: 'Know your rights', color: 'purple' },
+                  { icon: <MapPin />, title: 'Safe Spaces', desc: 'Find support nearby', color: 'blue' },
+                  { icon: <Award />, title: 'Empowerment', desc: 'Build your skills', color: 'green' },
+                  { icon: <TrendingUp />, title: 'Advocacy', desc: 'Make your voice heard', color: 'orange' }
+                ].map((feature, index) => (
+                  <motion.div
+                    key={feature.title}
+                    variants={fadeInUp}
+                    whileHover={{ scale: 1.02, y: -5 }}
+                    className="relative"
+                  >
+                    <Card className={`hover:shadow-lg transition-all duration-300 cursor-pointer group border-${feature.color}-200`}>
+                      <CardContent className="p-6">
+                        <div className="flex items-center gap-4">
+                          <motion.div 
+                            className={`h-12 w-12 rounded-full bg-${feature.color}-100 flex items-center justify-center text-${feature.color}-600 group-hover:scale-110 transition-transform`}
+                            whileHover={{ rotate: 360 }}
+                            transition={{ duration: 0.5 }}
+                          >
+                            {feature.icon}
+                          </motion.div>
+                          <div>
+                            <h3 className="font-semibold">{feature.title}</h3>
+                            <p className="text-sm text-sgc-neutral">{feature.desc}</p>
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </motion.div>
+                ))}
+              </motion.div>
+
               {/* Featured Initiatives */}
-              <div className="mt-8">
+              <motion.div 
+                initial="hidden"
+                animate={featuresInView ? "visible" : "hidden"}
+                variants={staggerContainer}
+                className="mt-8"
+              >
                 <h2 className="text-2xl font-bold mb-6">Featured Initiatives</h2>
                 <div className="grid md:grid-cols-3 gap-6">
-                  <Card className="overflow-hidden group">
-                    <div className="h-48 bg-gradient-to-r from-sgc-purple to-sgc-purple-dark relative">
-                      <div className="absolute inset-0 bg-black/20 group-hover:bg-black/30 transition-colors" />
-                      <div className="absolute bottom-4 left-4 text-white">
-                        <Badge className="bg-white/20 text-white mb-2">SDG 5</Badge>
-                        <h3 className="text-xl font-bold">Women in Tech</h3>
-          </div>
-        </div>
-                    <CardContent className="p-6">
-                      <p className="text-sgc-neutral mb-4">Empowering women through technology education and career opportunities.</p>
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-2">
-                          <Avatar className="h-8 w-8">
-                            <AvatarFallback>WT</AvatarFallback>
-                          </Avatar>
-                          <span className="text-sm">1.2K Members</span>
+                  {[
+                    { 
+                      title: 'Women in Tech',
+                      desc: 'Empowering women through technology education and career opportunities.',
+                      badge: 'SDG 5',
+                      gradient: 'from-sgc-purple to-sgc-purple-dark',
+                      members: '1.2K'
+                    },
+                    {
+                      title: 'Equal Pay Campaign',
+                      desc: 'Advocating for fair compensation and workplace equality.',
+                      badge: 'SDG 10',
+                      gradient: 'from-blue-500 to-blue-600',
+                      members: '850'
+                    },
+                    {
+                      title: 'Safe Spaces Network',
+                      desc: 'Creating inclusive spaces for marginalized communities.',
+                      badge: 'SDG 5 & 10',
+                      gradient: 'from-green-500 to-green-600',
+                      members: '2.5K'
+                    }
+                  ].map((initiative, index) => (
+                    <motion.div
+                      key={initiative.title}
+                      variants={fadeInUp}
+                      whileHover={{ scale: 1.02 }}
+                    >
+                      <Card className="overflow-hidden group">
+                        <div className={`h-48 bg-gradient-to-r ${initiative.gradient} relative`}>
+                          <motion.div 
+                            className="absolute inset-0 bg-black/20 group-hover:bg-black/30 transition-colors"
+                            whileHover={{ scale: 1.1 }}
+                          />
+                          <div className="absolute bottom-4 left-4 text-white">
+                            <Badge className="bg-white/20 text-white mb-2">{initiative.badge}</Badge>
+                            <h3 className="text-xl font-bold">{initiative.title}</h3>
+                          </div>
                         </div>
-                        <Button variant="ghost" size="sm" className="text-sgc-purple">
-                          Join Initiative
-                        </Button>
-                      </div>
-                    </CardContent>
-                  </Card>
-
-                  <Card className="overflow-hidden group">
-                    <div className="h-48 bg-gradient-to-r from-blue-500 to-blue-600 relative">
-                      <div className="absolute inset-0 bg-black/20 group-hover:bg-black/30 transition-colors" />
-                      <div className="absolute bottom-4 left-4 text-white">
-                        <Badge className="bg-white/20 text-white mb-2">SDG 10</Badge>
-                        <h3 className="text-xl font-bold">Equal Pay Campaign</h3>
-                      </div>
-                    </div>
-                    <CardContent className="p-6">
-                      <p className="text-sgc-neutral mb-4">Advocating for fair compensation and workplace equality.</p>
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-2">
-                          <Avatar className="h-8 w-8">
-                            <AvatarFallback>EP</AvatarFallback>
-                          </Avatar>
-                          <span className="text-sm">850 Members</span>
-                        </div>
-                        <Button variant="ghost" size="sm" className="text-blue-600">
-                          Join Campaign
-                        </Button>
-          </div>
-                    </CardContent>
-                  </Card>
-
-                  <Card className="overflow-hidden group">
-                    <div className="h-48 bg-gradient-to-r from-green-500 to-green-600 relative">
-                      <div className="absolute inset-0 bg-black/20 group-hover:bg-black/30 transition-colors" />
-                      <div className="absolute bottom-4 left-4 text-white">
-                        <Badge className="bg-white/20 text-white mb-2">SDG 5 & 10</Badge>
-                        <h3 className="text-xl font-bold">Safe Spaces Network</h3>
-                      </div>
-                    </div>
-                    <CardContent className="p-6">
-                      <p className="text-sgc-neutral mb-4">Creating inclusive spaces for marginalized communities.</p>
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-2">
-                          <Avatar className="h-8 w-8">
-                            <AvatarFallback>SS</AvatarFallback>
-                          </Avatar>
-                          <span className="text-sm">2.5K Members</span>
-              </div>
-                        <Button variant="ghost" size="sm" className="text-green-600">
-                          Join Network
-                        </Button>
-                  </div>
-                    </CardContent>
-                  </Card>
+                        <CardContent className="p-6">
+                          <p className="text-sgc-neutral mb-4">{initiative.desc}</p>
+                          <div className="flex items-center justify-between">
+                            <div className="flex items-center gap-2">
+                              <Avatar className="h-8 w-8">
+                                <AvatarFallback>{initiative.title.split(' ').map(w => w[0]).join('')}</AvatarFallback>
+                              </Avatar>
+                              <span className="text-sm">{initiative.members} Members</span>
+                            </div>
+                            <Button variant="ghost" size="sm" className="text-sgc-purple">
+                              Join Initiative
+                            </Button>
+                          </div>
+                        </CardContent>
+                      </Card>
+                    </motion.div>
+                  ))}
                 </div>
-              </div>
-              
+              </motion.div>
+
               {/* Recent Activity & Upcoming Events */}
-              <div className="grid md:grid-cols-2 gap-6">
-                <Card>
-                  <CardContent className="p-6">
-                    <h3 className="text-lg font-semibold mb-4">Equality Updates</h3>
-                    <div className="space-y-4">
-                      {[
-                        { title: "Gender Pay Gap Report", desc: "New insights on workplace equality", time: "2h ago" },
-                        { title: "Policy Change", desc: "New anti-discrimination laws passed", time: "5h ago" },
-                        { title: "Community Win", desc: "Local initiative success story", time: "1d ago" }
-                      ].map((item, i) => (
-                        <div key={i} className="flex items-start gap-4 p-3 rounded-lg hover:bg-sgc-neutral-light/50 transition-colors">
-                          <div className="h-10 w-10 rounded-full bg-sgc-purple-light flex items-center justify-center text-sgc-purple">
-                            <BarChart size={20} />
-                          </div>
-                          <div className="flex-1">
-                            <div className="flex justify-between items-start">
-                              <div>
-                                <h4 className="font-medium">{item.title}</h4>
-                                <p className="text-sm text-sgc-neutral">{item.desc}</p>
-              </div>
-                              <span className="text-xs text-sgc-neutral">{item.time}</span>
-                  </div>
-                </div>
-              </div>
-                      ))}
-                    </div>
-                  </CardContent>
-                </Card>
+              <motion.div 
+                initial="hidden"
+                animate={featuresInView ? "visible" : "hidden"}
+                variants={staggerContainer}
+                className="grid md:grid-cols-2 gap-6"
+              >
+                <motion.div variants={fadeInUp}>
+                  <Card>
+                    <CardContent className="p-6">
+                      <h3 className="text-lg font-semibold mb-4">Equality Updates</h3>
+                      <div className="space-y-4">
+                        {[
+                          { title: "Gender Pay Gap Report", desc: "New insights on workplace equality", time: "2h ago", icon: <BarChart /> },
+                          { title: "Policy Change", desc: "New anti-discrimination laws passed", time: "5h ago", icon: <FileText /> },
+                          { title: "Community Win", desc: "Local initiative success story", time: "1d ago", icon: <Award /> }
+                        ].map((item, i) => (
+                          <motion.div
+                            key={i}
+                            whileHover={{ x: 10 }}
+                            className="flex items-start gap-4 p-3 rounded-lg hover:bg-sgc-neutral-light/50 transition-colors"
+                          >
+                            <div className="h-10 w-10 rounded-full bg-sgc-purple-light flex items-center justify-center text-sgc-purple">
+                              {item.icon}
+                            </div>
+                            <div className="flex-1">
+                              <div className="flex justify-between items-start">
+                                <div>
+                                  <h4 className="font-medium">{item.title}</h4>
+                                  <p className="text-sm text-sgc-neutral">{item.desc}</p>
+                                </div>
+                                <span className="text-xs text-sgc-neutral">{item.time}</span>
+                              </div>
+                            </div>
+                          </motion.div>
+                        ))}
+                      </div>
+                    </CardContent>
+                  </Card>
+                </motion.div>
 
-                <Card>
-                  <CardContent className="p-6">
-                    <h3 className="text-lg font-semibold mb-4">Upcoming Events</h3>
-                    <div className="space-y-4">
-                      {[
-                        { title: "Women in Leadership", desc: "Panel discussion on breaking barriers", time: "Tomorrow" },
-                        { title: "Equality Workshop", desc: "Understanding intersectional feminism", time: "Next Week" },
-                        { title: "Community Meetup", desc: "Building inclusive spaces", time: "In 2 weeks" }
-                      ].map((item, i) => (
-                        <div key={i} className="flex items-start gap-4 p-3 rounded-lg hover:bg-sgc-neutral-light/50 transition-colors">
-                          <div className="h-10 w-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600">
-                            <Calendar size={20} />
-                          </div>
-                          <div className="flex-1">
-                            <div className="flex justify-between items-start">
-                              <div>
-                                <h4 className="font-medium">{item.title}</h4>
-                                <p className="text-sm text-sgc-neutral">{item.desc}</p>
-              </div>
-                              <Badge variant="secondary">{item.time}</Badge>
-                  </div>
-                </div>
-              </div>
-                      ))}
-                    </div>
-                  </CardContent>
-                </Card>
-              </div>
+                <motion.div variants={fadeInUp}>
+                  <Card>
+                    <CardContent className="p-6">
+                      <h3 className="text-lg font-semibold mb-4">Upcoming Events</h3>
+                      <div className="space-y-4">
+                        {[
+                          { title: "Women in Leadership", desc: "Panel discussion on breaking barriers", time: "Tomorrow", icon: <Users /> },
+                          { title: "Equality Workshop", desc: "Understanding intersectional feminism", time: "Next Week", icon: <GraduationCap /> },
+                          { title: "Community Meetup", desc: "Building inclusive spaces", time: "In 2 weeks", icon: <Handshake /> }
+                        ].map((event, i) => (
+                          <motion.div
+                            key={i}
+                            whileHover={{ x: 10 }}
+                            className="flex items-start gap-4 p-3 rounded-lg hover:bg-sgc-neutral-light/50 transition-colors"
+                          >
+                            <div className="h-10 w-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600">
+                              {event.icon}
+                            </div>
+                            <div className="flex-1">
+                              <div className="flex justify-between items-start">
+                                <div>
+                                  <h4 className="font-medium">{event.title}</h4>
+                                  <p className="text-sm text-sgc-neutral">{event.desc}</p>
+                                </div>
+                                <Badge variant="secondary">{event.time}</Badge>
+                              </div>
+                            </div>
+                          </motion.div>
+                        ))}
+                      </div>
+                    </CardContent>
+                  </Card>
+                </motion.div>
+              </motion.div>
             </TabsContent>
 
             <TabsContent value="equality" className="space-y-6">
@@ -401,8 +419,8 @@ const Index = () => {
                           <span className="text-sm text-sgc-neutral">82%</span>
                         </div>
                         <Progress value={82} className="h-2" />
-                  </div>
-                </div>
+                      </div>
+                    </div>
                   </CardContent>
                 </Card>
               </div>
@@ -458,12 +476,12 @@ const Index = () => {
                                   <Share2 size={16} />
                                   Share
                                 </Button>
-              </div>
-            </div>
-          </div>
-        </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
                       ))}
-          </div>
+                    </div>
                   </CardContent>
                 </Card>
 
@@ -497,11 +515,11 @@ const Index = () => {
                           <div className="flex items-center justify-between text-sm text-sgc-neutral">
                             <span>{event.date}</span>
                             <span>{event.attendees} attending</span>
-          </div>
+                          </div>
                           <Button variant="outline" size="sm" className="w-full mt-3">
                             Join Event
-            </Button>
-          </div>
+                          </Button>
+                        </div>
                       ))}
                     </div>
                   </CardContent>
@@ -552,8 +570,8 @@ const Index = () => {
                             </div>
                           </CardContent>
                         </Card>
-            </div>
-            </div>
+                      </div>
+                    </div>
                   </CardContent>
                 </Card>
 
@@ -573,12 +591,12 @@ const Index = () => {
                         <div key={i} className="flex items-center gap-4 p-3 rounded-lg bg-sgc-neutral-light/30">
                           <div className="h-10 w-10 rounded-full bg-white flex items-center justify-center">
                             {achievement.icon}
-            </div>
-            <div>
+                          </div>
+                          <div>
                             <h4 className="font-medium">{achievement.title}</h4>
                             <p className="text-sm text-sgc-neutral">{achievement.desc}</p>
-            </div>
-          </div>
+                          </div>
+                        </div>
                       ))}
                     </div>
                   </CardContent>
@@ -589,40 +607,15 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Chatbot Section */}
-      <section className="py-8">
-        <div className="sgc-container max-w-lg mx-auto bg-white rounded-lg shadow p-6">
-          <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
-            <img src="/mr-hootsworth.png" alt="Mr. Hootsworth" className="w-8 h-8" />
-            Chat with Mr. Hootsworth
-          </h2>
-          <div className="space-y-2 mb-4 h-48 overflow-y-auto bg-sgc-neutral-light rounded p-2">
-            {chatMessages.map((msg, i) => (
-              <div key={i} className={msg.sender === 'user' ? 'text-right' : 'text-left'}>
-                <span className={msg.sender === 'user' ? 'bg-blue-100 text-blue-800' : 'bg-purple-100 text-purple-800'} style={{ borderRadius: 8, padding: '4px 8px', display: 'inline-block', margin: 2 }}>
-                  {msg.text}
-                </span>
-              </div>
-            ))}
-            {isLoading && <div className="text-sgc-neutral">Mr. Hootsworth is typing...</div>}
-          </div>
-          <div className="flex gap-2">
-            <input
-              className="flex-1 border rounded p-2"
-              value={chatInput}
-              onChange={e => setChatInput(e.target.value)}
-              onKeyDown={e => e.key === 'Enter' && sendMessage()}
-              placeholder="Type your question..."
-            />
-            <Button onClick={sendMessage} disabled={isLoading || !chatInput.trim()}>Send</Button>
-          </div>
-        </div>
-      </section>
-
       {/* Emergency Button */}
-      <div className="fixed bottom-6 right-6 z-50">
+      <motion.div 
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 1 }}
+        className="fixed bottom-6 right-6 z-50"
+      >
         <EmergencyButton variant="floating" />
-      </div>
+      </motion.div>
     </div>
   );
 };

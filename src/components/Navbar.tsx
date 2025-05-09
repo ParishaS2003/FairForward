@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Menu, X, Home, MessageCircle, MapPin, FileText, BookOpen } from 'lucide-react';
+import { Menu, X, Home, MessageCircle, MapPin, FileText, BookOpen, Gavel } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import EmergencyButton from './EmergencyButton';
 
@@ -29,6 +29,7 @@ const Navbar = () => {
             <NavLink to="/map" icon={<MapPin size={18} />} text="Safe Spaces" />
             <NavLink to="/report" icon={<FileText size={18} />} text="Report" />
             <NavLink to="/learn" icon={<BookOpen size={18} />} text="Learn" />
+            <NavLink to="/legal-help" icon={<Gavel className="h-5 w-5" />} text="Legal Help" />
             
             <div className="pl-4 border-l border-border">
               <EmergencyButton variant="navbar" />
@@ -54,6 +55,7 @@ const Navbar = () => {
             <MobileNavLink to="/map" icon={<MapPin size={18} />} text="Safe Spaces" onClick={toggleMenu} />
             <MobileNavLink to="/report" icon={<FileText size={18} />} text="Report" onClick={toggleMenu} />
             <MobileNavLink to="/learn" icon={<BookOpen size={18} />} text="Learn" onClick={toggleMenu} />
+            <MobileNavLink to="/legal-help" icon={<Gavel className="h-5 w-5" />} text="Legal Help" onClick={toggleMenu} />
             
             <div className="pt-4 border-t border-border">
               <EmergencyButton variant="inline" />
