@@ -66,7 +66,7 @@ npm run dev
 yarn dev
 ```
 
-4. Open [http://localhost:3000](http://localhost:3000) in your browser.
+4. Open in your browser.
 
 ## 🛠️ Tech Stack
 
@@ -87,32 +87,7 @@ yarn dev
 - `/login` - User Authentication
 - `/signup` - New User Registration
 
-## 🤝 Contributing
 
-We welcome contributions! Please follow these steps:
 
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 🙏 Acknowledgments
-
-- All contributors who have helped shape FairForward
-- The open-source community for their invaluable tools and resources
-- Our users for their continuous feedback and support
-
-## 📞 Contact
-
-For any queries or support, please reach out to us at [support@fairforward.org](mailto:support@fairforward.org)
-
----
-
-Made with ❤️ by the FairForward Team
 
 
