@@ -698,831 +698,834 @@ const Account = () => {
   }
 
   return (
-    <div className="container max-w-6xl py-6 space-y-6">
-      <BackButton />
-      
-      <div className="flex items-center justify-between relative">
-        <h1 className="text-3xl font-bold">{translate('account.settings')}</h1>
-        <div className="flex items-center gap-4">
-          <motion.div
-            className="cursor-pointer"
-            variants={hootsworthVariants}
-            initial="initial"
-            animate="animate"
-            whileHover="hover"
-            whileTap="tap"
-            onClick={handleHootsworthClick}
-          >
-            <img 
-              src="/mr-hootsworth.png" 
-              alt="Mr. Hootsworth" 
-              className="h-16 w-16 md:h-20 md:w-20"
-            />
+    <div className="min-h-screen bg-gradient-to-b from-sgc-purple-light/10 to-white">
+      <div className="container max-w-6xl py-6 space-y-6">
+        <BackButton />
+        
+        <div className="flex items-center justify-between relative">
+          <h1 className="text-3xl font-bold text-sgc-purple">{translate('account.settings')}</h1>
+          <div className="flex items-center gap-4">
             <motion.div
-              className="absolute -top-2 -right-2"
-              animate={{ 
-                rotate: [0, 15, -15, 0],
-                scale: [1, 1.2, 1.2, 1]
-              }}
-              transition={{ 
-                duration: 2,
-                repeat: Infinity,
-                repeatType: "reverse"
-              }}
-            >
-              <Sparkles className="h-5 w-5 text-yellow-400" />
-            </motion.div>
-          </motion.div>
-          <Button variant="outline" onClick={handleSignOut}>
-            <LogOut className="w-4 h-4 mr-2" />
-            {translate('account.logout')}
-          </Button>
-        </div>
-        <AnimatePresence>
-          {hootsworthMessage && (
-            <motion.div
-              className="absolute right-0 top-24 bg-white p-4 rounded-lg shadow-lg max-w-xs z-50"
-              variants={messageVariants}
+              className="cursor-pointer"
+              variants={hootsworthVariants}
               initial="initial"
               animate="animate"
-              exit="exit"
+              whileHover="hover"
+              whileTap="tap"
+              onClick={handleHootsworthClick}
             >
-              <p className="text-sm text-sgc-neutral-dark">{hootsworthMessage}</p>
+              <img 
+                src="/mr-hootsworth.png" 
+                alt="Mr. Hootsworth" 
+                className="h-16 w-16 md:h-20 md:w-20"
+              />
+              <motion.div
+                className="absolute -top-2 -right-2"
+                animate={{ 
+                  rotate: [0, 15, -15, 0],
+                  scale: [1, 1.2, 1.2, 1]
+                }}
+                transition={{ 
+                  duration: 2,
+                  repeat: Infinity,
+                  repeatType: "reverse"
+                }}
+              >
+                <Sparkles className="h-5 w-5 text-yellow-400" />
+              </motion.div>
             </motion.div>
-          )}
-        </AnimatePresence>
-      </div>
+            <Button variant="outline" onClick={handleSignOut} className="border-sgc-purple/20 hover:bg-sgc-purple/10">
+              <LogOut className="w-4 h-4 mr-2 text-sgc-purple" />
+              {translate('account.logout')}
+            </Button>
+          </div>
+          <AnimatePresence>
+            {hootsworthMessage && (
+              <motion.div
+                className="absolute right-0 top-24 bg-white p-4 rounded-lg shadow-lg max-w-xs z-50"
+                variants={messageVariants}
+                initial="initial"
+                animate="animate"
+                exit="exit"
+              >
+                <p className="text-sm text-sgc-neutral-dark">{hootsworthMessage}</p>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
 
-      <Tabs defaultValue="profile" className="space-y-6">
-        <TabsList className="bg-white border">
-          <TabsTrigger value="profile" className="data-[state=active]:bg-gray-100">
-            <User className="w-4 h-4 mr-2" />
-            {translate('nav.profile')}
-          </TabsTrigger>
-          <TabsTrigger value="safety" className="data-[state=active]:bg-gray-100">
-            <Shield className="w-4 h-4 mr-2" />
-            Safety
-          </TabsTrigger>
-          <TabsTrigger value="resources" className="data-[state=active]:bg-gray-100">
-            <BookmarkCheck className="w-4 h-4 mr-2" />
-            Resources
-          </TabsTrigger>
-          <TabsTrigger value="activity" className="data-[state=active]:bg-gray-100">
-            <Clock className="w-4 h-4 mr-2" />
-            Activity
-          </TabsTrigger>
-        </TabsList>
+        <Tabs defaultValue="profile" className="space-y-6">
+          <TabsList className="bg-white border border-sgc-purple/20">
+            <TabsTrigger value="profile" className="data-[state=active]:bg-sgc-purple/10 data-[state=active]:text-sgc-purple">
+              <User className="w-4 h-4 mr-2" />
+              {translate('nav.profile')}
+            </TabsTrigger>
+            <TabsTrigger value="safety" className="data-[state=active]:bg-sgc-purple/10 data-[state=active]:text-sgc-purple">
+              <Shield className="w-4 h-4 mr-2" />
+              Safety
+            </TabsTrigger>
+            <TabsTrigger value="resources" className="data-[state=active]:bg-sgc-purple/10 data-[state=active]:text-sgc-purple">
+              <BookmarkCheck className="w-4 h-4 mr-2" />
+              Resources
+            </TabsTrigger>
+            <TabsTrigger value="activity" className="data-[state=active]:bg-sgc-purple/10 data-[state=active]:text-sgc-purple">
+              <Clock className="w-4 h-4 mr-2" />
+              Activity
+            </TabsTrigger>
+          </TabsList>
 
-        <TabsContent value="profile">
-          <div className="space-y-6">
-            <Card>
-              <CardHeader className="flex flex-row items-center justify-between">
-                <div>
-                  <CardTitle>{translate('account.personal_info')}</CardTitle>
-                  <CardDescription>{translate('account.personal_info_desc')}</CardDescription>
-                </div>
-                <Button 
-                  variant="outline" 
-                  onClick={() => isEditing ? handleSaveProfile() : setIsEditing(true)}
-                >
-                  {isEditing ? (
-                    <>
-                      <Save className="w-4 h-4 mr-2" />
-                      {translate('button.save')}
-                    </>
-                  ) : (
-                    <>
-                      <Edit2 className="w-4 h-4 mr-2" />
-                      {translate('button.edit')}
-                    </>
-                  )}
-                </Button>
-              </CardHeader>
-              <CardContent className="space-y-6">
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div className="space-y-2">
-                    <Label htmlFor="name">{translate('account.full_name')}</Label>
-                    <Input 
-                      id="name" 
-                      placeholder={translate('form.placeholder.name')}
-                      value={user?.name || ''} 
-                      disabled={!isEditing}
-                      onChange={(e) => setUser(prev => ({ ...prev!, name: e.target.value }))}
-                    />
+          <TabsContent value="profile">
+            <div className="space-y-6">
+              <Card className="border-sgc-purple/20 hover:border-sgc-purple/40 transition-colors">
+                <CardHeader className="flex flex-row items-center justify-between bg-gradient-to-r from-sgc-purple/5 to-transparent">
+                  <div>
+                    <CardTitle className="text-sgc-purple">{translate('account.personal_info')}</CardTitle>
+                    <CardDescription>{translate('account.personal_info_desc')}</CardDescription>
                   </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="email">{translate('account.email_address')}</Label>
-                    <Input 
-                      id="email" 
-                      type="email" 
-                      placeholder={translate('form.placeholder.email')}
-                      value={user?.email || ''} 
-                      disabled={!isEditing}
-                      onChange={(e) => setUser(prev => ({ ...prev!, email: e.target.value }))}
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="phone">{translate('account.phone_number')}</Label>
-                    <Input 
-                      id="phone" 
-                      type="tel" 
-                      placeholder={translate('form.placeholder.phone')}
-                      value={user?.phone || ''} 
-                      disabled={!isEditing}
-                      onChange={(e) => setUser(prev => ({ ...prev!, phone: e.target.value }))}
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="language">{translate('account.language')}</Label>
-                    <LanguageSelector className="w-full" />
-                  </div>
-                </div>
-
-                <div className="border-t pt-6">
-                  <h3 className="text-lg font-medium mb-4">{translate('account.address')}</h3>
+                  <Button 
+                    variant="outline" 
+                    onClick={() => isEditing ? handleSaveProfile() : setIsEditing(true)}
+                    className="border-sgc-purple/20 hover:bg-sgc-purple/10"
+                  >
+                    {isEditing ? (
+                      <>
+                        <Save className="w-4 h-4 mr-2 text-sgc-purple" />
+                        {translate('button.save')}
+                      </>
+                    ) : (
+                      <>
+                        <Edit2 className="w-4 h-4 mr-2 text-sgc-purple" />
+                        {translate('button.edit')}
+                      </>
+                    )}
+                  </Button>
+                </CardHeader>
+                <CardContent className="space-y-6">
                   <div className="grid md:grid-cols-2 gap-6">
                     <div className="space-y-2">
-                      <Label htmlFor="street">{translate('account.street')}</Label>
+                      <Label htmlFor="name">{translate('account.full_name')}</Label>
                       <Input 
-                        id="street" 
-                        value={user?.address?.street || ''} 
+                        id="name" 
+                        placeholder={translate('form.placeholder.name')}
+                        value={user?.name || ''} 
                         disabled={!isEditing}
-                        onChange={(e) => setUser(prev => ({
-                          ...prev!,
-                          address: { ...prev!.address, street: e.target.value }
-                        }))}
+                        onChange={(e) => setUser(prev => ({ ...prev!, name: e.target.value }))}
                       />
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="city">{translate('account.city')}</Label>
+                      <Label htmlFor="email">{translate('account.email_address')}</Label>
                       <Input 
-                        id="city" 
-                        value={user?.address?.city || ''} 
+                        id="email" 
+                        type="email" 
+                        placeholder={translate('form.placeholder.email')}
+                        value={user?.email || ''} 
                         disabled={!isEditing}
-                        onChange={(e) => setUser(prev => ({
-                          ...prev!,
-                          address: { ...prev!.address, city: e.target.value }
-                        }))}
+                        onChange={(e) => setUser(prev => ({ ...prev!, email: e.target.value }))}
                       />
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="state">{translate('account.state')}</Label>
+                      <Label htmlFor="phone">{translate('account.phone_number')}</Label>
                       <Input 
-                        id="state" 
-                        value={user?.address?.state || ''} 
+                        id="phone" 
+                        type="tel" 
+                        placeholder={translate('form.placeholder.phone')}
+                        value={user?.phone || ''} 
                         disabled={!isEditing}
-                        onChange={(e) => setUser(prev => ({
-                          ...prev!,
-                          address: { ...prev!.address, state: e.target.value }
-                        }))}
+                        onChange={(e) => setUser(prev => ({ ...prev!, phone: e.target.value }))}
                       />
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="zipCode">{translate('account.zip')}</Label>
-                      <Input 
-                        id="zipCode" 
-                        value={user?.address?.zipCode || ''} 
-                        disabled={!isEditing}
-                        onChange={(e) => setUser(prev => ({
-                          ...prev!,
-                          address: { ...prev!.address, zipCode: e.target.value }
-                        }))}
-                      />
-                    </div>
-                  </div>
-                </div>
-
-                <Card>
-                  <CardHeader>
-                    <CardTitle>{translate('account.language')}</CardTitle>
-                    <CardDescription>Choose your preferred language for the interface</CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="space-y-4">
-                      <div className="flex items-center justify-between">
-                        <div>
-                          <Label>Interface Language</Label>
-                          <p className="text-sm text-gray-500">Select the language you want to use</p>
-                        </div>
-                        <LanguageSelector className="w-[200px]" />
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader>
-                <CardTitle>Accessibility & Privacy</CardTitle>
-                <CardDescription>Customize your experience and privacy settings</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-6">
-                  <div>
-                    <h4 className="text-sm font-medium mb-4">Accessibility Options</h4>
-                    <div className="space-y-4">
-                      <div className="flex items-center justify-between">
-                        <div>
-                          <Label htmlFor="highContrast">High Contrast Mode</Label>
-                          <p className="text-sm text-gray-500">Enhance visual contrast for better readability</p>
-                        </div>
-                        <Switch 
-                          id="highContrast"
-                          checked={preferences.accessibility.highContrast}
-                          onCheckedChange={(checked) => handleAccessibilityChange('highContrast', checked)}
-                          aria-label="Toggle high contrast mode"
-                        />
-                      </div>
-                      <div className="flex items-center justify-between">
-                        <div>
-                          <Label htmlFor="largeText">Large Text</Label>
-                          <p className="text-sm text-gray-500">Increase text size for better visibility</p>
-                        </div>
-                        <Switch 
-                          id="largeText"
-                          checked={preferences.accessibility.largeText}
-                          onCheckedChange={(checked) => handleAccessibilityChange('largeText', checked)}
-                          aria-label="Toggle large text mode"
-                        />
-                      </div>
-                      <div className="flex items-center justify-between">
-                        <div>
-                          <Label htmlFor="screenReader">Screen Reader Support</Label>
-                          <p className="text-sm text-gray-500">Enable enhanced screen reader compatibility</p>
-                        </div>
-                        <Switch 
-                          id="screenReader"
-                          checked={preferences.accessibility.screenReader}
-                          onCheckedChange={(checked) => handleAccessibilityChange('screenReader', checked)}
-                          aria-label="Toggle screen reader support"
-                        />
-                      </div>
+                      <Label htmlFor="language">{translate('account.language')}</Label>
+                      <LanguageSelector className="w-full" />
                     </div>
                   </div>
 
                   <div className="border-t pt-6">
-                    <h4 className="text-sm font-medium mb-4">Privacy Settings</h4>
-                    <div className="space-y-4">
-                      <div className="flex items-center justify-between">
-                        <div>
-                          <Label htmlFor="profileVisibility">Profile Visibility</Label>
-                          <p className="text-sm text-gray-500">Control who can see your profile information</p>
-                        </div>
-                        <select
-                          id="profileVisibility"
-                          className="form-select rounded-md border-gray-300"
-                          value={preferences.privacy.profileVisibility}
-                          onChange={(e) => handlePrivacyChange('profileVisibility', e.target.value as 'public' | 'private' | 'contacts')}
-                          aria-label="Select profile visibility"
-                        >
-                          <option value="private">Private</option>
-                          <option value="contacts">Contacts Only</option>
-                          <option value="public">Public</option>
-                        </select>
+                    <h3 className="text-lg font-medium mb-4">{translate('account.address')}</h3>
+                    <div className="grid md:grid-cols-2 gap-6">
+                      <div className="space-y-2">
+                        <Label htmlFor="street">{translate('account.street')}</Label>
+                        <Input 
+                          id="street" 
+                          value={user?.address?.street || ''} 
+                          disabled={!isEditing}
+                          onChange={(e) => setUser(prev => ({
+                            ...prev!,
+                            address: { ...prev!.address, street: e.target.value }
+                          }))}
+                        />
                       </div>
-
-                      <div className="flex items-center justify-between">
-                        <div>
-                          <Label htmlFor="locationSharing">Location Sharing</Label>
-                          <p className="text-sm text-gray-500">Allow trusted contacts to see your location during emergencies</p>
-                          {locationSharing.lastLocation && (
-                            <div className="mt-2 text-sm text-gray-500">
-                              <p>Last updated: {new Date(locationSharing.lastLocation.timestamp).toLocaleString()}</p>
-                              <p>Accuracy: {Math.round(locationSharing.lastLocation.accuracy)}m</p>
-                            </div>
-                          )}
-                        </div>
-                        <div className="flex items-center gap-4">
-                          <select
-                            className="form-select text-sm"
-                            value={locationSharing.updateInterval}
-                            onChange={(e) => setLocationSharing(prev => ({
-                              ...prev,
-                              updateInterval: parseInt(e.target.value)
-                            }))}
-                          >
-                            <option value="5">Update every 5 min</option>
-                            <option value="15">Update every 15 min</option>
-                            <option value="30">Update every 30 min</option>
-                            <option value="60">Update every hour</option>
-                          </select>
-                          <Switch 
-                            id="locationSharing"
-                            checked={locationSharing.isEnabled}
-                            onCheckedChange={handleLocationSharing}
-                            aria-label="Toggle location sharing"
-                          />
-                        </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="city">{translate('account.city')}</Label>
+                        <Input 
+                          id="city" 
+                          value={user?.address?.city || ''} 
+                          disabled={!isEditing}
+                          onChange={(e) => setUser(prev => ({
+                            ...prev!,
+                            address: { ...prev!.address, city: e.target.value }
+                          }))}
+                        />
                       </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="state">{translate('account.state')}</Label>
+                        <Input 
+                          id="state" 
+                          value={user?.address?.state || ''} 
+                          disabled={!isEditing}
+                          onChange={(e) => setUser(prev => ({
+                            ...prev!,
+                            address: { ...prev!.address, state: e.target.value }
+                          }))}
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="zipCode">{translate('account.zip')}</Label>
+                        <Input 
+                          id="zipCode" 
+                          value={user?.address?.zipCode || ''} 
+                          disabled={!isEditing}
+                          onChange={(e) => setUser(prev => ({
+                            ...prev!,
+                            address: { ...prev!.address, zipCode: e.target.value }
+                          }))}
+                        />
+                      </div>
+                    </div>
+                  </div>
 
+                  <Card>
+                    <CardHeader>
+                      <CardTitle>{translate('account.language')}</CardTitle>
+                      <CardDescription>Choose your preferred language for the interface</CardDescription>
+                    </CardHeader>
+                    <CardContent>
                       <div className="space-y-4">
                         <div className="flex items-center justify-between">
                           <div>
-                            <Label htmlFor="activityHistory">Activity History</Label>
-                            <p className="text-sm text-gray-500">Control how your activity is tracked and shared</p>
+                            <Label>Interface Language</Label>
+                            <p className="text-sm text-gray-500">Select the language you want to use</p>
+                          </div>
+                          <LanguageSelector className="w-[200px]" />
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </CardContent>
+              </Card>
+
+              <Card className="border-sgc-purple/20 hover:border-sgc-purple/40 transition-colors">
+                <CardHeader className="bg-gradient-to-r from-sgc-purple/5 to-transparent">
+                  <CardTitle className="text-sgc-purple">Accessibility & Privacy</CardTitle>
+                  <CardDescription>Customize your experience and privacy settings</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-6">
+                    <div>
+                      <h4 className="text-sm font-medium mb-4">Accessibility Options</h4>
+                      <div className="space-y-4">
+                        <div className="flex items-center justify-between">
+                          <div>
+                            <Label htmlFor="highContrast">High Contrast Mode</Label>
+                            <p className="text-sm text-gray-500">Enhance visual contrast for better readability</p>
                           </div>
                           <Switch 
-                            id="activityHistory"
-                            checked={activityHistory.isEnabled}
-                            onCheckedChange={handleActivityHistoryChange}
-                            aria-label="Toggle activity history"
+                            id="highContrast"
+                            checked={preferences.accessibility.highContrast}
+                            onCheckedChange={(checked) => handleAccessibilityChange('highContrast', checked)}
+                            aria-label="Toggle high contrast mode"
                           />
                         </div>
-
-                        {activityHistory.isEnabled && (
-                          <div className="mt-4 space-y-4 pl-4 border-l-2 border-gray-200">
-                            <div className="flex items-center justify-between">
-                              <Label htmlFor="activityVisibility">Visibility</Label>
-                              <select
-                                id="activityVisibility"
-                                className="form-select text-sm rounded-md border-gray-300"
-                                value={activityHistory.visibleTo}
-                                onChange={(e) => setActivityHistory(prev => ({
-                                  ...prev,
-                                  visibleTo: e.target.value as ActivityHistoryState['visibleTo']
-                                }))}
-                              >
-                                <option value="none">Only Me</option>
-                                <option value="trusted">Trusted Contacts</option>
-                                <option value="all">All Contacts</option>
-                              </select>
-                            </div>
-
-                            <div className="flex items-center justify-between">
-                              <Label htmlFor="retentionPeriod">Data Retention</Label>
-                              <select
-                                id="retentionPeriod"
-                                className="form-select text-sm rounded-md border-gray-300"
-                                value={activityHistory.retentionPeriod}
-                                onChange={(e) => setActivityHistory(prev => ({
-                                  ...prev,
-                                  retentionPeriod: parseInt(e.target.value)
-                                }))}
-                              >
-                                <option value="7">7 days</option>
-                                <option value="30">30 days</option>
-                                <option value="90">90 days</option>
-                                <option value="180">180 days</option>
-                              </select>
-                            </div>
-
-                            <div className="space-y-2">
-                              <Label>Track Activity Categories</Label>
-                              <div className="grid grid-cols-2 gap-2">
-                                {Object.entries(activityHistory.categories).map(([category, isEnabled]) => (
-                                  <div key={category} className="flex items-center space-x-2">
-                                    <Switch 
-                                      id={`category-${category}`}
-                                      checked={isEnabled}
-                                      onCheckedChange={() => handleActivityCategoryToggle(category as keyof ActivityHistoryState['categories'])}
-                                      aria-label={`Toggle ${category} tracking`}
-                                    />
-                                    <Label htmlFor={`category-${category}`} className="capitalize">
-                                      {category}
-                                    </Label>
-                                  </div>
-                                ))}
-                              </div>
-                            </div>
-
-                            <div className="mt-4 p-4 bg-gray-50 rounded-lg">
-                              <h5 className="text-sm font-medium mb-2">Activity Tracking Notice</h5>
-                              <p className="text-sm text-gray-600">
-                                Your activity is being recorded and will be retained for {activityHistory.retentionPeriod} days. 
-                                This data is visible to {activityHistory.visibleTo === 'none' ? 'only you' : 
-                                  activityHistory.visibleTo === 'trusted' ? 'your trusted contacts' : 'all your contacts'}.
-                              </p>
-                            </div>
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-        </TabsContent>
-
-        {/* Safety Tab */}
-        <TabsContent value="safety">
-          <div className="space-y-6">
-            <Card>
-              <CardHeader>
-                <CardTitle>Emergency Contacts</CardTitle>
-                <CardDescription>Manage your trusted emergency contacts</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-6">
-                  {safetySettings.emergencyContacts.map((contact, index) => (
-                    <div key={contact.id} className="p-4 border rounded-lg space-y-4">
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center space-x-4">
-                          <div className="h-10 w-10 rounded-full bg-purple-100 flex items-center justify-center">
-                            <User className="h-5 w-5 text-purple-600" />
-                          </div>
+                        <div className="flex items-center justify-between">
                           <div>
-                            <h4 className="font-medium">{contact.name}</h4>
-                            <p className="text-sm text-gray-500">{contact.relationship}</p>
+                            <Label htmlFor="largeText">Large Text</Label>
+                            <p className="text-sm text-gray-500">Increase text size for better visibility</p>
                           </div>
+                          <Switch 
+                            id="largeText"
+                            checked={preferences.accessibility.largeText}
+                            onCheckedChange={(checked) => handleAccessibilityChange('largeText', checked)}
+                            aria-label="Toggle large text mode"
+                          />
                         </div>
-                        <div className="flex items-center space-x-2">
-                          {contact.isVerified && (
-                            <Badge variant="secondary" className="flex items-center">
-                              <CheckCircle className="w-3 h-3 mr-1" />
-                              Verified
-                            </Badge>
-                          )}
-                          <Button variant="ghost" size="sm" onClick={() => handleEditContact(contact.id)}>
-                            <Edit2 className="w-4 h-4" />
-                          </Button>
-                        </div>
-                      </div>
-
-                      <div className="grid md:grid-cols-2 gap-4">
-                        <div>
-                          <Label>Phone Number</Label>
-                          <div className="flex items-center space-x-2">
-                            <Phone className="w-4 h-4 text-gray-500" />
-                            <span>{contact.phone}</span>
-                          </div>
-                        </div>
-                        {contact.email && (
+                        <div className="flex items-center justify-between">
                           <div>
-                            <Label>Email</Label>
-                            <div className="flex items-center space-x-2">
-                              <Mail className="w-4 h-4 text-gray-500" />
-                              <span>{contact.email}</span>
-                            </div>
+                            <Label htmlFor="screenReader">Screen Reader Support</Label>
+                            <p className="text-sm text-gray-500">Enable enhanced screen reader compatibility</p>
                           </div>
-                        )}
-                      </div>
-
-                      <div className="border-t pt-4">
-                        <Label className="mb-2 block">Notification Preferences</Label>
-                        <div className="flex space-x-4">
-                          <div className="flex items-center space-x-2">
-                            <Switch 
-                              id={`sms-${contact.id}`}
-                              checked={contact.notificationPreferences.sms}
-                              onCheckedChange={(checked) => handleUpdateContactPreferences(contact.id, 'sms', checked)}
-                            />
-                            <Label htmlFor={`sms-${contact.id}`}>SMS</Label>
-                          </div>
-                          <div className="flex items-center space-x-2">
-                            <Switch 
-                              id={`email-${contact.id}`}
-                              checked={contact.notificationPreferences.email}
-                              onCheckedChange={(checked) => handleUpdateContactPreferences(contact.id, 'email', checked)}
-                            />
-                            <Label htmlFor={`email-${contact.id}`}>Email</Label>
-                          </div>
-                          <div className="flex items-center space-x-2">
-                            <Switch 
-                              id={`app-${contact.id}`}
-                              checked={contact.notificationPreferences.app}
-                              onCheckedChange={(checked) => handleUpdateContactPreferences(contact.id, 'app', checked)}
-                            />
-                            <Label htmlFor={`app-${contact.id}`}>App</Label>
-                          </div>
+                          <Switch 
+                            id="screenReader"
+                            checked={preferences.accessibility.screenReader}
+                            onCheckedChange={(checked) => handleAccessibilityChange('screenReader', checked)}
+                            aria-label="Toggle screen reader support"
+                          />
                         </div>
                       </div>
                     </div>
-                  ))}
 
-                  <Button 
-                    variant="outline" 
-                    className="w-full" 
-                    onClick={handleAddContact}
-                  >
-                    <Plus className="w-4 h-4 mr-2" />
-                    Add Emergency Contact
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader>
-                <CardTitle>Safety Check-ins</CardTitle>
-                <CardDescription>Set up regular safety check-ins and notifications</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-6">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <Label>Enable Safety Check-ins</Label>
-                      <p className="text-sm text-gray-500">Receive regular reminders to confirm your safety</p>
-                    </div>
-                    <Switch 
-                      checked={safetySettings.safetyChecks.enabled}
-                      onCheckedChange={(checked) => 
-                        setSafetySettings(prev => ({
-                          ...prev,
-                          safetyChecks: { ...prev.safetyChecks, enabled: checked }
-                        }))
-                      }
-                    />
-                  </div>
-
-                  {safetySettings.safetyChecks.enabled && (
-                    <div className="space-y-4">
-                      <div>
-                        <Label>Check-in Frequency</Label>
-                        <select
-                          className="form-select mt-1 block w-full"
-                          value={safetySettings.safetyChecks.frequency}
-                          onChange={(e) => 
-                            setSafetySettings(prev => ({
-                              ...prev,
-                              safetyChecks: { 
-                                ...prev.safetyChecks, 
-                                frequency: e.target.value as 'daily' | 'weekly' | 'monthly' 
-                              }
-                            }))
-                          }
-                        >
-                          <option value="daily">Daily</option>
-                          <option value="weekly">Weekly</option>
-                          <option value="monthly">Monthly</option>
-                        </select>
-                      </div>
-                      <div>
-                        <Label>Last Check-in</Label>
-                        <p className="text-sm text-gray-500">
-                          {new Date(safetySettings.safetyChecks.lastCheck).toLocaleDateString()}
-                        </p>
-                      </div>
-                    </div>
-                  )}
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader>
-                <CardTitle>Trusted Locations</CardTitle>
-                <CardDescription>Manage your safe locations and zones</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                  {safetySettings.trustedLocations.map((location, index) => (
-                    <div key={index} className="flex items-center justify-between p-4 border rounded-lg">
-                      <div>
-                        <h4 className="font-medium">{location.name}</h4>
-                        <p className="text-sm text-gray-500">{location.address}</p>
-                      </div>
-                      <Button variant="ghost" size="sm">
-                        <MapPin className="w-4 h-4" />
-                      </Button>
-                    </div>
-                  ))}
-                  <Button variant="outline" className="w-full">
-                    <Plus className="w-4 h-4 mr-2" />
-                    Add Trusted Location
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader>
-                <CardTitle>Emergency Button Settings</CardTitle>
-                <CardDescription>Configure your emergency button preferences</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-6">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <Label>Enable Emergency Button</Label>
-                      <p className="text-sm text-gray-500">Quick access to emergency help</p>
-                    </div>
-                    <Switch 
-                      checked={safetySettings.panicButton.enabled}
-                      onCheckedChange={(checked) => 
-                        setSafetySettings(prev => ({
-                          ...prev,
-                          panicButton: { ...prev.panicButton, enabled: checked }
-                        }))
-                      }
-                    />
-                  </div>
-
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <Label>Auto-notify Contacts</Label>
-                      <p className="text-sm text-gray-500">Automatically notify emergency contacts</p>
-                    </div>
-                    <Switch 
-                      checked={safetySettings.panicButton.autoNotify}
-                      onCheckedChange={(checked) => 
-                        setSafetySettings(prev => ({
-                          ...prev,
-                          panicButton: { ...prev.panicButton, autoNotify: checked }
-                        }))
-                      }
-                    />
-                  </div>
-
-                  <div>
-                    <Label>Custom Emergency Message</Label>
-                    <Textarea 
-                      value={safetySettings.panicButton.customMessage}
-                      onChange={(e) => 
-                        setSafetySettings(prev => ({
-                          ...prev,
-                          panicButton: { ...prev.panicButton, customMessage: e.target.value }
-                        }))
-                      }
-                      className="mt-2"
-                      placeholder="Enter your custom emergency message"
-                    />
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-        </TabsContent>
-
-        {/* Resources Tab */}
-        <TabsContent value="resources">
-          <div className="space-y-6">
-            <Card>
-              <CardHeader>
-                <CardTitle>Saved Resources</CardTitle>
-                <CardDescription>Access your bookmarked resources and information</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-6">
-                  <div className="flex items-center space-x-4">
-                    <Input 
-                      placeholder="Search resources..." 
-                      className="flex-1"
-                    />
-                    <select className="form-select">
-                      <option value="all">All Types</option>
-                      <option value="legal">Legal</option>
-                      <option value="safety">Safety</option>
-                      <option value="education">Education</option>
-                      <option value="health">Health</option>
-                      <option value="community">Community</option>
-                    </select>
-                  </div>
-
-                  <div className="space-y-4">
-                    {resources.map((resource) => (
-                      <div 
-                        key={resource.id}
-                        className="p-4 border rounded-lg hover:bg-gray-50 transition-colors"
-                      >
-                        <div className="flex items-start justify-between">
+                    <div className="border-t pt-6">
+                      <h4 className="text-sm font-medium mb-4">Privacy Settings</h4>
+                      <div className="space-y-4">
+                        <div className="flex items-center justify-between">
                           <div>
-                            <h4 className="font-medium">{resource.title}</h4>
-                            <p className="text-sm text-gray-500 mt-1">{resource.description}</p>
-                            <div className="flex items-center space-x-2 mt-2">
-                              <Badge>{resource.type}</Badge>
-                              {resource.tags.map((tag) => (
-                                <Badge key={tag} variant="outline">{tag}</Badge>
-                              ))}
-                            </div>
+                            <Label htmlFor="profileVisibility">Profile Visibility</Label>
+                            <p className="text-sm text-gray-500">Control who can see your profile information</p>
                           </div>
-                          <Button 
-                            variant="ghost" 
-                            size="sm"
-                            onClick={() => {
-                              setResources(prev => 
-                                prev.map(r => 
-                                  r.id === resource.id 
-                                    ? { ...r, isBookmarked: !r.isBookmarked }
-                                    : r
-                                )
-                              );
-                            }}
+                          <select
+                            id="profileVisibility"
+                            className="form-select rounded-md border-gray-300"
+                            value={preferences.privacy.profileVisibility}
+                            onChange={(e) => handlePrivacyChange('profileVisibility', e.target.value as 'public' | 'private' | 'contacts')}
+                            aria-label="Select profile visibility"
                           >
-                            <BookmarkCheck 
-                              className={`w-4 h-4 ${
-                                resource.isBookmarked ? 'text-purple-600' : 'text-gray-400'
-                              }`} 
-                            />
-                          </Button>
+                            <option value="private">Private</option>
+                            <option value="contacts">Contacts Only</option>
+                            <option value="public">Public</option>
+                          </select>
                         </div>
-                        <div className="flex items-center justify-between mt-4 text-sm text-gray-500">
-                          <span>Added {new Date(resource.dateAdded).toLocaleDateString()}</span>
-                          {resource.url && (
-                            <a 
-                              href={resource.url} 
-                              target="_blank" 
-                              rel="noopener noreferrer"
-                              className="text-purple-600 hover:underline flex items-center"
-                            >
-                              View Resource
-                              <ArrowRight className="w-4 h-4 ml-1" />
-                            </a>
-                          )}
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-        </TabsContent>
 
-        {/* Activity Tab */}
-        <TabsContent value="activity">
-          <div className="space-y-6">
-            <Card>
-              <CardHeader>
-                <CardTitle>Recent Activity</CardTitle>
-                <CardDescription>Track your account activity and security events</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-6">
-                  <div className="flex items-center space-x-4">
-                    <Input 
-                      placeholder="Search activity..." 
-                      className="flex-1"
-                    />
-                    <select className="form-select">
-                      <option value="all">All Activities</option>
-                      <option value="login">Logins</option>
-                      <option value="emergency">Emergency Events</option>
-                      <option value="safety_check">Safety Checks</option>
-                      <option value="profile_update">Profile Updates</option>
-                    </select>
-                  </div>
-
-                  <div className="space-y-4">
-                    {activities.map((activity) => (
-                      <div 
-                        key={activity.id}
-                        className="p-4 border rounded-lg hover:bg-gray-50 transition-colors"
-                      >
-                        <div className="flex items-start space-x-4">
-                          <div className={`
-                            h-8 w-8 rounded-full flex items-center justify-center
-                            ${activity.severity === 'high' ? 'bg-red-100' : 
-                              activity.severity === 'medium' ? 'bg-yellow-100' : 
-                              'bg-green-100'}
-                          `}>
-                            {activity.type === 'login' && <LogIn className="w-4 h-4 text-gray-600" />}
-                            {activity.type === 'emergency' && <AlertTriangle className="w-4 h-4 text-red-600" />}
-                            {activity.type === 'safety_check' && <Shield className="w-4 h-4 text-green-600" />}
-                            {activity.type === 'profile_update' && <User className="w-4 h-4 text-blue-600" />}
-                          </div>
-                          <div className="flex-1">
-                            <div className="flex items-start justify-between">
-                              <div>
-                                <h4 className="font-medium">{activity.description}</h4>
-                                <p className="text-sm text-gray-500">
-                                  {new Date(activity.timestamp).toLocaleString()}
-                                </p>
-                              </div>
-                              <Badge 
-                                variant={
-                                  activity.severity === 'high' ? 'destructive' : 
-                                  activity.severity === 'medium' ? 'secondary' : 
-                                  'default'
-                                }
-                              >
-                                {activity.severity}
-                              </Badge>
-                            </div>
-                            {activity.details && (
+                        <div className="flex items-center justify-between">
+                          <div>
+                            <Label htmlFor="locationSharing">Location Sharing</Label>
+                            <p className="text-sm text-gray-500">Allow trusted contacts to see your location during emergencies</p>
+                            {locationSharing.lastLocation && (
                               <div className="mt-2 text-sm text-gray-500">
-                                {activity.details.location && (
-                                  <div className="flex items-center space-x-1">
-                                    <MapPin className="w-4 h-4" />
-                                    <span>{activity.details.location}</span>
-                                  </div>
-                                )}
-                                {activity.details.device && (
-                                  <div className="flex items-center space-x-1">
-                                    <Monitor className="w-4 h-4" />
-                                    <span>{activity.details.device}</span>
-                                  </div>
-                                )}
-                                {activity.details.status && (
-                                  <div className="flex items-center space-x-1">
-                                    <Info className="w-4 h-4" />
-                                    <span>{activity.details.status}</span>
-                                  </div>
-                                )}
+                                <p>Last updated: {new Date(locationSharing.lastLocation.timestamp).toLocaleString()}</p>
+                                <p>Accuracy: {Math.round(locationSharing.lastLocation.accuracy)}m</p>
                               </div>
                             )}
                           </div>
+                          <div className="flex items-center gap-4">
+                            <select
+                              className="form-select text-sm"
+                              value={locationSharing.updateInterval}
+                              onChange={(e) => setLocationSharing(prev => ({
+                                ...prev,
+                                updateInterval: parseInt(e.target.value)
+                              }))}
+                            >
+                              <option value="5">Update every 5 min</option>
+                              <option value="15">Update every 15 min</option>
+                              <option value="30">Update every 30 min</option>
+                              <option value="60">Update every hour</option>
+                            </select>
+                            <Switch 
+                              id="locationSharing"
+                              checked={locationSharing.isEnabled}
+                              onCheckedChange={handleLocationSharing}
+                              aria-label="Toggle location sharing"
+                            />
+                          </div>
+                        </div>
+
+                        <div className="space-y-4">
+                          <div className="flex items-center justify-between">
+                            <div>
+                              <Label htmlFor="activityHistory">Activity History</Label>
+                              <p className="text-sm text-gray-500">Control how your activity is tracked and shared</p>
+                            </div>
+                            <Switch 
+                              id="activityHistory"
+                              checked={activityHistory.isEnabled}
+                              onCheckedChange={handleActivityHistoryChange}
+                              aria-label="Toggle activity history"
+                            />
+                          </div>
+
+                          {activityHistory.isEnabled && (
+                            <div className="mt-4 space-y-4 pl-4 border-l-2 border-gray-200">
+                              <div className="flex items-center justify-between">
+                                <Label htmlFor="activityVisibility">Visibility</Label>
+                                <select
+                                  id="activityVisibility"
+                                  className="form-select text-sm rounded-md border-gray-300"
+                                  value={activityHistory.visibleTo}
+                                  onChange={(e) => setActivityHistory(prev => ({
+                                    ...prev,
+                                    visibleTo: e.target.value as ActivityHistoryState['visibleTo']
+                                  }))}
+                                >
+                                  <option value="none">Only Me</option>
+                                  <option value="trusted">Trusted Contacts</option>
+                                  <option value="all">All Contacts</option>
+                                </select>
+                              </div>
+
+                              <div className="flex items-center justify-between">
+                                <Label htmlFor="retentionPeriod">Data Retention</Label>
+                                <select
+                                  id="retentionPeriod"
+                                  className="form-select text-sm rounded-md border-gray-300"
+                                  value={activityHistory.retentionPeriod}
+                                  onChange={(e) => setActivityHistory(prev => ({
+                                    ...prev,
+                                    retentionPeriod: parseInt(e.target.value)
+                                  }))}
+                                >
+                                  <option value="7">7 days</option>
+                                  <option value="30">30 days</option>
+                                  <option value="90">90 days</option>
+                                  <option value="180">180 days</option>
+                                </select>
+                              </div>
+
+                              <div className="space-y-2">
+                                <Label>Track Activity Categories</Label>
+                                <div className="grid grid-cols-2 gap-2">
+                                  {Object.entries(activityHistory.categories).map(([category, isEnabled]) => (
+                                    <div key={category} className="flex items-center space-x-2">
+                                      <Switch 
+                                        id={`category-${category}`}
+                                        checked={isEnabled}
+                                        onCheckedChange={() => handleActivityCategoryToggle(category as keyof ActivityHistoryState['categories'])}
+                                        aria-label={`Toggle ${category} tracking`}
+                                      />
+                                      <Label htmlFor={`category-${category}`} className="capitalize">
+                                        {category}
+                                      </Label>
+                                    </div>
+                                  ))}
+                                </div>
+                              </div>
+
+                              <div className="mt-4 p-4 bg-gray-50 rounded-lg">
+                                <h5 className="text-sm font-medium mb-2">Activity Tracking Notice</h5>
+                                <p className="text-sm text-gray-600">
+                                  Your activity is being recorded and will be retained for {activityHistory.retentionPeriod} days. 
+                                  This data is visible to {activityHistory.visibleTo === 'none' ? 'only you' : 
+                                    activityHistory.visibleTo === 'trusted' ? 'your trusted contacts' : 'all your contacts'}.
+                                </p>
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          </TabsContent>
+
+          {/* Safety Tab */}
+          <TabsContent value="safety">
+            <div className="space-y-6">
+              <Card className="border-sgc-purple/20 hover:border-sgc-purple/40 transition-colors">
+                <CardHeader className="bg-gradient-to-r from-sgc-purple/5 to-transparent">
+                  <CardTitle className="text-sgc-purple">Emergency Contacts</CardTitle>
+                  <CardDescription>Manage your trusted emergency contacts</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-6">
+                    {safetySettings.emergencyContacts.map((contact, index) => (
+                      <div key={contact.id} className="p-4 border rounded-lg space-y-4">
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center space-x-4">
+                            <div className="h-10 w-10 rounded-full bg-purple-100 flex items-center justify-center">
+                              <User className="h-5 w-5 text-purple-600" />
+                            </div>
+                            <div>
+                              <h4 className="font-medium">{contact.name}</h4>
+                              <p className="text-sm text-gray-500">{contact.relationship}</p>
+                            </div>
+                          </div>
+                          <div className="flex items-center space-x-2">
+                            {contact.isVerified && (
+                              <Badge variant="secondary" className="flex items-center">
+                                <CheckCircle className="w-3 h-3 mr-1" />
+                                Verified
+                              </Badge>
+                            )}
+                            <Button variant="ghost" size="sm" onClick={() => handleEditContact(contact.id)}>
+                              <Edit2 className="w-4 h-4" />
+                            </Button>
+                          </div>
+                        </div>
+
+                        <div className="grid md:grid-cols-2 gap-4">
+                          <div>
+                            <Label>Phone Number</Label>
+                            <div className="flex items-center space-x-2">
+                              <Phone className="w-4 h-4 text-gray-500" />
+                              <span>{contact.phone}</span>
+                            </div>
+                          </div>
+                          {contact.email && (
+                            <div>
+                              <Label>Email</Label>
+                              <div className="flex items-center space-x-2">
+                                <Mail className="w-4 h-4 text-gray-500" />
+                                <span>{contact.email}</span>
+                              </div>
+                            </div>
+                          )}
+                        </div>
+
+                        <div className="border-t pt-4">
+                          <Label className="mb-2 block">Notification Preferences</Label>
+                          <div className="flex space-x-4">
+                            <div className="flex items-center space-x-2">
+                              <Switch 
+                                id={`sms-${contact.id}`}
+                                checked={contact.notificationPreferences.sms}
+                                onCheckedChange={(checked) => handleUpdateContactPreferences(contact.id, 'sms', checked)}
+                              />
+                              <Label htmlFor={`sms-${contact.id}`}>SMS</Label>
+                            </div>
+                            <div className="flex items-center space-x-2">
+                              <Switch 
+                                id={`email-${contact.id}`}
+                                checked={contact.notificationPreferences.email}
+                                onCheckedChange={(checked) => handleUpdateContactPreferences(contact.id, 'email', checked)}
+                              />
+                              <Label htmlFor={`email-${contact.id}`}>Email</Label>
+                            </div>
+                            <div className="flex items-center space-x-2">
+                              <Switch 
+                                id={`app-${contact.id}`}
+                                checked={contact.notificationPreferences.app}
+                                onCheckedChange={(checked) => handleUpdateContactPreferences(contact.id, 'app', checked)}
+                              />
+                              <Label htmlFor={`app-${contact.id}`}>App</Label>
+                            </div>
+                          </div>
                         </div>
                       </div>
                     ))}
+
+                    <Button 
+                      variant="outline" 
+                      className="w-full" 
+                      onClick={handleAddContact}
+                    >
+                      <Plus className="w-4 h-4 mr-2" />
+                      Add Emergency Contact
+                    </Button>
                   </div>
-                </div>
-              </CardContent>
-            </Card>
+                </CardContent>
+              </Card>
+
+              <Card className="border-sgc-purple/20 hover:border-sgc-purple/40 transition-colors">
+                <CardHeader className="bg-gradient-to-r from-sgc-purple/5 to-transparent">
+                  <CardTitle className="text-sgc-purple">Safety Check-ins</CardTitle>
+                  <CardDescription>Set up regular safety check-ins and notifications</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-6">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <Label>Enable Safety Check-ins</Label>
+                        <p className="text-sm text-gray-500">Receive regular reminders to confirm your safety</p>
+                      </div>
+                      <Switch 
+                        checked={safetySettings.safetyChecks.enabled}
+                        onCheckedChange={(checked) => 
+                          setSafetySettings(prev => ({
+                            ...prev,
+                            safetyChecks: { ...prev.safetyChecks, enabled: checked }
+                          }))
+                        }
+                      />
+                    </div>
+
+                    {safetySettings.safetyChecks.enabled && (
+                      <div className="space-y-4">
+                        <div>
+                          <Label>Check-in Frequency</Label>
+                          <select
+                            className="form-select mt-1 block w-full"
+                            value={safetySettings.safetyChecks.frequency}
+                            onChange={(e) => 
+                              setSafetySettings(prev => ({
+                                ...prev,
+                                safetyChecks: { 
+                                  ...prev.safetyChecks, 
+                                  frequency: e.target.value as 'daily' | 'weekly' | 'monthly' 
+                                }
+                              }))
+                            }
+                          >
+                            <option value="daily">Daily</option>
+                            <option value="weekly">Weekly</option>
+                            <option value="monthly">Monthly</option>
+                          </select>
+                        </div>
+                        <div>
+                          <Label>Last Check-in</Label>
+                          <p className="text-sm text-gray-500">
+                            {new Date(safetySettings.safetyChecks.lastCheck).toLocaleDateString()}
+                          </p>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card className="border-sgc-purple/20 hover:border-sgc-purple/40 transition-colors">
+                <CardHeader className="bg-gradient-to-r from-sgc-purple/5 to-transparent">
+                  <CardTitle className="text-sgc-purple">Trusted Locations</CardTitle>
+                  <CardDescription>Manage your safe locations and zones</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-4">
+                    {safetySettings.trustedLocations.map((location, index) => (
+                      <div key={index} className="flex items-center justify-between p-4 border rounded-lg">
+                        <div>
+                          <h4 className="font-medium">{location.name}</h4>
+                          <p className="text-sm text-gray-500">{location.address}</p>
+                        </div>
+                        <Button variant="ghost" size="sm">
+                          <MapPin className="w-4 h-4" />
+                        </Button>
+                      </div>
+                    ))}
+                    <Button variant="outline" className="w-full">
+                      <Plus className="w-4 h-4 mr-2" />
+                      Add Trusted Location
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card className="border-sgc-purple/20 hover:border-sgc-purple/40 transition-colors">
+                <CardHeader className="bg-gradient-to-r from-sgc-purple/5 to-transparent">
+                  <CardTitle className="text-sgc-purple">Emergency Button Settings</CardTitle>
+                  <CardDescription>Configure your emergency button preferences</CardDescription>
+        </CardHeader>
+                <CardContent>
+                  <div className="space-y-6">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <Label>Enable Emergency Button</Label>
+                        <p className="text-sm text-gray-500">Quick access to emergency help</p>
+                      </div>
+                      <Switch 
+                        checked={safetySettings.panicButton.enabled}
+                        onCheckedChange={(checked) => 
+                          setSafetySettings(prev => ({
+                            ...prev,
+                            panicButton: { ...prev.panicButton, enabled: checked }
+                          }))
+                        }
+                      />
+                    </div>
+
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <Label>Auto-notify Contacts</Label>
+                        <p className="text-sm text-gray-500">Automatically notify emergency contacts</p>
+                      </div>
+                      <Switch 
+                        checked={safetySettings.panicButton.autoNotify}
+                        onCheckedChange={(checked) => 
+                          setSafetySettings(prev => ({
+                            ...prev,
+                            panicButton: { ...prev.panicButton, autoNotify: checked }
+                          }))
+                        }
+                      />
+                    </div>
+
+                    <div>
+                      <Label>Custom Emergency Message</Label>
+                      <Textarea 
+                        value={safetySettings.panicButton.customMessage}
+                        onChange={(e) => 
+                          setSafetySettings(prev => ({
+                            ...prev,
+                            panicButton: { ...prev.panicButton, customMessage: e.target.value }
+                          }))
+                        }
+                        className="mt-2"
+                        placeholder="Enter your custom emergency message"
+                      />
+                    </div>
           </div>
-        </TabsContent>
-      </Tabs>
+        </CardContent>
+              </Card>
+            </div>
+          </TabsContent>
+
+          {/* Resources Tab */}
+          <TabsContent value="resources">
+            <div className="space-y-6">
+              <Card className="border-sgc-purple/20 hover:border-sgc-purple/40 transition-colors">
+                <CardHeader className="bg-gradient-to-r from-sgc-purple/5 to-transparent">
+                  <CardTitle className="text-sgc-purple">Saved Resources</CardTitle>
+                  <CardDescription>Access your bookmarked resources and information</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-6">
+                    <div className="flex items-center space-x-4">
+                      <Input 
+                        placeholder="Search resources..." 
+                        className="flex-1"
+                      />
+                      <select className="form-select">
+                        <option value="all">All Types</option>
+                        <option value="legal">Legal</option>
+                        <option value="safety">Safety</option>
+                        <option value="education">Education</option>
+                        <option value="health">Health</option>
+                        <option value="community">Community</option>
+                      </select>
+                    </div>
+
+                    <div className="space-y-4">
+                      {resources.map((resource) => (
+                        <div 
+                          key={resource.id}
+                          className="p-4 border rounded-lg hover:bg-gray-50 transition-colors"
+                        >
+                          <div className="flex items-start justify-between">
+                            <div>
+                              <h4 className="font-medium">{resource.title}</h4>
+                              <p className="text-sm text-gray-500 mt-1">{resource.description}</p>
+                              <div className="flex items-center space-x-2 mt-2">
+                                <Badge>{resource.type}</Badge>
+                                {resource.tags.map((tag) => (
+                                  <Badge key={tag} variant="outline">{tag}</Badge>
+                                ))}
+                              </div>
+                            </div>
+                            <Button 
+                              variant="ghost" 
+                              size="sm"
+                              onClick={() => {
+                                setResources(prev => 
+                                  prev.map(r => 
+                                    r.id === resource.id 
+                                      ? { ...r, isBookmarked: !r.isBookmarked }
+                                      : r
+                                  )
+                                );
+                              }}
+                            >
+                              <BookmarkCheck 
+                                className={`w-4 h-4 ${
+                                  resource.isBookmarked ? 'text-purple-600' : 'text-gray-400'
+                                }`} 
+                              />
+          </Button>
+                          </div>
+                          <div className="flex items-center justify-between mt-4 text-sm text-gray-500">
+                            <span>Added {new Date(resource.dateAdded).toLocaleDateString()}</span>
+                            {resource.url && (
+                              <a 
+                                href={resource.url} 
+                                target="_blank" 
+                                rel="noopener noreferrer"
+                                className="text-purple-600 hover:underline flex items-center"
+                              >
+                                View Resource
+                                <ArrowRight className="w-4 h-4 ml-1" />
+                              </a>
+                            )}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          </TabsContent>
+
+          {/* Activity Tab */}
+          <TabsContent value="activity">
+            <div className="space-y-6">
+              <Card className="border-sgc-purple/20 hover:border-sgc-purple/40 transition-colors">
+                <CardHeader className="bg-gradient-to-r from-sgc-purple/5 to-transparent">
+                  <CardTitle className="text-sgc-purple">Recent Activity</CardTitle>
+                  <CardDescription>Track your account activity and security events</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-6">
+                    <div className="flex items-center space-x-4">
+                      <Input 
+                        placeholder="Search activity..." 
+                        className="flex-1"
+                      />
+                      <select className="form-select">
+                        <option value="all">All Activities</option>
+                        <option value="login">Logins</option>
+                        <option value="emergency">Emergency Events</option>
+                        <option value="safety_check">Safety Checks</option>
+                        <option value="profile_update">Profile Updates</option>
+                      </select>
+                    </div>
+
+                    <div className="space-y-4">
+                      {activities.map((activity) => (
+                        <div 
+                          key={activity.id}
+                          className="p-4 border rounded-lg hover:bg-gray-50 transition-colors"
+                        >
+                          <div className="flex items-start space-x-4">
+                            <div className={`
+                              h-8 w-8 rounded-full flex items-center justify-center
+                              ${activity.severity === 'high' ? 'bg-red-100' : 
+                                activity.severity === 'medium' ? 'bg-yellow-100' : 
+                                'bg-green-100'}
+                            `}>
+                              {activity.type === 'login' && <LogIn className="w-4 h-4 text-gray-600" />}
+                              {activity.type === 'emergency' && <AlertTriangle className="w-4 h-4 text-red-600" />}
+                              {activity.type === 'safety_check' && <Shield className="w-4 h-4 text-green-600" />}
+                              {activity.type === 'profile_update' && <User className="w-4 h-4 text-blue-600" />}
+                            </div>
+                            <div className="flex-1">
+                              <div className="flex items-start justify-between">
+                                <div>
+                                  <h4 className="font-medium">{activity.description}</h4>
+                                  <p className="text-sm text-gray-500">
+                                    {new Date(activity.timestamp).toLocaleString()}
+                                  </p>
+                                </div>
+                                <Badge 
+                                  variant={
+                                    activity.severity === 'high' ? 'destructive' : 
+                                    activity.severity === 'medium' ? 'secondary' : 
+                                    'default'
+                                  }
+                                >
+                                  {activity.severity}
+                                </Badge>
+                              </div>
+                              {activity.details && (
+                                <div className="mt-2 text-sm text-gray-500">
+                                  {activity.details.location && (
+                                    <div className="flex items-center space-x-1">
+                                      <MapPin className="w-4 h-4" />
+                                      <span>{activity.details.location}</span>
+                                    </div>
+                                  )}
+                                  {activity.details.device && (
+                                    <div className="flex items-center space-x-1">
+                                      <Monitor className="w-4 h-4" />
+                                      <span>{activity.details.device}</span>
+                                    </div>
+                                  )}
+                                  {activity.details.status && (
+                                    <div className="flex items-center space-x-1">
+                                      <Info className="w-4 h-4" />
+                                      <span>{activity.details.status}</span>
+                                    </div>
+                                  )}
+                                </div>
+                              )}
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </CardContent>
+      </Card>
+            </div>
+          </TabsContent>
+        </Tabs>
+      </div>
     </div>
   );
 };

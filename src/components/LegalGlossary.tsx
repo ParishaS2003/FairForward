@@ -341,7 +341,7 @@ const LegalGlossary = () => {
     <div className="container max-w-6xl py-4 space-y-6">
       <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 bg-muted/30 rounded-lg p-6">
         <div className="flex-1">
-          <h1 className="text-3xl font-bold mb-2">{translate('glossary.title')}</h1>
+          <h1 className="text-3xl font-bold mb-2 text-sgc-purple">{translate('glossary.title')}</h1>
           <p className="text-muted-foreground max-w-2xl mb-4">
             {translate('glossary.subtitle')}
           </p>
@@ -356,7 +356,7 @@ const LegalGlossary = () => {
           <div className="flex items-center gap-2">
             <Button 
               variant="outline" 
-              className="flex items-center gap-2"
+              className="flex items-center gap-2 border-sgc-purple/50 text-sgc-purple hover:bg-sgc-purple/10 hover:text-sgc-purple-dark"
               onClick={generatePDF}
               disabled={isGeneratingPDF}
             >
@@ -419,6 +419,7 @@ const LegalGlossary = () => {
               variant={selectedLetter === 'all' ? 'default' : 'outline'}
               size="sm"
               onClick={() => setSelectedLetter('all')}
+              className={selectedLetter === 'all' ? 'bg-sgc-purple hover:bg-sgc-purple-dark text-white' : 'border-sgc-purple/50 text-sgc-purple hover:bg-sgc-purple/10 hover:text-sgc-purple-dark'}
             >
               {translate('glossary.all_letters')}
             </Button>
@@ -428,6 +429,7 @@ const LegalGlossary = () => {
                 variant={selectedLetter === letter ? 'default' : 'outline'}
                 size="sm"
                 onClick={() => setSelectedLetter(letter)}
+                className={selectedLetter === letter ? 'bg-sgc-purple hover:bg-sgc-purple-dark text-white' : 'border-sgc-purple/50 text-sgc-purple hover:bg-sgc-purple/10 hover:text-sgc-purple-dark'}
               >
                 {letter}
               </Button>
@@ -467,7 +469,7 @@ const LegalGlossary = () => {
                     {term.relatedTerms && term.relatedTerms.length > 0 && (
                       <div className="flex flex-wrap gap-2 mt-3">
                         {term.relatedTerms.map((relatedTerm, i) => (
-                          <Badge key={i} variant="secondary">
+                          <Badge key={i} variant="secondary" className="bg-sgc-purple/10 text-sgc-purple hover:bg-sgc-purple/20">
                             {relatedTerm}
                           </Badge>
                         ))}
@@ -477,11 +479,11 @@ const LegalGlossary = () => {
                   
                   {/* Category and Jurisdiction */}
                   <div className={`flex flex-col gap-2 ${currentLanguage.direction === 'rtl' ? 'items-start' : 'items-end'}`}>
-                    <Badge>
+                    <Badge className="bg-sgc-purple/10 text-sgc-purple hover:bg-sgc-purple/20">
                       {translate(`glossary.categories.${term.category.replace('-', '_')}`)}
                     </Badge>
                     {term.jurisdiction && (
-                      <span className="text-sm text-muted-foreground">
+                      <span className="text-sm text-sgc-purple/70">
                         {term.jurisdiction}
                       </span>
                     )}

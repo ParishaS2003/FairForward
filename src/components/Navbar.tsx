@@ -72,9 +72,9 @@ const Navbar = () => {
             <div className="flex items-center space-x-6">
               <EmergencyButton />
               <div className="h-6 border-l border-gray-200" />
-              {isAuthenticated && (
-                <NavLink to="/account" icon={<User size={18} />} text="Account" />
-              )}
+            {isAuthenticated && (
+              <NavLink to="/account" icon={<User size={18} />} text="Account" />
+            )}
             </div>
           </div>
           
