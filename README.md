@@ -58,15 +58,20 @@ npm install
 # or
 yarn install
 ```
+3. Run in terminal to start the AI backend
+ ```bash
+python app.py
+```
+4. Open the server on your browser
 
-3. Start the development server:
+5. Start the development server:
 ```bash
 npm run dev
 # or
 yarn dev
 ```
 
-4. Open in your browser.
+6. Open in your browser.
 
 ## 🛠️ Tech Stack
 
