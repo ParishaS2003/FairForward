@@ -63,5 +63,31 @@
     "enhance_visibility": "Enhance visual contrast for better readability",
     "increase_text": "Increase text size for better visibility",
     "screen_reader_desc": "Enable enhanced screen reader compatibility"
+  },
+  "glossary": {
+    "title": "Legal Terms Glossary",
+    "subtitle": "Understanding legal terminology made simple",
+    "search_placeholder": "Search legal terms...",
+    "all_categories": "All Categories",
+    "no_results": "No terms found matching your criteria.",
+    "download_pdf": "Download PDF",
+    "examples": "Examples:",
+    "jurisdiction": "Jurisdiction",
+    "pdf": {
+      "success_title": "PDF Generated Successfully",
+      "success_description": "Your legal glossary has been downloaded.",
+      "error_title": "Error Generating PDF",
+      "error_description": "There was a problem generating the PDF. Please try again.",
+      "related_terms": "Related Terms"
+    },
+    "categories": {
+      "civil_rights": "Civil Rights",
+      "criminal_law": "Criminal Law",
+      "family_law": "Family Law",
+      "employment_law": "Employment Law",
+      "immigration": "Immigration",
+      "housing_law": "Housing Law",
+      "general": "General"
+    }
   }
 } 

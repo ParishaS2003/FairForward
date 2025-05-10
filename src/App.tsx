@@ -18,6 +18,7 @@ import LegalHelp from '@/pages/LegalHelp';
 import Community from '@/pages/Community';
 import EmergencyPage from '@/pages/EmergencyPage';
 import Account from '@/pages/Account';
+import GlossaryPage from '@/pages/Glossary';
 import { LanguageProvider } from '@/contexts/LanguageContext';
 
 const queryClient = new QueryClient();
@@ -61,6 +62,7 @@ const App = () => {
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/legal-help" element={<LegalHelp />} />
               <Route path="/community" element={<Community />} />
+              <Route path="/glossary" element={<GlossaryPage />} />
               <Route 
                 path="/account" 
                 element={

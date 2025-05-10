@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { Menu, X, Home, MessageCircle, MapPin, Users, LogOut, User } from 'lucide-react';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { Menu, X, Home, MessageCircle, MapPin, Users, LogOut, User, Book, FileText, BookOpen } from 'lucide-react';
 import { Button } from './ui/button';
 import EmergencyButton from './EmergencyButton';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
   const isAuthenticated = typeof window !== 'undefined' && localStorage.getItem('user');
+  const isHomePage = location.pathname === '/';
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -30,18 +32,22 @@ const Navbar = () => {
           </Link>
           
           {/* Desktop Navigation */}
-          <div className="hidden md:flex space-x-6 items-center">
+          <div className="hidden md:flex items-center space-x-6">
             <NavLink to="/app" icon={<Home size={18} />} text="Home" />
             <NavLink to="/chat" icon={<MessageCircle size={18} />} text="LegalBot" />
             <NavLink to="/map" icon={<MapPin size={18} />} text="Safe Spaces" />
             <NavLink to="/community" icon={<Users size={18} />} text="Community" />
+            <NavLink to="/report" icon={<FileText size={18} />} text="Report" />
+            <NavLink to="/learn" icon={<BookOpen size={18} />} text="Learn" />
+            <NavLink to="/glossary" icon={<Book size={18} />} text="Legal Terms" />
             
-            <div className="pl-4 border-l border-border">
-              <EmergencyButton variant="navbar" />
-            </div>
+            <div className="flex items-center space-x-6">
+              <EmergencyButton />
+              <div className="h-6 border-l border-gray-200" />
             {isAuthenticated && (
               <NavLink to="/account" icon={<User size={18} />} text="Account" />
             )}
+            </div>
           </div>
           
           {/* Mobile Menu Button */}
@@ -62,12 +68,12 @@ const Navbar = () => {
             <MobileNavLink to="/chat" icon={<MessageCircle size={18} />} text="LegalBot" onClick={toggleMenu} />
             <MobileNavLink to="/map" icon={<MapPin size={18} />} text="Safe Spaces" onClick={toggleMenu} />
             <MobileNavLink to="/community" icon={<Users size={18} />} text="Community" onClick={toggleMenu} />
+            <MobileNavLink to="/report" icon={<FileText size={18} />} text="Report" onClick={toggleMenu} />
+            <MobileNavLink to="/learn" icon={<BookOpen size={18} />} text="Learn" onClick={toggleMenu} />
+            <MobileNavLink to="/glossary" icon={<Book size={18} />} text="Legal Terms" onClick={toggleMenu} />
             {isAuthenticated && (
               <MobileNavLink to="/account" icon={<User size={18} />} text="Account" onClick={toggleMenu} />
             )}
-            <div className="pt-4 border-t border-border">
-              <EmergencyButton variant="inline" />
-            </div>
           </div>
         </div>
       )}

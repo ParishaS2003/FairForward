@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { MapPin, Phone, Clock, Info } from 'lucide-react';
+import BackButton from '@/components/BackButton';
 
 const SafeSpaces = () => {
   const [shelters, setShelters] = useState([]);
@@ -166,6 +167,7 @@ const SafeSpaces = () => {
 
   return (
     <div className="container mx-auto px-4 py-8">
+      <BackButton to="/app" />
       <h1 className="text-2xl font-bold mb-6">Safe Spaces Near You</h1>
       <div className="space-y-6">
         <div className="flex flex-wrap gap-2">

@@ -63,5 +63,31 @@
     "enhance_visibility": "تحسين التباين المرئي لقراءة أفضل",
     "increase_text": "زيادة حجم النص لرؤية أفضل",
     "screen_reader_desc": "تمكين التوافق المحسن مع قارئ الشاشة"
+  },
+  "glossary": {
+    "title": "قاموس المصطلحات القانونية",
+    "subtitle": "فهم المصطلحات القانونية بشكل مبسط",
+    "search_placeholder": "البحث عن المصطلحات القانونية...",
+    "all_categories": "جميع الفئات",
+    "no_results": "لم يتم العثور على مصطلحات تطابق معاييرك.",
+    "download_pdf": "تحميل PDF",
+    "examples": "أمثلة:",
+    "jurisdiction": "الاختصاص القضائي",
+    "pdf": {
+      "success_title": "تم إنشاء ملف PDF بنجاح",
+      "success_description": "تم تنزيل القاموس القانوني الخاص بك.",
+      "error_title": "خطأ في إنشاء PDF",
+      "error_description": "حدثت مشكلة أثناء إنشاء ملف PDF. يرجى المحاولة مرة أخرى.",
+      "related_terms": "مصطلحات ذات صلة"
+    },
+    "categories": {
+      "civil_rights": "الحقوق المدنية",
+      "criminal_law": "القانون الجنائي",
+      "family_law": "قانون الأسرة",
+      "employment_law": "قانون العمل",
+      "immigration": "الهجرة",
+      "housing_law": "قانون الإسكان",
+      "general": "عام"
+    }
   }
 } 
