@@ -28,6 +28,14 @@ FairForward is a comprehensive platform designed to make legal support accessibl
 - Community support
 - Regular updates on legal rights
 
+## 🦉 Meet Mr. Hootsworth
+
+Mr. Hootsworth is our beloved hand-drawn mascot who guides users through their legal journey. Created with care and attention to detail, he brings warmth and approachability to our platform through:
+- Hand-drawn illustrations
+- Delightful animations
+- Friendly interactions
+- Consistent presence across the platform
+
 ## 🚀 Getting Started
 
 ### Prerequisites
