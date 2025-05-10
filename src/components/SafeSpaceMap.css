@@ -1,0 +1,87 @@
+.leaflet-container {
+  width: 100%;
+  height: 100%;
+  min-height: 400px;
+  z-index: 1;
+}
+
+.custom-div-icon {
+  background: none;
+  border: none;
+}
+
+.custom-div-icon div {
+  box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+.leaflet-popup-content {
+  margin: 8px 12px;
+}
+
+.leaflet-popup-content-wrapper {
+  border-radius: 8px;
+}
+
+.map-container {
+  position: relative;
+  height: 400px;
+  width: 100%;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Loading spinner animation */
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+/* Mapbox Popup customization */
+.mapboxgl-popup-content {
+  padding: 0 !important;
+  border-radius: 8px !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+}
+
+.mapboxgl-popup-close-button {
+  padding: 4px 8px !important;
+  font-size: 16px !important;
+  color: #6B7280 !important;
+}
+
+.mapboxgl-popup-close-button:hover {
+  background-color: transparent !important;
+  color: #374151 !important;
+}
+
+/* Custom marker styles */
+.mapboxgl-marker {
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.mapboxgl-marker:hover {
+  transform: scale(1.1);
+}
+
+/* Google Maps InfoWindow customization */
+.gm-style .gm-style-iw-c {
+  padding: 0 !important;
+  border-radius: 8px !important;
+}
+
+.gm-style .gm-style-iw-d {
+  overflow: hidden !important;
+  padding: 0 !important;
+}
+
+.gm-style .gm-style-iw-t::after {
+  background: linear-gradient(45deg, rgba(255,255,255,1) 50%, rgba(255,255,255,0) 51%, rgba(255,255,255,0) 100%) !important;
+  box-shadow: -2px 2px 2px 0 rgba(178,178,178,.4) !important;
+} 
