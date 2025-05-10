@@ -89,7 +89,7 @@ const Login = () => {
             </div>
           </CardContent>
           <CardFooter className="flex flex-col space-y-4">
-            <Button type="submit" className="w-full">
+            <Button type="submit" className="w-full bg-sgc-purple hover:bg-sgc-purple-dark text-white">
               Sign In
             </Button>
             <p className="text-sm text-center text-sgc-neutral">

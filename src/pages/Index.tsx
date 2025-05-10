@@ -4,10 +4,10 @@ import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import { 
   Gavel, MapPin, FileText, MessageCircle,
-  ArrowRight, Shield, PhoneCall, BookOpen, Users, CheckCircle, User
+  ArrowRight, Shield, PhoneCall, BookOpen, Users, CheckCircle, User, MessageSquare
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/card';
 import { useToast } from '@/components/ui/use-toast';
 
 const Index = () => {
@@ -30,6 +30,27 @@ const Index = () => {
       }
     }
   };
+
+  const services = [
+    {
+      title: "Legal Assistant",
+      description: "Get instant answers to your legal questions",
+      icon: <MessageSquare className="h-6 w-6" />,
+      link: "/legal-assistant",
+    },
+    {
+      title: "Safe Spaces",
+      description: "Find and share safe locations in your area",
+      icon: <MapPin className="h-6 w-6" />,
+      link: "/safe-spaces",
+    },
+    {
+      title: "Connect to Lawyers",
+      description: "Find pro bono legal help",
+      icon: <Users className="h-6 w-6" />,
+      link: "/pro-bono-qualification",
+    },
+  ];
 
   return (
     <div className="min-h-screen flex flex-col bg-white">
@@ -76,55 +97,32 @@ const Index = () => {
             variants={staggerContainer}
             className="grid md:grid-cols-3 gap-8"
           >
-            {[
-              {
-                icon: <MessageCircle className="h-8 w-8" />,
-                title: "Legal Assistant",
-                description: "Get instant answers to your legal questions from our AI-powered assistant.",
-                color: "purple",
-                link: "/chat",
-                cta: "Chat Now"
-              },
-              {
-                icon: <MapPin className="h-8 w-8" />,
-                title: "Safe Spaces",
-                description: "Find verified shelters and support centers near you.",
-                color: "blue",
-                link: "/map",
-                cta: "Find Spaces"
-              },
-              {
-                icon: <FileText className="h-8 w-8" />,
-                title: "Connect to Lawyers",
-                description: "Find pro bono legal help and connect with qualified lawyers.",
-                color: "indigo",
-                link: "/pro-bono-qualification",
-                cta: "Find Lawyers"
-              }
-            ].map((service, index) => (
+            {services.map((service, index) => (
               <motion.div
                 key={service.title}
-                variants={fadeInUp}
-                whileHover={{ y: -5 }}
-                className="relative"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
               >
-                <Link to={service.link}>
-                  <Card className="h-full hover:shadow-lg transition-all duration-300">
-                    <CardContent className="p-8">
-                      <div className={`h-16 w-16 rounded-full bg-${service.color}-100 flex items-center justify-center text-${service.color}-600 mb-6`}>
-                        {service.icon}
-                      </div>
-                      <h3 className="text-2xl font-semibold mb-4">{service.title}</h3>
-                      <p className="text-gray-600 mb-6">{service.description}</p>
-                      <Button 
-                        className={`w-full bg-${service.color}-600 hover:bg-${service.color}-700 text-white`}
-                      >
-                        {service.cta}
-                        <ArrowRight className="ml-2 h-4 w-4" />
-                      </Button>
-                    </CardContent>
-                  </Card>
-                </Link>
+                <Card className="h-full hover:shadow-lg transition-shadow">
+                  <CardHeader>
+                    <div className="p-2 rounded-lg bg-sgc-purple/10 w-fit">
+                      {service.icon}
+                    </div>
+                    <CardTitle className="text-xl">{service.title}</CardTitle>
+                    <CardDescription>{service.description}</CardDescription>
+                  </CardHeader>
+                  <CardFooter>
+                    <Button
+                      variant="ghost"
+                      className="text-sgc-purple hover:text-sgc-purple-dark"
+                      onClick={() => navigate(service.link)}
+                    >
+                      Learn More
+                      <ArrowRight className="ml-2 h-4 w-4" />
+                    </Button>
+                  </CardFooter>
+                </Card>
               </motion.div>
             ))}
           </motion.div>
