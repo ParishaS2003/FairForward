@@ -51,7 +51,7 @@ const Index = () => {
           >
             <h1 className="text-4xl md:text-5xl font-bold text-purple-900">
               Legal Support Made Simple
-            </h1>
+              </h1>
             <motion.img 
               src="/mr-hootsworth.png" 
               alt="Mr. Hootsworth the Owl" 
@@ -79,7 +79,7 @@ const Index = () => {
             >
               <PhoneCall className="mr-2 h-6 w-6" />
               24/7 Emergency Help
-            </Button>
+                </Button>
           </motion.div>
         </div>
       </motion.section>
@@ -139,7 +139,7 @@ const Index = () => {
                       >
                         {service.cta}
                         <ArrowRight className="ml-2 h-4 w-4" />
-                      </Button>
+                        </Button>
                     </CardContent>
                   </Card>
                 </Link>
