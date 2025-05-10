@@ -196,18 +196,18 @@ const SafeSpaces = () => {
           
           const batchResults = await Promise.all(
             batch.map(async (shelter) => {
-              try {
-                const fullAddress = `${shelter.address}, ${shelter.city}`;
+            try {
+              const fullAddress = `${shelter.address}, ${shelter.city}`;
                 console.log('Geocoding address:', fullAddress);
-                const coordinates = await geocodeAddress(fullAddress);
+              const coordinates = await geocodeAddress(fullAddress);
                 console.log('Geocoding result:', coordinates);
-                return { ...shelter, ...coordinates };
-              } catch (error) {
-                console.error(`Failed to geocode address for ${shelter.name}:`, error);
-                return { ...shelter, lat: null, lng: null };
-              }
-            })
-          );
+              return { ...shelter, ...coordinates };
+            } catch (error) {
+              console.error(`Failed to geocode address for ${shelter.name}:`, error);
+              return { ...shelter, lat: null, lng: null };
+            }
+          })
+        );
           geocodedShelters.push(...batchResults);
         }
 
@@ -349,7 +349,7 @@ const SafeSpaces = () => {
           
           {markers.map((marker, index) => {
             console.log('Rendering marker:', marker);
-            return (
+      return (
               <Marker
                 key={index}
                 position={marker.position}
@@ -407,8 +407,8 @@ const SafeSpaces = () => {
                       >
                         View Details
                       </Button>
-                    </div>
-                  </div>
+          </div>
+        </div>
                 </Popup>
               </Marker>
             );
@@ -423,8 +423,8 @@ const SafeSpaces = () => {
 
           <MapUpdater center={[mapCenter.lat, mapCenter.lng]} />
         </MapContainer>
-      </div>
-    );
+        </div>
+      );
   };
 
   // Add this new component for the shelter modal
@@ -537,8 +537,8 @@ const SafeSpaces = () => {
                   >
                     <Navigation className="w-5 h-5" />
                     Get Directions
-                  </a>
-                )}
+                </a>
+              )}
               </div>
             </div>
           </div>
@@ -714,9 +714,9 @@ const SafeSpaces = () => {
             </motion.div>
           )}
         </AnimatePresence>
-      </div>
+        </div>
 
-      {/* Controls Section */}
+        {/* Controls Section */}
       <div className="mb-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <Tabs 
           defaultValue="all" 
@@ -740,15 +740,15 @@ const SafeSpaces = () => {
             className="w-full sm:w-64"
           />
           <Button
-            onClick={requestLocation}
+                onClick={requestLocation}
             variant="outline"
             className="flex items-center gap-2"
-          >
-            <Navigation className="w-4 h-4" />
-            Use My Location
+              >
+                <Navigation className="w-4 h-4" />
+                Use My Location
           </Button>
-        </div>
-      </div>
+            </div>
+          </div>
 
       {/* View Toggle */}
       <div className="mb-6 flex justify-end">
@@ -770,12 +770,12 @@ const SafeSpaces = () => {
             Map
           </Button>
         </div>
-      </div>
+        </div>
 
-      {/* Main Content */}
-      {viewMode === 'list' ? (
-        <div className="grid gap-6">
-          {getSortedShelters().length === 0 ? (
+        {/* Main Content */}
+        {viewMode === 'list' ? (
+          <div className="grid gap-6">
+            {getSortedShelters().length === 0 ? (
             <Card className="text-center py-20">
               <CardContent>
                 <Search className="w-20 h-20 mx-auto mb-6 text-gray-400" />
@@ -783,8 +783,8 @@ const SafeSpaces = () => {
                 <p className="text-gray-500">Try adjusting your filters or search terms</p>
               </CardContent>
             </Card>
-          ) : (
-            getSortedShelters().map((shelter) => (
+            ) : (
+              getSortedShelters().map((shelter) => (
               <Card key={shelter.id} className="overflow-hidden hover:shadow-md transition-shadow">
                 <CardHeader>
                   <div className="flex justify-between items-start">
@@ -831,7 +831,7 @@ const SafeSpaces = () => {
                         <p className="text-gray-600">{shelter.address}</p>
                       </div>
                     )}
-                    {shelter.phone && (
+                      {shelter.phone && (
                       <div className="flex items-start gap-3">
                         <Phone className="w-5 h-5 text-gray-400 mt-1" />
                         <a href={`tel:${shelter.phone}`} className="text-blue-600 hover:text-blue-800">
@@ -847,27 +847,27 @@ const SafeSpaces = () => {
                       <Phone className="w-4 h-4 mr-2" />
                       Call Now
                     </Button>
-                  )}
-                  {getDistance(shelter) && (
+                      )}
+                      {getDistance(shelter) && (
                     <Button variant="outline" className="flex-1">
-                      <Navigation className="w-4 h-4 mr-2" />
-                      Get Directions
+                          <Navigation className="w-4 h-4 mr-2" />
+                          Get Directions
                     </Button>
                   )}
                 </CardFooter>
               </Card>
-            ))
-          )}
-        </div>
-      ) : (
+              ))
+            )}
+          </div>
+        ) : (
         <Card className="overflow-hidden">
           <CardContent className="p-0">
-            <MapView />
+              <MapView />
           </CardContent>
         </Card>
-      )}
+        )}
 
-      {/* Additional Resources */}
+        {/* Additional Resources */}
       <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-6">
         <Card className="hover:shadow-md transition-shadow">
           <CardHeader>

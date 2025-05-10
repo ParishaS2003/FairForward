@@ -40,10 +40,10 @@ const LegalBot = () => {
       try {
         const response = await fetch(`${API_BASE_URL}/api/test`);
         const data = await response.json();
-        setInitialMessage(data.message);
+        setInitialMessage("👋 Hello! I'm Mr. Hootsworth, your friendly legal assistant. I'm here to help you understand your rights and find the support you need.\n\n**You can ask me about:**\n\n• **Workplace Rights** and discrimination\n• **Legal Resources** and support services\n• **Filing Complaints** and documentation\n• **Legal Aid** options\n\nHow can I assist you today?");
       } catch (error) {
         console.error('Error fetching initial message:', error);
-        setInitialMessage('Welcome to the Legal Rights Chatbot! How can I help you today?');
+        setInitialMessage('Hello! I am your legal assistant. How can I help you today?');
       }
     };
     fetchInitialMessage();
@@ -319,18 +319,61 @@ const LegalBot = () => {
   );
 };
 
+const formatMessage = (content: string) => {
+    // Split content into paragraphs
+    const paragraphs = content.split('\n\n');
+    
+    return paragraphs.map((paragraph, pIndex) => {
+      // Handle bullet points
+      if (paragraph.startsWith('•')) {
+        const items = paragraph.split('\n');
+        return (
+          <div key={pIndex} className="space-y-2">
+            {items.map((item, iIndex) => {
+              // Format bold text within bullet points
+              const parts = item.split(/(\*\*.*?\*\*)/g);
+              return (
+                <p key={iIndex} className="text-sm">
+                  {parts.map((part, partIndex) => {
+                    if (part.startsWith('**') && part.endsWith('**')) {
+                      return <strong key={partIndex} className="font-semibold text-sgc-purple">{part.slice(2, -2)}</strong>;
+                    }
+                    return part;
+                  })}
+                </p>
+              );
+            })}
+          </div>
+        );
+      }
+
+      // Format regular paragraphs with bold text
+      const parts = paragraph.split(/(\*\*.*?\*\*)/g);
+      return (
+        <p key={pIndex} className="text-sm mb-4">
+          {parts.map((part, partIndex) => {
+            if (part.startsWith('**') && part.endsWith('**')) {
+              return <strong key={partIndex} className="font-semibold text-sgc-purple">{part.slice(2, -2)}</strong>;
+            }
+            return part;
+          })}
+        </p>
+      );
+    });
+  };
+
 const MessageBubble = ({ message }: { message: Message }) => {
   // Speech bubble tail styles
   const tail = message.isUser
-    ? 'after:content-[""] after:absolute after:right-[-10px] after:top-3 after:border-8 after:border-transparent after:border-l-sgc-blue'
+    ? 'after:content-[""] after:absolute after:right-[-10px] after:top-3 after:border-8 after:border-transparent after:border-l-sgc-purple'
     : 'after:content-[""] after:absolute after:left-[-10px] after:top-3 after:border-8 after:border-transparent after:border-r-sgc-purple-light';
 
   return (
     <div className={`flex ${message.isUser ? 'justify-end' : 'justify-start'} relative`}>
       <div className={`flex max-w-[80%] ${message.isUser ? 'flex-row-reverse' : 'flex-row'} items-end`}>
-        <div className={`flex-shrink-0 h-10 w-10 rounded-full flex items-center justify-center ${message.isUser ? 'bg-sgc-blue-light ml-2' : 'bg-sgc-purple-light mr-2'}`}>
+        <div className={`flex-shrink-0 h-10 w-10 rounded-full flex items-center justify-center ${message.isUser ? 'bg-gradient-to-br from-sgc-purple to-sgc-purple-dark ml-2' : 'bg-sgc-purple-light mr-2'}`}>
           {message.isUser ? (
-            <User size={20} className="text-sgc-blue" />
+            <User size={20} className="text-white" />
           ) : (
             <img 
               src="/mr-hootsworth.png" 
@@ -341,26 +384,25 @@ const MessageBubble = ({ message }: { message: Message }) => {
           )}
         </div>
         <div className={`relative ${tail} ${message.isUser ? 'ml-2' : 'mr-2'}`}> 
-          <Card className={`shadow-md ${
-            message.isUser ? 'bg-sgc-blue text-white' : 
+          <Card className={`shadow-lg ${
+            message.isUser ? 'bg-gradient-to-br from-sgc-purple to-sgc-purple-dark text-white' : 
             message.type === 'suggestions' ? 'bg-sgc-purple-light' :
             message.type === 'resources' ? 'bg-sgc-purple-light' :
             message.type === 'error' ? 'bg-red-100 text-red-700' :
             'bg-white'
           }`}>
-            <CardContent className="p-4">
+            <CardContent className={`p-4 ${message.isUser ? 'pb-3' : ''}`}>
               {message.type === 'suggestions' ? (
                 <>
-                  <p className="text-sm font-semibold mb-2">You might also be interested in:</p>
+                  <p className="text-sm font-semibold mb-3 text-sgc-purple">You might also be interested in:</p>
                   {message.content.split('\n').map((suggestion, index) => (
-                    <p key={index} className="text-sm py-1">• {suggestion}</p>
+                    <p key={index} className="text-sm py-1.5">• {suggestion}</p>
                   ))}
                 </>
               ) : message.type === 'resources' ? (
-                <div className="text-sm whitespace-pre-line">
+                <div className="text-sm whitespace-pre-line space-y-2">
                   {message.content.split('\n').map((line, index) => {
                     if (line.startsWith('🔗')) {
-                      // Extract the URL after the '🔗 '
                       const url = line.replace('🔗', '').trim();
                       return (
                         <a
@@ -374,11 +416,13 @@ const MessageBubble = ({ message }: { message: Message }) => {
                         </a>
                       );
                     }
-                    return <p key={index}>{line}</p>;
+                    return <p key={index} className="mb-2">{line}</p>;
                   })}
                 </div>
               ) : (
-                <p className="text-sm whitespace-pre-line">{message.content}</p>
+                <div className={`text-sm ${message.isUser ? 'text-white' : 'text-gray-800'} space-y-2`}>
+                  {formatMessage(message.content)}
+                </div>
               )}
             </CardContent>
           </Card>
