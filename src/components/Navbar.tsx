@@ -1,23 +1,52 @@
 import React, { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { Menu, X, Home, MessageCircle, MapPin, Users, LogOut, User, Book, FileText, BookOpen } from 'lucide-react';
+import { Menu, X, Home, MessageCircle, MapPin, Users, LogOut, User, Book, Scale } from 'lucide-react';
 import { Button } from './ui/button';
 import EmergencyButton from './EmergencyButton';
+import {
+  NavigationMenu,
+  NavigationMenuItem,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+  NavigationMenuContent,
+  NavigationMenuLink
+} from './ui/navigation-menu';
+import { cn } from '@/lib/utils';
+
+const ListItem = React.forwardRef<
+  React.ElementRef<"a">,
+  React.ComponentPropsWithoutRef<"a">
+>(({ className, title, children, ...props }, ref) => {
+  return (
+    <li>
+      <NavigationMenuLink asChild>
+        <a
+          ref={ref}
+          className={cn(
+            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
+            className
+          )}
+          {...props}
+        >
+          <div className="text-sm font-medium leading-none">{title}</div>
+          <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+            {children}
+          </p>
+        </a>
+      </NavigationMenuLink>
+    </li>
+  );
+});
+ListItem.displayName = "ListItem";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
   const isAuthenticated = typeof window !== 'undefined' && localStorage.getItem('user');
-  const isHomePage = location.pathname === '/';
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
-  };
-
-  const handleSignOut = () => {
-    localStorage.removeItem('user');
-    navigate('/');
   };
 
   return (
@@ -37,16 +66,15 @@ const Navbar = () => {
             <NavLink to="/chat" icon={<MessageCircle size={18} />} text="LegalBot" />
             <NavLink to="/map" icon={<MapPin size={18} />} text="Safe Spaces" />
             <NavLink to="/community" icon={<Users size={18} />} text="Community" />
-            <NavLink to="/report" icon={<FileText size={18} />} text="Report" />
-            <NavLink to="/learn" icon={<BookOpen size={18} />} text="Learn" />
+            <NavLink to="/pro-bono-qualification" icon={<Scale size={18} />} text="Pro Bono Lawyers" />
             <NavLink to="/glossary" icon={<Book size={18} />} text="Legal Terms" />
             
             <div className="flex items-center space-x-6">
               <EmergencyButton />
               <div className="h-6 border-l border-gray-200" />
-            {isAuthenticated && (
-              <NavLink to="/account" icon={<User size={18} />} text="Account" />
-            )}
+              {isAuthenticated && (
+                <NavLink to="/account" icon={<User size={18} />} text="Account" />
+              )}
             </div>
           </div>
           
@@ -68,8 +96,7 @@ const Navbar = () => {
             <MobileNavLink to="/chat" icon={<MessageCircle size={18} />} text="LegalBot" onClick={toggleMenu} />
             <MobileNavLink to="/map" icon={<MapPin size={18} />} text="Safe Spaces" onClick={toggleMenu} />
             <MobileNavLink to="/community" icon={<Users size={18} />} text="Community" onClick={toggleMenu} />
-            <MobileNavLink to="/report" icon={<FileText size={18} />} text="Report" onClick={toggleMenu} />
-            <MobileNavLink to="/learn" icon={<BookOpen size={18} />} text="Learn" onClick={toggleMenu} />
+            <MobileNavLink to="/pro-bono-qualification" icon={<Scale size={18} />} text="Pro Bono Lawyers" onClick={toggleMenu} />
             <MobileNavLink to="/glossary" icon={<Book size={18} />} text="Legal Terms" onClick={toggleMenu} />
             {isAuthenticated && (
               <MobileNavLink to="/account" icon={<User size={18} />} text="Account" onClick={toggleMenu} />

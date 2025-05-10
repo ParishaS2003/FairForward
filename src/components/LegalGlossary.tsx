@@ -339,22 +339,49 @@ const LegalGlossary = () => {
 
   return (
     <div className="container max-w-6xl py-4 space-y-6">
-      <div className="flex items-center justify-between">
-        <div>
+      <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 bg-muted/30 rounded-lg p-6">
+        <div className="flex-1">
           <h1 className="text-3xl font-bold mb-2">{translate('glossary.title')}</h1>
-          <p className="text-muted-foreground">
+          <p className="text-muted-foreground max-w-2xl mb-4">
             {translate('glossary.subtitle')}
           </p>
+          <div className="bg-white/50 rounded-lg p-4 mb-4 max-w-2xl">
+            <p className="text-sm text-muted-foreground italic">
+              "{translate('glossary.mascot.welcome')}"
+            </p>
+            <p className="text-sm text-sgc-purple mt-2 font-medium">
+              {translate('glossary.mascot.tip')}
+            </p>
+          </div>
+          <div className="flex items-center gap-2">
+            <Button 
+              variant="outline" 
+              className="flex items-center gap-2"
+              onClick={generatePDF}
+              disabled={isGeneratingPDF}
+            >
+              <Book className="w-4 h-4" />
+              {isGeneratingPDF ? translate('app.loading') : translate('glossary.download_pdf')}
+            </Button>
+          </div>
         </div>
-        <Button 
-          variant="outline" 
-          className="flex items-center gap-2"
-          onClick={generatePDF}
-          disabled={isGeneratingPDF}
-        >
-          <Book className="w-4 h-4" />
-          {isGeneratingPDF ? translate('app.loading') : translate('glossary.download_pdf')}
-        </Button>
+        <div className="relative flex-shrink-0">
+          <div className="w-32 h-32 md:w-40 md:h-40 relative">
+            <img 
+              src="/mr-hootsworth.png" 
+              alt={translate('glossary.mascot.name')} 
+              className="w-full h-full object-contain"
+            />
+            <div className="absolute -top-2 -right-2 bg-white dark:bg-background rounded-full p-2 shadow-md">
+              <Book className="w-5 h-5 text-sgc-purple" />
+            </div>
+          </div>
+          <div className="absolute -bottom-2 left-0 right-0 text-center">
+            <span className="bg-sgc-purple text-white text-sm px-3 py-1 rounded-full">
+              {translate('glossary.mascot.name')}
+            </span>
+          </div>
+        </div>
       </div>
 
       {/* Search and Filter Section */}

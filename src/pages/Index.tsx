@@ -8,8 +8,8 @@ import {
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import Navbar from '@/components/Navbar';
 import { useToast } from '@/components/ui/use-toast';
+import Navbar from '@/components/Navbar';
 
 const Index = () => {
   const navigate = useNavigate();
@@ -33,10 +33,10 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-gradient-to-b from-purple-50 to-white">
+    <div className="min-h-screen flex flex-col bg-white">
       <Navbar />
       
-      {/* Hero Section */}
+      {/* Hero Section with improved readability */}
       <motion.section 
         ref={heroRef}
         initial="hidden"
@@ -139,7 +139,7 @@ const Index = () => {
                       >
                         {service.cta}
                         <ArrowRight className="ml-2 h-4 w-4" />
-                        </Button>
+                      </Button>
                     </CardContent>
                   </Card>
                 </Link>

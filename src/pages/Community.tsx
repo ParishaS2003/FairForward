@@ -21,7 +21,6 @@ import { Label } from '../components/ui/label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../components/ui/tabs';
 import { ScrollArea } from '../components/ui/scroll-area';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '../components/ui/dropdown-menu';
-import Navbar from '../components/Navbar';
 
 interface Comment {
   id: number;
@@ -362,8 +361,6 @@ const Community = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-sgc-neutral-light/30 to-white">
-      <Navbar />
-      
       <div className="sgc-container py-8">
         <Button
           variant="ghost"

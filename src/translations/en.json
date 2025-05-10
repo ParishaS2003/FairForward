@@ -73,6 +73,12 @@
     "download_pdf": "Download PDF",
     "examples": "Examples:",
     "jurisdiction": "Jurisdiction",
+    "all_letters": "All",
+    "mascot": {
+      "name": "Mr. Hootsworth",
+      "welcome": "Hello! I'm Mr. Hootsworth, your legal terms guide. I'm here to help you understand legal terminology in a simple and friendly way.",
+      "tip": "Tip: Use the search bar or browse by category to find the terms you're looking for!"
+    },
     "pdf": {
       "success_title": "PDF Generated Successfully",
       "success_description": "Your legal glossary has been downloaded.",
