@@ -16,6 +16,8 @@ import LiteracyHub from "./components/LiteracyHub";
 import Dashboard from "./components/Dashboard";
 import LegalHelp from '@/pages/LegalHelp';
 import Community from '@/pages/Community';
+import EmergencyPage from '@/pages/EmergencyPage';
+import Account from '@/pages/Account';
 
 const queryClient = new QueryClient();
 
@@ -37,10 +39,11 @@ const App = () => {
       <Toaster />
       <Sonner />
         <Router>
-        <Routes>
+          <Routes>
             <Route path="/" element={<Homepage />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
+            <Route path="/emergency" element={<EmergencyPage />} />
             <Route 
               path="/app/*" 
               element={
@@ -56,6 +59,14 @@ const App = () => {
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/legal-help" element={<LegalHelp />} />
             <Route path="/community" element={<Community />} />
+            <Route 
+              path="/account" 
+              element={
+                <ProtectedRoute>
+                  <Account />
+                </ProtectedRoute>
+              } 
+            />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Router>
