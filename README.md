@@ -76,6 +76,7 @@ yarn dev
 - **Routing**: React Router
 - **State Management**: React Context
 - **Styling**: Tailwind CSS
+- **Database**: SQL Lite
 
 ## 📱 Key Pages
 
