@@ -1,0 +1,129 @@
+/* RTL Support */
+[dir="rtl"] {
+  /* Text alignment */
+  text-align: right;
+}
+
+[dir="rtl"] .rtl-flip {
+  transform: scaleX(-1);
+}
+
+[dir="rtl"] .rtl-rotate-180 {
+  transform: rotate(180deg);
+}
+
+/* RTL support for Tailwind classes */
+[dir="rtl"] .space-x-1 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-x-reverse: 1;
+}
+
+[dir="rtl"] .space-x-2 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-x-reverse: 1;
+}
+
+[dir="rtl"] .space-x-3 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-x-reverse: 1;
+}
+
+[dir="rtl"] .space-x-4 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-x-reverse: 1;
+}
+
+[dir="rtl"] .space-x-6 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-x-reverse: 1;
+}
+
+[dir="rtl"] .space-x-8 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-x-reverse: 1;
+}
+
+/* RTL support for form elements */
+[dir="rtl"] input,
+[dir="rtl"] textarea {
+  text-align: right;
+}
+
+/* RTL support for buttons */
+[dir="rtl"] .btn-icon {
+  flex-direction: row-reverse;
+}
+
+/* RTL support for dropdown menus */
+[dir="rtl"] .dropdown-menu {
+  right: 0;
+  left: auto;
+}
+
+/* RTL support for navigation */
+[dir="rtl"] .nav-item {
+  margin-right: 0;
+  margin-left: 1rem;
+}
+
+/* RTL support for lists */
+[dir="rtl"] ul, 
+[dir="rtl"] ol {
+  padding-right: 1.5rem;
+  padding-left: 0;
+}
+
+/* RTL support for borders */
+[dir="rtl"] .border-l {
+  border-left: none;
+  border-right: 1px solid;
+}
+
+[dir="rtl"] .border-r {
+  border-right: none;
+  border-left: 1px solid;
+}
+
+/* RTL support for icons */
+[dir="rtl"] .icon-before {
+  margin-right: 0;
+  margin-left: 0.5rem;
+}
+
+[dir="rtl"] .icon-after {
+  margin-left: 0;
+  margin-right: 0.5rem;
+}
+
+/* RTL support for grid */
+[dir="rtl"] .grid {
+  direction: rtl;
+}
+
+/* RTL support for flexbox */
+[dir="rtl"] .flex-row {
+  flex-direction: row-reverse;
+}
+
+/* RTL support for positioning */
+[dir="rtl"] .left-0 {
+  left: auto;
+  right: 0;
+}
+
+[dir="rtl"] .right-0 {
+  right: auto;
+  left: 0;
+}
+
+/* RTL support for shadows */
+[dir="rtl"] .shadow-l {
+  box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+}
+
+[dir="rtl"] .shadow-r {
+  box-shadow: -2px 0 5px rgba(0,0,0,0.1);
+}
+
+/* RTL support for transitions */
+[dir="rtl"] .slide-in {
+  transform: translateX(100%);
+}
+
+[dir="rtl"] .slide-out {
+  transform: translateX(-100%);
+} 

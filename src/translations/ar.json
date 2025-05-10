@@ -1,0 +1,93 @@
+{
+  "app": {
+    "welcome": "مرحباً بك في FairForward",
+    "description": "منصتك للدعم القانوني وموارد السلامة",
+    "loading": "جاري التحميل...",
+    "error": "حدث خطأ",
+    "not_signed_in": "لم تقم بتسجيل الدخول."
+  },
+  "nav": {
+    "home": "الرئيسية",
+    "legal_help": "المساعدة القانونية",
+    "safe_spaces": "الأماكن الآمنة",
+    "resources": "الموارد",
+    "account": "الحساب",
+    "profile": "الملف الشخصي",
+    "safety": "السلامة",
+    "activity": "النشاط"
+  },
+  "account": {
+    "settings": "إعدادات الحساب",
+    "personal_info": "المعلومات الشخصية",
+    "personal_info_desc": "إدارة بياناتك الشخصية وتفضيلاتك",
+    "language": "اللغة",
+    "notifications": "الإشعارات",
+    "privacy": "الخصوصية",
+    "help": "المساعدة والدعم",
+    "logout": "تسجيل الخروج",
+    "interface_language": "لغة الواجهة",
+    "select_language": "اختر اللغة التي تريد استخدامها",
+    "full_name": "الاسم الكامل",
+    "email_address": "البريد الإلكتروني",
+    "phone_number": "رقم الهاتف",
+    "address": "معلومات العنوان",
+    "street": "عنوان الشارع",
+    "city": "المدينة",
+    "state": "الولاية",
+    "zip": "الرمز البريدي"
+  },
+  "button": {
+    "save": "حفظ",
+    "cancel": "إلغاء",
+    "next": "التالي",
+    "back": "رجوع",
+    "submit": "إرسال",
+    "learn_more": "معرفة المزيد",
+    "edit": "تعديل الملف الشخصي",
+    "sign_in": "تسجيل الدخول"
+  },
+  "form": {
+    "required": "مطلوب",
+    "optional": "اختياري",
+    "placeholder": {
+      "name": "أدخل اسمك الكامل",
+      "email": "أدخل بريدك الإلكتروني",
+      "phone": "أدخل رقم هاتفك",
+      "search": "بحث..."
+    }
+  },
+  "accessibility": {
+    "high_contrast": "وضع التباين العالي",
+    "large_text": "وضع النص الكبير",
+    "screen_reader": "دعم قارئ الشاشة",
+    "enhance_visibility": "تحسين التباين المرئي لقراءة أفضل",
+    "increase_text": "زيادة حجم النص لرؤية أفضل",
+    "screen_reader_desc": "تمكين التوافق المحسن مع قارئ الشاشة"
+  },
+  "glossary": {
+    "title": "قاموس المصطلحات القانونية",
+    "subtitle": "فهم المصطلحات القانونية بشكل مبسط",
+    "search_placeholder": "البحث عن المصطلحات القانونية...",
+    "all_categories": "جميع الفئات",
+    "no_results": "لم يتم العثور على مصطلحات تطابق معاييرك.",
+    "download_pdf": "تحميل PDF",
+    "examples": "أمثلة:",
+    "jurisdiction": "الاختصاص القضائي",
+    "pdf": {
+      "success_title": "تم إنشاء ملف PDF بنجاح",
+      "success_description": "تم تنزيل القاموس القانوني الخاص بك.",
+      "error_title": "خطأ في إنشاء PDF",
+      "error_description": "حدثت مشكلة أثناء إنشاء ملف PDF. يرجى المحاولة مرة أخرى.",
+      "related_terms": "مصطلحات ذات صلة"
+    },
+    "categories": {
+      "civil_rights": "الحقوق المدنية",
+      "criminal_law": "القانون الجنائي",
+      "family_law": "قانون الأسرة",
+      "employment_law": "قانون العمل",
+      "immigration": "الهجرة",
+      "housing_law": "قانون الإسكان",
+      "general": "عام"
+    }
+  }
+} 

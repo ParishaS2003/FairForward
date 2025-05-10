@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { MapPin, Phone, Clock, Info, Search, Map, AlertTriangle, Heart, Navigation, List, Star, Filter, ChevronDown, Shield, Users, Home } from 'lucide-react';
-import { GoogleMap, useJsApiLoader, Marker, InfoWindow } from '@react-google-maps/api';
+import React, { useState, useEffect } from 'react';
+import { MapPin, Phone, Clock, Info } from 'lucide-react';
+import BackButton from '@/components/BackButton';
 
 const SafeSpaces = () => {
   const [shelters, setShelters] = useState([]);
@@ -377,48 +377,51 @@ const SafeSpaces = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Hero Section */}
-      <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white py-16">
-        <div className="container mx-auto px-4 max-w-6xl">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4 text-center">Safe Spaces Near You</h1>
-          <p className="text-xl text-center text-blue-100 mb-8">Find shelter, support, and resources in your area</p>
-          
-          {/* Search Bar */}
-          <div className="max-w-2xl mx-auto">
-            <div className="relative">
-              <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-              <input
-                type="text"
-                placeholder="Search shelters by name or location..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-12 pr-4 py-4 rounded-full shadow-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900"
-              />
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div className="container mx-auto px-4 py-8 max-w-6xl">
-        {/* Emergency Banner */}
-        <div className="bg-red-50 border border-red-200 rounded-xl p-4 mb-8 transform hover:scale-[1.02] transition-transform">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center">
-              <AlertTriangle className="w-6 h-6 text-red-500 mr-3" />
-              <div>
-                <span className="text-red-700 font-semibold block">Emergency Resources Available 24/7</span>
-                <span className="text-red-600 text-sm">Immediate assistance is just a call away</span>
-              </div>
-            </div>
-            <a
-              href="tel:911"
-              className="bg-red-600 text-white px-6 py-2 rounded-full hover:bg-red-700 transition-colors flex items-center gap-2"
-            >
-              <Phone className="w-4 h-4" />
-              Call 911
-            </a>
-          </div>
+    <div className="container mx-auto px-4 py-8">
+      <BackButton to="/app" />
+      <h1 className="text-2xl font-bold mb-6">Safe Spaces Near You</h1>
+      <div className="space-y-6">
+        <div className="flex flex-wrap gap-2">
+          <button
+            onClick={() => setSelectedType('all')}
+            className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+              selectedType === 'all' 
+                ? 'bg-blue-600 text-white' 
+                : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+            }`}
+          >
+            All
+          </button>
+          <button
+            onClick={() => setSelectedType('emergency')}
+            className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+              selectedType === 'emergency' 
+                ? 'bg-red-600 text-white' 
+                : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+            }`}
+          >
+            24-Hour Shelters
+          </button>
+          <button
+            onClick={() => setSelectedType('youth')}
+            className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+              selectedType === 'youth' 
+                ? 'bg-blue-600 text-white' 
+                : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+            }`}
+          >
+            Youth Shelters
+          </button>
+          <button
+            onClick={() => setSelectedType('family')}
+            className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+              selectedType === 'family' 
+                ? 'bg-green-600 text-white' 
+                : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+            }`}
+          >
+            Family Shelters
+          </button>
         </div>
 
         {/* Controls Section */}
