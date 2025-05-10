@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { MapPin, Phone, Clock, Info } from 'lucide-react';
-import BackButton from '@/components/BackButton';
+import React, { useState, useEffect, useRef } from 'react';
+import { MapPin, Phone, Clock, Info, Search, Map, AlertTriangle, Heart, Navigation, List, Star, Filter, ChevronDown, Shield, Users, Home } from 'lucide-react';
+import { GoogleMap, LoadScript, Marker, InfoWindow } from '@react-google-maps/api';
 
 const SafeSpaces = () => {
   const [shelters, setShelters] = useState([]);
@@ -39,12 +39,6 @@ const SafeSpaces = () => {
       }
     ]
   };
-
-  const { isLoaded, loadError } = useJsApiLoader({
-    id: 'google-map-script',
-    googleMapsApiKey: "AIzaSyDHvDKki_ZB-gu31FmPoSdf8ubxJK0va88",
-    libraries: ['places']
-  });
 
   const geocodeAddress = async (address) => {
     if (!geocoder.current) {
@@ -207,15 +201,9 @@ const SafeSpaces = () => {
     return R * c;
   };
 
-  const onMapLoad = useCallback((map) => {
-    console.log('Map loaded successfully');
+  const onMapLoad = (map) => {
     mapRef.current = map;
-  }, []);
-
-  const onMapError = useCallback((error) => {
-    console.error('Error loading map:', error);
-    setError('Failed to load map. Please try again later.');
-  }, []);
+  };
 
   const requestLocation = () => {
     if (navigator.geolocation) {
@@ -247,8 +235,6 @@ const SafeSpaces = () => {
   };
 
   const MapView = () => {
-    console.log('Rendering MapView with shelters:', shelters);
-    
     const markers = getSortedShelters()
       .filter(shelter => shelter.lat && shelter.lng)
       .map(shelter => ({
@@ -256,101 +242,71 @@ const SafeSpaces = () => {
         shelter
       }));
 
-    console.log('Filtered markers:', markers);
-
-    if (loadError) {
-      return (
-        <div className="h-[600px] flex items-center justify-center bg-gray-50">
-          <div className="text-center">
-            <AlertTriangle className="w-16 h-16 text-red-500 mx-auto mb-4" />
-            <p className="text-red-600 text-lg">Failed to load Google Maps</p>
-            <p className="text-gray-500 text-sm mt-2">Please check your internet connection and try again</p>
-            <button
-              onClick={() => window.location.reload()}
-              className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
-            >
-              Try Again
-            </button>
-          </div>
-        </div>
-      );
-    }
-
-    if (!isLoaded) {
-      return (
-        <div className="h-[600px] flex items-center justify-center bg-gray-50">
-          <div className="text-center">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto mb-4"></div>
-            <p className="text-gray-600">Loading map...</p>
-          </div>
-        </div>
-      );
-    }
-
     return (
-      <GoogleMap
-        mapContainerStyle={mapContainerStyle}
-        center={mapCenter}
-        zoom={12}
-        options={mapOptions}
-        onLoad={onMapLoad}
-        onError={onMapError}
-      >
-        {markers.map((marker, index) => (
-          <Marker
-            key={index}
-            position={marker.position}
-            onClick={() => setSelectedShelter(marker.shelter)}
-            icon={{
-              url: marker.shelter.category.includes('24 Hour') 
-                ? 'https://maps.google.com/mapfiles/ms/icons/red-dot.png'
-                : marker.shelter.category.includes('Youth')
-                ? 'https://maps.google.com/mapfiles/ms/icons/blue-dot.png'
-                : 'https://maps.google.com/mapfiles/ms/icons/green-dot.png',
-              scaledSize: new window.google.maps.Size(32, 32)
-            }}
-          />
-        ))}
+      <LoadScript googleMapsApiKey="AIzaSyDHvDKki_ZB-gu31FmPoSdf8ubxJK0va88" libraries={['places']}>
+        <GoogleMap
+          mapContainerStyle={mapContainerStyle}
+          center={mapCenter}
+          zoom={12}
+          options={mapOptions}
+          onLoad={onMapLoad}
+        >
+          {markers.map((marker, index) => (
+            <Marker
+              key={index}
+              position={marker.position}
+              onClick={() => setSelectedShelter(marker.shelter)}
+              icon={{
+                url: marker.shelter.category.includes('24 Hour') 
+                  ? 'https://maps.google.com/mapfiles/ms/icons/red-dot.png'
+                  : marker.shelter.category.includes('Youth')
+                  ? 'https://maps.google.com/mapfiles/ms/icons/blue-dot.png'
+                  : 'https://maps.google.com/mapfiles/ms/icons/green-dot.png',
+                scaledSize: new window.google.maps.Size(32, 32)
+              }}
+            />
+          ))}
 
-        {selectedShelter && (
-          <InfoWindow
-            position={{ lat: selectedShelter.lat, lng: selectedShelter.lng }}
-            onCloseClick={() => setSelectedShelter(null)}
-          >
-            <div className="p-2 max-w-xs">
-              <h3 className="font-semibold text-gray-900">{selectedShelter.name}</h3>
-              <p className="text-sm text-gray-600 mt-1">{selectedShelter.address}</p>
-              <div className="mt-2 flex flex-wrap gap-2">
-                <span className={`inline-block px-2 py-1 rounded-full text-xs font-medium ${getTypeColor(selectedShelter.category)}`}>
-                  {selectedShelter.gender}
-                </span>
-                <span className="inline-block px-2 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
-                  {selectedShelter.ageRange}
-                </span>
+          {selectedShelter && (
+            <InfoWindow
+              position={{ lat: selectedShelter.lat, lng: selectedShelter.lng }}
+              onCloseClick={() => setSelectedShelter(null)}
+            >
+              <div className="p-2 max-w-xs">
+                <h3 className="font-semibold text-gray-900">{selectedShelter.name}</h3>
+                <p className="text-sm text-gray-600 mt-1">{selectedShelter.address}</p>
+                <div className="mt-2 flex flex-wrap gap-2">
+                  <span className={`inline-block px-2 py-1 rounded-full text-xs font-medium ${getTypeColor(selectedShelter.category)}`}>
+                    {selectedShelter.gender}
+                  </span>
+                  <span className="inline-block px-2 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
+                    {selectedShelter.ageRange}
+                  </span>
+                </div>
+                {selectedShelter.phone && (
+                  <a
+                    href={`tel:${selectedShelter.phone}`}
+                    className="mt-2 inline-flex items-center text-blue-600 hover:text-blue-800 text-sm"
+                  >
+                    <Phone className="w-4 h-4 mr-1" />
+                    {selectedShelter.phone}
+                  </a>
+                )}
               </div>
-              {selectedShelter.phone && (
-                <a
-                  href={`tel:${selectedShelter.phone}`}
-                  className="mt-2 inline-flex items-center text-blue-600 hover:text-blue-800 text-sm"
-                >
-                  <Phone className="w-4 h-4 mr-1" />
-                  {selectedShelter.phone}
-                </a>
-              )}
-            </div>
-          </InfoWindow>
-        )}
+            </InfoWindow>
+          )}
 
-        {userLocation && (
-          <Marker
-            position={userLocation}
-            icon={{
-              url: 'https://maps.google.com/mapfiles/ms/icons/blue-dot.png',
-              scaledSize: new window.google.maps.Size(32, 32)
-            }}
-          />
-        )}
-      </GoogleMap>
+          {userLocation && (
+            <Marker
+              position={userLocation}
+              icon={{
+                url: 'https://maps.google.com/mapfiles/ms/icons/blue-dot.png',
+                scaledSize: new window.google.maps.Size(32, 32)
+              }}
+            />
+          )}
+        </GoogleMap>
+      </LoadScript>
     );
   };
 
@@ -377,51 +333,48 @@ const SafeSpaces = () => {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <BackButton to="/app" />
-      <h1 className="text-2xl font-bold mb-6">Safe Spaces Near You</h1>
-      <div className="space-y-6">
-        <div className="flex flex-wrap gap-2">
-          <button
-            onClick={() => setSelectedType('all')}
-            className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-              selectedType === 'all' 
-                ? 'bg-blue-600 text-white' 
-                : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-            }`}
-          >
-            All
-          </button>
-          <button
-            onClick={() => setSelectedType('emergency')}
-            className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-              selectedType === 'emergency' 
-                ? 'bg-red-600 text-white' 
-                : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-            }`}
-          >
-            24-Hour Shelters
-          </button>
-          <button
-            onClick={() => setSelectedType('youth')}
-            className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-              selectedType === 'youth' 
-                ? 'bg-blue-600 text-white' 
-                : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-            }`}
-          >
-            Youth Shelters
-          </button>
-          <button
-            onClick={() => setSelectedType('family')}
-            className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-              selectedType === 'family' 
-                ? 'bg-green-600 text-white' 
-                : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-            }`}
-          >
-            Family Shelters
-          </button>
+    <div className="min-h-screen bg-gray-50">
+      {/* Hero Section */}
+      <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white py-16">
+        <div className="container mx-auto px-4 max-w-6xl">
+          <h1 className="text-4xl md:text-5xl font-bold mb-4 text-center">Safe Spaces Near You</h1>
+          <p className="text-xl text-center text-blue-100 mb-8">Find shelter, support, and resources in your area</p>
+          
+          {/* Search Bar */}
+          <div className="max-w-2xl mx-auto">
+            <div className="relative">
+              <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+              <input
+                type="text"
+                placeholder="Search shelters by name or location..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full pl-12 pr-4 py-4 rounded-full shadow-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="container mx-auto px-4 py-8 max-w-6xl">
+        {/* Emergency Banner */}
+        <div className="bg-red-50 border border-red-200 rounded-xl p-4 mb-8 transform hover:scale-[1.02] transition-transform">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center">
+              <AlertTriangle className="w-6 h-6 text-red-500 mr-3" />
+              <div>
+                <span className="text-red-700 font-semibold block">Emergency Resources Available 24/7</span>
+                <span className="text-red-600 text-sm">Immediate assistance is just a call away</span>
+              </div>
+            </div>
+            <a
+              href="tel:911"
+              className="bg-red-600 text-white px-6 py-2 rounded-full hover:bg-red-700 transition-colors flex items-center gap-2"
+            >
+              <Phone className="w-4 h-4" />
+              Call 911
+            </a>
+          </div>
         </div>
 
         {/* Controls Section */}
@@ -595,29 +548,7 @@ const SafeSpaces = () => {
           </div>
         ) : (
           <div className="bg-white rounded-xl shadow-sm overflow-hidden">
-            {error ? (
-              <div className="h-[600px] flex items-center justify-center bg-gray-50">
-                <div className="text-center">
-                  <AlertTriangle className="w-16 h-16 text-red-500 mx-auto mb-4" />
-                  <p className="text-red-600 text-lg">{error}</p>
-                  <button
-                    onClick={() => window.location.reload()}
-                    className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
-                  >
-                    Try Again
-                  </button>
-                </div>
-              </div>
-            ) : loading ? (
-              <div className="h-[600px] flex items-center justify-center bg-gray-50">
-                <div className="text-center">
-                  <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto mb-4"></div>
-                  <p className="text-gray-600">Loading shelters data...</p>
-                </div>
-              </div>
-            ) : (
-              <MapView />
-            )}
+            <MapView />
           </div>
         )}
 
