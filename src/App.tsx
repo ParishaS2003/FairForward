@@ -40,10 +40,11 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
 const Layout = ({ children }: { children: React.ReactNode }) => {
   const location = useLocation();
   const isHomepage = location.pathname === '/';
+  const isAuthPage = location.pathname === '/login' || location.pathname === '/signup';
 
   return (
     <div className="min-h-screen flex flex-col">
-      {!isHomepage && <Navbar />}
+      {!isHomepage && !isAuthPage && <Navbar />}
       <main className="flex-1">
         {children}
       </main>

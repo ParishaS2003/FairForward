@@ -33,35 +33,36 @@ const ProBonoQualification = () => {
       <div className="sgc-container py-16">
         <div className="max-w-2xl mx-auto">
           <div className="text-center mb-8">
-            <h1 className="text-3xl font-bold mb-4">Pro Bono Legal Support</h1>
+            <h1 className="text-3xl font-bold mb-4 text-sgc-purple">Pro Bono Legal Support</h1>
             <p className="text-sgc-neutral">
               To ensure our pro bono services reach those most in need, please answer a few questions about your household.
             </p>
           </div>
 
-          <Card className="mb-6">
-            <CardHeader>
-              <CardTitle>Qualification Check</CardTitle>
+          <Card className="mb-6 border-sgc-purple/20">
+            <CardHeader className="bg-gradient-to-r from-sgc-purple/5 to-transparent">
+              <CardTitle className="text-sgc-purple">Qualification Check</CardTitle>
               <CardDescription>
                 Pro bono legal services are available to households meeting specific income criteria.
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
               <div className="space-y-4">
-                <Label>How many members are in your household?</Label>
+                <Label className="text-sgc-purple">How many members are in your household?</Label>
                 <RadioGroup
                   value={householdSize || ''}
                   onValueChange={(value) => {
                     setHouseholdSize(value as '1-3'|'4+');
                     setShowError(false);
                   }}
+                  className="text-sgc-purple"
                 >
                   <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="1-3" id="1-3" />
+                    <RadioGroupItem value="1-3" id="1-3" className="border-sgc-purple/50 data-[state=checked]:bg-sgc-purple data-[state=checked]:text-white" />
                     <Label htmlFor="1-3">1-3 members</Label>
                   </div>
                   <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="4+" id="4+" />
+                    <RadioGroupItem value="4+" id="4+" className="border-sgc-purple/50 data-[state=checked]:bg-sgc-purple data-[state=checked]:text-white" />
                     <Label htmlFor="4+">4 or more members</Label>
                   </div>
                 </RadioGroup>
@@ -69,7 +70,7 @@ const ProBonoQualification = () => {
 
               {householdSize && (
                 <div className="space-y-4">
-                  <Label>
+                  <Label className="text-sgc-purple">
                     Is your annual household income less than {householdSize === '1-3' ? '$60,000' : '$84,000'}?
                   </Label>
                   <RadioGroup
@@ -78,13 +79,14 @@ const ProBonoQualification = () => {
                       setIncome(value as 'less'|'more');
                       setShowError(false);
                     }}
+                    className="text-sgc-purple"
                   >
                     <div className="flex items-center space-x-2">
-                      <RadioGroupItem value="less" id="less" />
+                      <RadioGroupItem value="less" id="less" className="border-sgc-purple/50 data-[state=checked]:bg-sgc-purple data-[state=checked]:text-white" />
                       <Label htmlFor="less">Yes, less than this amount</Label>
                     </div>
                     <div className="flex items-center space-x-2">
-                      <RadioGroupItem value="more" id="more" />
+                      <RadioGroupItem value="more" id="more" className="border-sgc-purple/50 data-[state=checked]:bg-sgc-purple data-[state=checked]:text-white" />
                       <Label htmlFor="more">No, more than this amount</Label>
                     </div>
                   </RadioGroup>
@@ -92,8 +94,8 @@ const ProBonoQualification = () => {
               )}
 
               {showError && (
-                <Alert variant="destructive">
-                  <AlertCircle className="h-4 w-4" />
+                <Alert variant="destructive" className="border-sgc-purple/20 bg-sgc-purple/10 text-sgc-purple">
+                  <AlertCircle className="h-4 w-4 text-sgc-purple" />
                   <AlertTitle>Error</AlertTitle>
                   <AlertDescription>
                     Please answer all questions to proceed.
@@ -102,7 +104,7 @@ const ProBonoQualification = () => {
               )}
 
               <Button 
-                className="w-full"
+                className="w-full bg-sgc-purple hover:bg-sgc-purple-dark text-white"
                 onClick={handleSubmit}
               >
                 Check Qualification

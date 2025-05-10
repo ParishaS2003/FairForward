@@ -70,11 +70,11 @@ const Homepage = () => {
     {
       category: "Privacy & Security",
       questions: [
-        {
-          question: "How does FairForward protect my privacy?",
+    {
+      question: "How does FairForward protect my privacy?",
           answer: "We use end-to-end encryption and strict privacy protocols to ensure your data remains secure. All information is stored according to legal requirements and best practices.",
           helpful: 245
-        },
+    },
         {
           question: "Is my information shared with third parties?",
           answer: "No, your personal information is never shared with third parties without your explicit consent. We maintain strict data protection policies.",
@@ -85,12 +85,12 @@ const Homepage = () => {
     {
       category: "Legal Support",
       questions: [
-        {
-          question: "Is the legal guidance provided by AI reliable?",
+    {
+      question: "Is the legal guidance provided by AI reliable?",
           answer: "Our AI LegalBot is trained on verified legal information and regularly updated. However, it's designed to provide general guidance and should not replace professional legal advice.",
           helpful: 312
-        },
-        {
+    },
+    {
           question: "How quickly can I get legal assistance?",
           answer: "Our AI LegalBot provides immediate assistance 24/7. For professional legal consultation, response times typically range from 1-24 hours depending on the complexity of your case.",
           helpful: 278
@@ -100,8 +100,8 @@ const Homepage = () => {
     {
       category: "Accessibility",
       questions: [
-        {
-          question: "Are the resources available in multiple languages?",
+    {
+      question: "Are the resources available in multiple languages?",
           answer: "Yes, we provide resources in multiple languages including English, Spanish, Arabic, and more. We're continuously expanding our language support to serve more communities.",
           helpful: 156
         },
@@ -263,7 +263,7 @@ const Homepage = () => {
           </motion.div>
         </div>
       </section>
-      
+
       {/* Features Section */}
       <section className="sgc-section bg-white py-16">
         <div className="sgc-container">
@@ -303,7 +303,7 @@ const Homepage = () => {
           </div>
         </div>
       </section>
-
+      
       {/* Learning Hub Section */}
       <section className="py-16 bg-sgc-neutral-light">
         <div className="sgc-container">
@@ -313,13 +313,13 @@ const Homepage = () => {
               Access the tools and information you need for immediate legal support and guidance
             </p>
           </div>
-
+          
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
             <Card className="hover:shadow-lg transition-all duration-300">
-              <CardContent className="p-6">
+                  <CardContent className="p-6">
                 <div className="h-12 w-12 rounded-full bg-sgc-purple-light/20 flex items-center justify-center mb-4">
                   <Scale className="text-sgc-purple" />
-                </div>
+                    </div>
                 <h3 className="font-bold text-lg mb-2">Quick Legal Guides</h3>
                 <p className="text-sgc-neutral mb-4">
                   Step-by-step guidance for common legal situations and immediate actions to take
@@ -334,7 +334,7 @@ const Homepage = () => {
               <CardContent className="p-6">
                 <div className="h-12 w-12 rounded-full bg-sgc-purple-light/20 flex items-center justify-center mb-4">
                   <BookText className="text-sgc-purple" />
-                </div>
+                      </div>
                 <h3 className="font-bold text-lg mb-2">Document Templates</h3>
                 <p className="text-sgc-neutral mb-4">
                   Ready-to-use legal document templates with simple fill-in instructions
@@ -349,7 +349,7 @@ const Homepage = () => {
               <CardContent className="p-6">
                 <div className="h-12 w-12 rounded-full bg-sgc-purple-light/20 flex items-center justify-center mb-4">
                   <MessageSquare className="text-sgc-purple" />
-                </div>
+                      </div>
                 <h3 className="font-bold text-lg mb-2">Legal Chat Support</h3>
                 <p className="text-sgc-neutral mb-4">
                   Get instant answers to your legal questions from our AI assistant and community
@@ -357,14 +357,14 @@ const Homepage = () => {
                 <Button variant="link" className="text-sgc-purple hover:text-sgc-purple-dark">
                   Start Chat <ChevronRight className="ml-1 h-4 w-4" />
                 </Button>
-              </CardContent>
-            </Card>
+                  </CardContent>
+                </Card>
 
             <Card className="hover:shadow-lg transition-all duration-300">
               <CardContent className="p-6">
                 <div className="h-12 w-12 rounded-full bg-sgc-purple-light/20 flex items-center justify-center mb-4">
                   <Users className="text-sgc-purple" />
-                </div>
+          </div>
                 <h3 className="font-bold text-lg mb-2">Community Support</h3>
                 <p className="text-sgc-neutral mb-4">
                   Connect with others who have faced similar situations and share experiences
@@ -375,13 +375,13 @@ const Homepage = () => {
               </CardContent>
             </Card>
           </div>
-
+          
           <div className="mt-12 text-center">
             <Link to="/resources">
               <Button 
                 size="lg"
                 className="bg-sgc-purple text-white hover:bg-sgc-purple-dark px-8 py-3 rounded-full text-lg transform transition-all duration-300 hover:scale-105 hover:shadow-lg"
-              >
+                    >
                 Access Resources
               </Button>
             </Link>
@@ -398,7 +398,7 @@ const Homepage = () => {
               Find answers to common questions about our platform and services
             </p>
           </div>
-
+          
           <div className="flex flex-col md:flex-row gap-8 max-w-5xl mx-auto">
             {/* Category Navigation */}
             <div className="md:w-1/4">
@@ -421,39 +421,39 @@ const Homepage = () => {
               {faqs
                 .find((cat) => cat.category === selectedCategory)
                 ?.questions.map((faq, index) => (
-                  <Card
+                <Card 
                     key={index}
                     className="cursor-pointer hover:shadow-md transition-all duration-300"
                     onClick={() => setActiveQuestion(activeQuestion === index ? null : index)}
-                  >
-                    <CardContent className="p-6">
-                      <div className="flex justify-between items-center">
-                        <h3 className="text-lg font-semibold">{faq.question}</h3>
+                >
+                  <CardContent className="p-6">
+                    <div className="flex justify-between items-center">
+                      <h3 className="text-lg font-semibold">{faq.question}</h3>
                         {activeQuestion === index ? (
-                          <ChevronUp className="text-sgc-purple" />
-                        ) : (
-                          <ChevronDown className="text-sgc-purple" />
-                        )}
-                      </div>
-                      <AnimatePresence>
+                        <ChevronUp className="text-sgc-purple" />
+                      ) : (
+                        <ChevronDown className="text-sgc-purple" />
+                      )}
+                    </div>
+                    <AnimatePresence>
                         {activeQuestion === index && (
-                          <motion.div
-                            initial={{ height: 0, opacity: 0 }}
-                            animate={{ height: "auto", opacity: 1 }}
-                            exit={{ height: 0, opacity: 0 }}
-                            transition={{ duration: 0.3 }}
+                        <motion.div
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{ height: "auto", opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          transition={{ duration: 0.3 }}
                           >
                             <p className="mt-4 text-sgc-neutral">{faq.answer}</p>
                             <div className="mt-4 flex items-center gap-2 text-sm text-sgc-neutral">
                               <ThumbsUp size={14} />
                               <span>{faq.helpful} people found this helpful</span>
                             </div>
-                          </motion.div>
-                        )}
-                      </AnimatePresence>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
                     </CardContent>
                   </Card>
-                ))}
+              ))}
             </div>
           </div>
         </div>
@@ -515,8 +515,8 @@ const Homepage = () => {
                       Reply
                     </Button>
                   </div>
-                </CardContent>
-              </Card>
+                  </CardContent>
+                </Card>
             ))}
           </div>
         </div>

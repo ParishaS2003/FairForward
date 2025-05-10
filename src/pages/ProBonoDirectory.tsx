@@ -19,7 +19,10 @@ import {
   Globe,
   Award,
   CheckCircle,
-  Sparkles
+  Sparkles,
+  User,
+  Briefcase,
+  Languages
 } from 'lucide-react';
 
 const ProBonoDirectory = () => {
@@ -239,7 +242,7 @@ const ProBonoDirectory = () => {
         <motion.div variants={itemVariants} className="mb-8">
           <Button
             variant="ghost"
-            className="mb-4"
+            className="mb-4 text-sgc-purple hover:text-sgc-purple-dark hover:bg-sgc-purple/10"
             onClick={() => navigate('/pro-bono-qualification')}
           >
             <ArrowLeft className="mr-2 h-4 w-4" />
@@ -397,11 +400,11 @@ const ProBonoDirectory = () => {
                       </div>
                     </div>
                     <div className="flex flex-wrap gap-4">
-                      <Button className="flex-1">
+                      <Button className="flex-1 bg-sgc-purple hover:bg-sgc-purple-dark text-white">
                         <Phone className="mr-2 h-4 w-4" />
                         Call
                       </Button>
-                      <Button variant="outline" className="flex-1">
+                      <Button variant="outline" className="flex-1 border-sgc-purple text-sgc-purple hover:bg-sgc-purple/10 hover:text-sgc-purple-dark">
                         <MessageSquare className="mr-2 h-4 w-4" />
                         Message
                       </Button>

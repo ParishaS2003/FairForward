@@ -156,6 +156,77 @@ const Community = () => {
     "Student Life"
   ];
 
+  const hootsworthVariants = {
+    initial: { scale: 0.8, opacity: 0, y: 20 },
+    animate: { 
+      scale: 1, 
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.8,
+        ease: "easeOut"
+      }
+    },
+    hover: {
+      scale: 1.15,
+      rotate: [0, -8, 8, -8, 0],
+      y: -5,
+      transition: {
+        duration: 0.6,
+        ease: "easeInOut"
+      }
+    },
+    tap: {
+      scale: 0.95,
+      transition: {
+        duration: 0.1
+      }
+    }
+  };
+
+  const floatingAnimation = {
+    y: [0, -10, 0],
+    transition: {
+      duration: 2,
+      repeat: Infinity,
+      ease: "easeInOut"
+    }
+  };
+
+  const sparkleVariants = {
+    initial: { opacity: 0, scale: 0 },
+    animate: { 
+      opacity: [0, 1, 0],
+      scale: [0, 1.2, 0],
+      transition: {
+        duration: 1.5,
+        repeat: Infinity,
+        repeatDelay: 0.5
+      }
+    }
+  };
+
+  const messageVariants = {
+    initial: { opacity: 0, y: 10, scale: 0.9 },
+    animate: { 
+      opacity: 1, 
+      y: 0,
+      scale: 1,
+      transition: {
+        duration: 0.3,
+        ease: "easeOut"
+      }
+    },
+    exit: { 
+      opacity: 0, 
+      y: -10,
+      scale: 0.9,
+      transition: {
+        duration: 0.2
+      }
+    }
+  };
+
   useEffect(() => {
     // Simulate loading data
     const timer = setTimeout(() => {
@@ -375,11 +446,46 @@ const Community = () => {
           {/* Main Content */}
           <div className="md:col-span-2 space-y-6">
             {/* Header */}
-            <div className="flex items-center gap-4 mb-6">
-              <img src="/mr-hootsworth.png" alt="Mascot" className="h-14 w-14 rounded-full border-2 border-sgc-purple bg-white shadow" />
-              <div>
-                <h1 className="text-2xl font-bold text-sgc-purple">Community Support Hub</h1>
-                <p className="text-sgc-neutral">Share your experiences and connect with others who understand.</p>
+            <div className="flex items-center gap-6 mb-8 relative">
+              <motion.div
+                className="cursor-pointer relative"
+                variants={hootsworthVariants}
+                initial="initial"
+                animate="animate"
+                whileHover="hover"
+                whileTap="tap"
+              >
+                <motion.div
+                  animate={floatingAnimation}
+                  className="relative"
+                >
+                  <img 
+                    src="/mr-hootsworth.png" 
+                    alt="Mr. Hootsworth" 
+                    className="h-24 w-24 shadow-lg"
+                  />
+                  <motion.div
+                    className="absolute -top-3 -right-3"
+                    variants={sparkleVariants}
+                    initial="initial"
+                    animate="animate"
+                  >
+                    <Sparkles className="h-8 w-8 text-yellow-400" />
+                  </motion.div>
+                  <motion.div
+                    className="absolute -bottom-3 -left-3"
+                    variants={sparkleVariants}
+                    initial="initial"
+                    animate="animate"
+                    style={{ animationDelay: "0.5s" }}
+                  >
+                    <Sparkles className="h-8 w-8 text-yellow-400" />
+                  </motion.div>
+                </motion.div>
+              </motion.div>
+              <div className="flex-1">
+                <h1 className="text-3xl font-bold text-sgc-purple mb-2">Community Support Hub</h1>
+                <p className="text-lg text-sgc-neutral">Share your experiences and connect with others who understand.</p>
               </div>
             </div>
 
