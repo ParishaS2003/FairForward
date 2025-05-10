@@ -1,0 +1,67 @@
+{
+  "app": {
+    "welcome": "Welcome to FairForward",
+    "description": "Your platform for legal support and safety resources",
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "not_signed_in": "You are not signed in."
+  },
+  "nav": {
+    "home": "Home",
+    "legal_help": "Legal Help",
+    "safe_spaces": "Safe Spaces",
+    "resources": "Resources",
+    "account": "Account",
+    "profile": "Profile",
+    "safety": "Safety",
+    "activity": "Activity"
+  },
+  "account": {
+    "settings": "Account Settings",
+    "personal_info": "Personal Information",
+    "personal_info_desc": "Manage your personal details and preferences",
+    "language": "Language",
+    "notifications": "Notifications",
+    "privacy": "Privacy",
+    "help": "Help & Support",
+    "logout": "Sign Out",
+    "interface_language": "Interface Language",
+    "select_language": "Select the language you want to use",
+    "full_name": "Full Name",
+    "email_address": "Email Address",
+    "phone_number": "Phone Number",
+    "address": "Address Information",
+    "street": "Street Address",
+    "city": "City",
+    "state": "State",
+    "zip": "ZIP Code"
+  },
+  "button": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "next": "Next",
+    "back": "Back",
+    "submit": "Submit",
+    "learn_more": "Learn More",
+    "edit": "Edit Profile",
+    "sign_in": "Sign In"
+  },
+  "form": {
+    "required": "Required",
+    "optional": "Optional",
+    "placeholder": {
+      "name": "Enter your full name",
+      "email": "Enter your email address",
+      "phone": "Enter your phone number",
+      "search": "Search..."
+    }
+  },
+  "accessibility": {
+    "high_contrast": "High Contrast Mode",
+    "large_text": "Large Text Mode",
+    "screen_reader": "Screen Reader Support",
+    "enhance_visibility": "Enhance visual contrast for better readability",
+    "increase_text": "Increase text size for better visibility",
+    "screen_reader_desc": "Enable enhanced screen reader compatibility"
+  }
+} 

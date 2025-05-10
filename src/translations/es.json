@@ -1,0 +1,67 @@
+{
+  "app": {
+    "welcome": "Bienvenido a FairForward",
+    "description": "Tu plataforma para apoyo legal y recursos de seguridad",
+    "loading": "Cargando...",
+    "error": "Ocurrió un error",
+    "not_signed_in": "No has iniciado sesión."
+  },
+  "nav": {
+    "home": "Inicio",
+    "legal_help": "Ayuda Legal",
+    "safe_spaces": "Espacios Seguros",
+    "resources": "Recursos",
+    "account": "Cuenta",
+    "profile": "Perfil",
+    "safety": "Seguridad",
+    "activity": "Actividad"
+  },
+  "account": {
+    "settings": "Configuración de Cuenta",
+    "personal_info": "Información Personal",
+    "personal_info_desc": "Administra tus datos personales y preferencias",
+    "language": "Idioma",
+    "notifications": "Notificaciones",
+    "privacy": "Privacidad",
+    "help": "Ayuda y Soporte",
+    "logout": "Cerrar Sesión",
+    "interface_language": "Idioma de la Interfaz",
+    "select_language": "Selecciona el idioma que deseas usar",
+    "full_name": "Nombre Completo",
+    "email_address": "Correo Electrónico",
+    "phone_number": "Número de Teléfono",
+    "address": "Información de Dirección",
+    "street": "Dirección",
+    "city": "Ciudad",
+    "state": "Estado",
+    "zip": "Código Postal"
+  },
+  "button": {
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "next": "Siguiente",
+    "back": "Atrás",
+    "submit": "Enviar",
+    "learn_more": "Más Información",
+    "edit": "Editar Perfil",
+    "sign_in": "Iniciar Sesión"
+  },
+  "form": {
+    "required": "Requerido",
+    "optional": "Opcional",
+    "placeholder": {
+      "name": "Ingresa tu nombre completo",
+      "email": "Ingresa tu correo electrónico",
+      "phone": "Ingresa tu número de teléfono",
+      "search": "Buscar..."
+    }
+  },
+  "accessibility": {
+    "high_contrast": "Modo de Alto Contraste",
+    "large_text": "Modo de Texto Grande",
+    "screen_reader": "Soporte para Lector de Pantalla",
+    "enhance_visibility": "Mejora el contraste visual para mejor legibilidad",
+    "increase_text": "Aumenta el tamaño del texto para mejor visibilidad",
+    "screen_reader_desc": "Habilita compatibilidad mejorada con lectores de pantalla"
+  }
+} 

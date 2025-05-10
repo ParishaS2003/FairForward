@@ -18,6 +18,7 @@ import LegalHelp from '@/pages/LegalHelp';
 import Community from '@/pages/Community';
 import EmergencyPage from '@/pages/EmergencyPage';
 import Account from '@/pages/Account';
+import { LanguageProvider } from '@/contexts/LanguageContext';
 
 const queryClient = new QueryClient();
 
@@ -34,45 +35,47 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
 
 const App = () => {
   return (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-        <Router>
-          <Routes>
-            <Route path="/" element={<Homepage />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<Signup />} />
-            <Route path="/emergency" element={<EmergencyPage />} />
-            <Route 
-              path="/app/*" 
-              element={
-                <ProtectedRoute>
-                  <Index />
-                </ProtectedRoute>
-              } 
-            />
-            <Route path="/chat" element={<LegalBot />} />
-            <Route path="/map" element={<SafeSpaces />} />
-            <Route path="/report" element={<ReportForm />} />
-            <Route path="/learn" element={<LiteracyHub />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/legal-help" element={<LegalHelp />} />
-            <Route path="/community" element={<Community />} />
-            <Route 
-              path="/account" 
-              element={
-                <ProtectedRoute>
-                  <Account />
-                </ProtectedRoute>
-              } 
-            />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </Router>
-    </TooltipProvider>
-  </QueryClientProvider>
-);
+    <QueryClientProvider client={queryClient}>
+      <LanguageProvider>
+        <TooltipProvider>
+          <Toaster />
+          <Sonner />
+          <Router>
+            <Routes>
+              <Route path="/" element={<Homepage />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/signup" element={<Signup />} />
+              <Route path="/emergency" element={<EmergencyPage />} />
+              <Route 
+                path="/app/*" 
+                element={
+                  <ProtectedRoute>
+                    <Index />
+                  </ProtectedRoute>
+                } 
+              />
+              <Route path="/chat" element={<LegalBot />} />
+              <Route path="/map" element={<SafeSpaces />} />
+              <Route path="/report" element={<ReportForm />} />
+              <Route path="/learn" element={<LiteracyHub />} />
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/legal-help" element={<LegalHelp />} />
+              <Route path="/community" element={<Community />} />
+              <Route 
+                path="/account" 
+                element={
+                  <ProtectedRoute>
+                    <Account />
+                  </ProtectedRoute>
+                } 
+              />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </Router>
+        </TooltipProvider>
+      </LanguageProvider>
+    </QueryClientProvider>
+  );
 };
 
 export default App;
