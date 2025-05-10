@@ -1,14 +1,15 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Send, User, Bot, Search, BookOpen, AlertCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Textarea } from '@/components/ui/textarea';
 import { Input } from '@/components/ui/input';
 import { motion, AnimatePresence } from 'framer-motion';
 import { format } from 'date-fns';
 import BackButton from './BackButton';
+import { ScrollArea } from "@/components/ui/scroll-area";
 
-const API_BASE_URL = 'http://localhost:5000';
+const API_BASE_URL = 'http://localhost:5001';
 
 type Message = {
   id: number;
@@ -26,19 +27,33 @@ type Resource = {
 };
 
 const LegalBot = () => {
-  const [messages, setMessages] = useState<Message[]>([
-    {
-      id: 1,
-      content: "Hello! I'm your AI Legal Assistant. I can help you with questions about Canadian legal rights, workplace issues, discrimination, and more. How can I assist you today?",
-      isUser: false,
-      type: 'normal'
-    }
-  ]);
+  const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [isThinking, setIsThinking] = useState(false);
   const [isApiConnected, setIsApiConnected] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [showResources, setShowResources] = useState(false);
+  const [initialMessage, setInitialMessage] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchInitialMessage = async () => {
+      try {
+        const response = await fetch(`${API_BASE_URL}/api/test`);
+        const data = await response.json();
+        setInitialMessage(data.message);
+      } catch (error) {
+        console.error('Error fetching initial message:', error);
+        setInitialMessage('Welcome to the Legal Rights Chatbot! How can I help you today?');
+      }
+    };
+    fetchInitialMessage();
+  }, []);
+
+  useEffect(() => {
+    if (initialMessage) {
+      setMessages([{ id: 1, content: initialMessage, isUser: false, type: 'normal' }]);
+    }
+  }, [initialMessage]);
 
   // Test API connection on component mount
   useEffect(() => {

@@ -4,12 +4,11 @@ import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import { 
   Gavel, MapPin, FileText, MessageCircle,
-  ArrowRight, Shield, PhoneCall
+  ArrowRight, Shield, PhoneCall, BookOpen, Users, CheckCircle, User
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { useToast } from '@/components/ui/use-toast';
-import Navbar from '@/components/Navbar';
 
 const Index = () => {
   const navigate = useNavigate();
@@ -34,8 +33,6 @@ const Index = () => {
 
   return (
     <div className="min-h-screen flex flex-col bg-white">
-      <Navbar />
-      
       {/* Hero Section with improved readability */}
       <motion.section 
         ref={heroRef}
@@ -51,7 +48,7 @@ const Index = () => {
           >
             <h1 className="text-4xl md:text-5xl font-bold text-purple-900">
               Legal Support Made Simple
-              </h1>
+            </h1>
             <motion.img 
               src="/mr-hootsworth.png" 
               alt="Mr. Hootsworth the Owl" 
@@ -66,21 +63,6 @@ const Index = () => {
           >
             Get immediate legal assistance, find safe spaces, and connect with support services - all in one place.
           </motion.p>
-
-          {/* Emergency Button */}
-          <motion.div
-            variants={fadeInUp}
-            className="mb-12"
-          >
-            <Button 
-              size="lg"
-              className="bg-red-600 hover:bg-red-700 text-white px-8 py-6 text-lg rounded-full shadow-lg hover:shadow-xl transition-all"
-              onClick={() => navigate('/emergency')}
-            >
-              <PhoneCall className="mr-2 h-6 w-6" />
-              24/7 Emergency Help
-                </Button>
-          </motion.div>
         </div>
       </motion.section>
 
@@ -113,11 +95,11 @@ const Index = () => {
               },
               {
                 icon: <FileText className="h-8 w-8" />,
-                title: "Report Incident",
-                description: "File a secure report and get connected with legal support.",
+                title: "Connect to Lawyers",
+                description: "Find pro bono legal help and connect with qualified lawyers.",
                 color: "indigo",
-                link: "/report",
-                cta: "File Report"
+                link: "/pro-bono-qualification",
+                cta: "Find Lawyers"
               }
             ].map((service, index) => (
               <motion.div

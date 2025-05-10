@@ -237,26 +237,26 @@ const Homepage = () => {
               <div className="relative z-10 bg-white rounded-xl shadow-lg p-8 md:ml-12 transform transition-all duration-300 hover:shadow-xl">
                 <h2 className="text-xl font-bold mb-4 text-center">What We Offer</h2>
                 <div className="grid grid-cols-2 gap-4">
-                  <FeatureIcon 
-                    icon={<MessageCircle className="mb-2 text-sgc-purple" size={24} />}
-                    title="LegalBot"
-                    description="AI-powered legal guidance"
-                  />
-                  <FeatureIcon 
-                    icon={<MapPin className="mb-2 text-sgc-purple" size={24} />}
-                    title="Safe Spaces"
-                    description="Find nearby help"
-                  />
-                  <FeatureIcon 
-                    icon={<BookOpen className="mb-2 text-sgc-purple" size={24} />}
-                    title="Learn"
-                    description="Free courses"
-                  />
-                  <FeatureIcon 
-                    icon={<Shield className="mb-2 text-sgc-purple" size={24} />}
-                    title="Legal Terms"
-                    description="Simple definitions"
-                  />
+                  <Link to="/chat" className="sgc-feature-card hover:shadow-md transition-all">
+                    <MessageCircle className="mb-2 text-sgc-purple" />
+                    <h3 className="font-medium">LegalBot</h3>
+                    <p className="text-sm text-sgc-neutral">Get legal guidance</p>
+                  </Link>
+                  <Link to="/map" className="sgc-feature-card hover:shadow-md transition-all">
+                    <MapPin className="mb-2 text-sgc-purple" />
+                    <h3 className="font-medium">Safe Spaces</h3>
+                    <p className="text-sm text-sgc-neutral">Find nearby help</p>
+                  </Link>
+                  <Link to="/pro-bono-qualification" className="sgc-feature-card hover:shadow-md transition-all">
+                    <FileText className="mb-2 text-sgc-purple" />
+                    <h3 className="font-medium">Connect to Lawyers</h3>
+                    <p className="text-sm text-sgc-neutral">Find pro bono legal help</p>
+                  </Link>
+                  <Link to="/glossary" className="sgc-feature-card hover:shadow-md transition-all">
+                    <BookText className="mb-2 text-sgc-purple" />
+                    <h3 className="font-medium">Glossary</h3>
+                    <p className="text-sm text-sgc-neutral">Legal terms explained</p>
+                  </Link>
                 </div>
               </div>
             </motion.div>
