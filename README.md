@@ -88,6 +88,9 @@ yarn dev
 - `/login` - User Authentication
 - `/signup` - New User Registration
 
+## Mr. Hootsworth Bot
+
+
 
 
 
