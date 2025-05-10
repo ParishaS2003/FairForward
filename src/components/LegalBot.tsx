@@ -6,7 +6,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Input } from '@/components/ui/input';
 import { motion, AnimatePresence } from 'framer-motion';
 
-const API_BASE_URL = 'http://localhost:8080';
+const API_BASE_URL = 'http://localhost:5000';
 
 type Message = {
   id: number;
@@ -327,11 +327,24 @@ const MessageBubble = ({ message }: { message: Message }) => {
                 </>
               ) : message.type === 'resources' ? (
                 <div className="text-sm whitespace-pre-line">
-                  {message.content.split('\n').map((line, index) => (
-                    <p key={index} className={line.startsWith('🔗') ? 'text-sgc-purple hover:underline' : ''}>
-                      {line}
-                    </p>
-                  ))}
+                  {message.content.split('\n').map((line, index) => {
+                    if (line.startsWith('🔗')) {
+                      // Extract the URL after the '🔗 '
+                      const url = line.replace('🔗', '').trim();
+                      return (
+                        <a
+                          key={index}
+                          href={url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-sgc-purple hover:underline break-all"
+                        >
+                          {url}
+                        </a>
+                      );
+                    }
+                    return <p key={index}>{line}</p>;
+                  })}
                 </div>
               ) : (
                 <p className="text-sm whitespace-pre-line">{message.content}</p>
