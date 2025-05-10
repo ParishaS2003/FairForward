@@ -8,7 +8,6 @@ import {
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import Navbar from '@/components/Navbar';
 import { useToast } from '@/components/ui/use-toast';
 
 const Index = () => {
@@ -42,8 +41,6 @@ const Index = () => {
 
   return (
     <div className="min-h-screen flex flex-col bg-white">
-      <Navbar />
-      
       {/* Hero Section with improved readability */}
       <motion.section 
         ref={heroRef}
