@@ -118,7 +118,7 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
 
   const translate = (key: string, params?: Record<string, string>): string => {
     const keys = key.split('.');
-    let translation: any = translations[currentLanguage.code];
+    let translation: any = translations[currentLanguage.code] || translations.en;
     
     // Traverse the nested keys
     for (const k of keys) {

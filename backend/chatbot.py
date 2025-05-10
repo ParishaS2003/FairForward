@@ -3,9 +3,14 @@ import time
 import json
 from typing import List, Dict
 import sys
+import os
+from dotenv import load_dotenv
 
-# Replace with your actual OpenRouter API key
-API_KEY = "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"
+# Load environment variables
+load_dotenv()
+
+# Get API key from environment variable
+API_KEY = os.getenv('OPENROUTER_API_KEY', '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')
 
 # Canadian-specific topics and resources
 TOPIC_SUGGESTIONS = [
@@ -183,6 +188,9 @@ class Chatbot:
                 
             # Get response content
             data = response.json()
+            if "choices" not in data or not data["choices"]:
+                raise Exception("Invalid response format from API")
+                
             bot_response = data["choices"][0]["message"]["content"]
             
             # Validate response

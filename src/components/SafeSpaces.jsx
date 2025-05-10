@@ -1,6 +1,39 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { MapPin, Phone, Clock, Info, Search, Map, AlertTriangle, Heart, Navigation, List, Star, Filter, ChevronDown, Shield, Users, Home } from 'lucide-react';
-import { GoogleMap, LoadScript, Marker, InfoWindow } from '@react-google-maps/api';
+import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
+import L from 'leaflet';
+import 'leaflet/dist/leaflet.css';
+import './SafeSpaces.css';
+
+// Fix for default marker icons in Leaflet with React
+delete L.Icon.Default.prototype._getIconUrl;
+L.Icon.Default.mergeOptions({
+  iconRetinaUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon-2x.png',
+  iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png',
+  shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
+});
+
+// Custom marker icons
+const createCustomIcon = (color) => {
+  return L.divIcon({
+    className: 'custom-icon',
+    html: `<div style="background-color: ${color}; width: 12px; height: 12px; border-radius: 50%; border: 2px solid white; box-shadow: 0 0 4px rgba(0,0,0,0.3);"></div>`,
+    iconSize: [16, 16],
+    iconAnchor: [8, 8],
+  });
+};
+
+// Component to handle map center updates
+const MapUpdater = ({ center }) => {
+  const map = useMap();
+  useEffect(() => {
+    map.setView(center);
+  }, [center, map]);
+  return null;
+};
+
+// Add this utility function at the top level
+const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
 const SafeSpaces = () => {
   const [shelters, setShelters] = useState([]);
@@ -16,7 +49,6 @@ const SafeSpaces = () => {
   const [selectedShelter, setSelectedShelter] = useState(null);
   const [mapCenter, setMapCenter] = useState({ lat: 37.7749, lng: -122.4194 }); // Default to San Francisco
   const mapRef = useRef(null);
-  const geocoder = useRef(null);
 
   const mapContainerStyle = {
     width: '100%',
@@ -41,24 +73,36 @@ const SafeSpaces = () => {
   };
 
   const geocodeAddress = async (address) => {
-    if (!geocoder.current) {
-      geocoder.current = new window.google.maps.Geocoder();
-    }
-
-    return new Promise((resolve, reject) => {
-      geocoder.current.geocode({ address }, (results, status) => {
-        if (status === 'OK' && results[0]) {
-          const location = results[0].geometry.location;
-          resolve({
-            lat: location.lat(),
-            lng: location.lng()
-          });
-        } else {
-          console.error('Geocode was not successful for the following reason:', status);
-          reject(new Error('Geocoding failed'));
+    try {
+      // Add a delay between requests to respect rate limits
+      await delay(1000); // 1 second delay between requests
+      
+      const response = await fetch(
+        `http://localhost:3001/api/geocode?address=${encodeURIComponent(address)}`
+      );
+      
+      if (!response.ok) {
+        if (response.status === 429) {
+          // If we hit rate limit, wait longer and retry
+          await delay(5000); // Wait 5 seconds
+          return geocodeAddress(address);
         }
-      });
-    });
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
+      const data = await response.json();
+      
+      if (data && data.length > 0) {
+        return {
+          lat: parseFloat(data[0].lat),
+          lng: parseFloat(data[0].lon)
+        };
+      }
+      return null;
+    } catch (error) {
+      console.error('Geocoding failed:', error);
+      return null;
+    }
   };
 
   useEffect(() => {
@@ -76,6 +120,7 @@ const SafeSpaces = () => {
         let currentShelter = null;
         let currentAddress = [];
         let currentPhone = '';
+        let shelterCounter = 0; // Add counter for unique IDs
 
         rows.forEach(row => {
           const columns = row.split(',').map(col => col.trim().replace(/^"|"$/g, ''));
@@ -89,9 +134,10 @@ const SafeSpaces = () => {
             
             currentAddress = [];
             currentPhone = '';
+            shelterCounter++; // Increment counter for each new shelter
             
             currentShelter = {
-              id: `${columns[0]}-${columns[1]}`,
+              id: `${columns[0]}-${columns[1]}-${shelterCounter}`, // Add counter to make ID unique
               name: columns[0],
               city: columns[1],
               gender: columns[2],
@@ -120,19 +166,26 @@ const SafeSpaces = () => {
 
         const validShelters = processedShelters.filter(shelter => shelter.name && shelter.name.trim() !== '');
         
-        // Geocode addresses
-        const geocodedShelters = await Promise.all(
-          validShelters.map(async (shelter) => {
-            try {
-              const fullAddress = `${shelter.address}, ${shelter.city}`;
-              const coordinates = await geocodeAddress(fullAddress);
-              return { ...shelter, ...coordinates };
-            } catch (error) {
-              console.error(`Failed to geocode address for ${shelter.name}:`, error);
-              return { ...shelter, lat: null, lng: null };
-            }
-          })
-        );
+        // Process shelters in smaller batches to avoid overwhelming the geocoding service
+        const batchSize = 5;
+        const geocodedShelters = [];
+        
+        for (let i = 0; i < validShelters.length; i += batchSize) {
+          const batch = validShelters.slice(i, i + batchSize);
+          const batchResults = await Promise.all(
+            batch.map(async (shelter) => {
+              try {
+                const fullAddress = `${shelter.address}, ${shelter.city}`;
+                const coordinates = await geocodeAddress(fullAddress);
+                return { ...shelter, ...coordinates };
+              } catch (error) {
+                console.error(`Failed to geocode address for ${shelter.name}:`, error);
+                return { ...shelter, lat: null, lng: null };
+              }
+            })
+          );
+          geocodedShelters.push(...batchResults);
+        }
 
         console.log('Loaded shelters:', geocodedShelters);
         setShelters(geocodedShelters);
@@ -238,75 +291,74 @@ const SafeSpaces = () => {
     const markers = getSortedShelters()
       .filter(shelter => shelter.lat && shelter.lng)
       .map(shelter => ({
-        position: { lat: shelter.lat, lng: shelter.lng },
+        position: [shelter.lat, shelter.lng],
         shelter
       }));
 
     return (
-      <LoadScript googleMapsApiKey="AIzaSyDHvDKki_ZB-gu31FmPoSdf8ubxJK0va88" libraries={['places']}>
-        <GoogleMap
-          mapContainerStyle={mapContainerStyle}
-          center={mapCenter}
+      <div style={{ height: '600px', width: '100%', position: 'relative' }}>
+        <MapContainer
+          center={[mapCenter.lat, mapCenter.lng]}
           zoom={12}
-          options={mapOptions}
-          onLoad={onMapLoad}
+          style={{ height: '100%', width: '100%', borderRadius: '0.75rem' }}
+          scrollWheelZoom={true}
         >
+          <TileLayer
+            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          />
+          
           {markers.map((marker, index) => (
             <Marker
               key={index}
               position={marker.position}
-              onClick={() => setSelectedShelter(marker.shelter)}
-              icon={{
-                url: marker.shelter.category.includes('24 Hour') 
-                  ? 'https://maps.google.com/mapfiles/ms/icons/red-dot.png'
-                  : marker.shelter.category.includes('Youth')
-                  ? 'https://maps.google.com/mapfiles/ms/icons/blue-dot.png'
-                  : 'https://maps.google.com/mapfiles/ms/icons/green-dot.png',
-                scaledSize: new window.google.maps.Size(32, 32)
+              eventHandlers={{
+                click: () => setSelectedShelter(marker.shelter),
               }}
-            />
-          ))}
-
-          {selectedShelter && (
-            <InfoWindow
-              position={{ lat: selectedShelter.lat, lng: selectedShelter.lng }}
-              onCloseClick={() => setSelectedShelter(null)}
+              icon={createCustomIcon(
+                marker.shelter.category.includes('24 Hour')
+                  ? '#ef4444'
+                  : marker.shelter.category.includes('Youth')
+                  ? '#3b82f6'
+                  : '#22c55e'
+              )}
             >
-              <div className="p-2 max-w-xs">
-                <h3 className="font-semibold text-gray-900">{selectedShelter.name}</h3>
-                <p className="text-sm text-gray-600 mt-1">{selectedShelter.address}</p>
-                <div className="mt-2 flex flex-wrap gap-2">
-                  <span className={`inline-block px-2 py-1 rounded-full text-xs font-medium ${getTypeColor(selectedShelter.category)}`}>
-                    {selectedShelter.gender}
-                  </span>
-                  <span className="inline-block px-2 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
-                    {selectedShelter.ageRange}
-                  </span>
+              <Popup>
+                <div className="p-2 max-w-xs">
+                  <h3 className="font-semibold text-gray-900">{marker.shelter.name}</h3>
+                  <p className="text-sm text-gray-600 mt-1">{marker.shelter.address}</p>
+                  <div className="mt-2 flex flex-wrap gap-2">
+                    <span className={`inline-block px-2 py-1 rounded-full text-xs font-medium ${getTypeColor(marker.shelter.category)}`}>
+                      {marker.shelter.gender}
+                    </span>
+                    <span className="inline-block px-2 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
+                      {marker.shelter.ageRange}
+                    </span>
+                  </div>
+                  {marker.shelter.phone && (
+                    <a
+                      href={`tel:${marker.shelter.phone}`}
+                      className="mt-2 inline-flex items-center text-blue-600 hover:text-blue-800 text-sm"
+                    >
+                      <Phone className="w-4 h-4 mr-1" />
+                      {marker.shelter.phone}
+                    </a>
+                  )}
                 </div>
-                {selectedShelter.phone && (
-                  <a
-                    href={`tel:${selectedShelter.phone}`}
-                    className="mt-2 inline-flex items-center text-blue-600 hover:text-blue-800 text-sm"
-                  >
-                    <Phone className="w-4 h-4 mr-1" />
-                    {selectedShelter.phone}
-                  </a>
-                )}
-              </div>
-            </InfoWindow>
-          )}
+              </Popup>
+            </Marker>
+          ))}
 
           {userLocation && (
             <Marker
-              position={userLocation}
-              icon={{
-                url: 'https://maps.google.com/mapfiles/ms/icons/blue-dot.png',
-                scaledSize: new window.google.maps.Size(32, 32)
-              }}
+              position={[userLocation.lat, userLocation.lng]}
+              icon={createCustomIcon('#3b82f6')}
             />
           )}
-        </GoogleMap>
-      </LoadScript>
+
+          <MapUpdater center={[mapCenter.lat, mapCenter.lng]} />
+        </MapContainer>
+      </div>
     );
   };
 

@@ -4,7 +4,9 @@ from chatbot import Chatbot, TOPIC_SUGGESTIONS
 import json
 
 app = Flask(__name__)
-CORS(app)  # Enable CORS for all routes
+# Allow all origins for development
+CORS(app, resources={r"/*": {"origins": "*"}})
+
 chatbot = Chatbot()
 
 @app.route('/')
@@ -29,4 +31,4 @@ def get_topics():
     return jsonify({'topics': TOPIC_SUGGESTIONS})
 
 if __name__ == '__main__':
-    app.run(debug=True, port=5000) 
+    app.run(debug=True, port=5000, host='0.0.0.0') 

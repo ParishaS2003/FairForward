@@ -44,7 +44,12 @@ const LegalBot = () => {
   useEffect(() => {
     const testApiConnection = async () => {
       try {
-        const response = await fetch(`${API_BASE_URL}/api/test`);
+        const response = await fetch(`${API_BASE_URL}/api/test`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
         if (response.ok) {
           setIsApiConnected(true);
         } else {
@@ -129,7 +134,12 @@ const LegalBot = () => {
     
     setIsThinking(true);
     try {
-      const response = await fetch(`${API_BASE_URL}/api/resources/search?q=${encodeURIComponent(searchQuery)}`);
+      const response = await fetch(`${API_BASE_URL}/api/resources/search?q=${encodeURIComponent(searchQuery)}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
       if (!response.ok) {
         throw new Error(`API error: ${response.status}`);
       }
