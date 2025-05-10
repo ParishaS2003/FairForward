@@ -42,6 +42,7 @@ Mr. Hootsworth is our beloved hand-drawn mascot who guides users through their l
 - Node.js (v16 or higher)
 - npm or yarn
 - Git
+- API key
 
 ### Installation
 
