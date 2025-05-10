@@ -14,6 +14,7 @@ import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import BackButton from '@/components/BackButton';
+import { motion, AnimatePresence } from 'framer-motion';
 import { 
   User, 
   Shield, 
@@ -33,7 +34,8 @@ import {
   LogIn,
   AlertTriangle,
   Monitor,
-  Info
+  Info,
+  Sparkles
 } from 'lucide-react';
 import { useToast } from '@/components/ui/use-toast';
 import { Badge } from '@/components/ui/badge';
@@ -227,6 +229,51 @@ const Account = () => {
       location: true
     }
   });
+  const [hootsworthMessage, setHootsworthMessage] = useState("");
+
+  const hootsworthVariants = {
+    initial: { scale: 0.8, opacity: 0 },
+    animate: { 
+      scale: 1, 
+      opacity: 1,
+      transition: {
+        duration: 0.5,
+        ease: "easeOut"
+      }
+    },
+    hover: {
+      scale: 1.1,
+      rotate: [0, -5, 5, -5, 0],
+      transition: {
+        duration: 0.5,
+        ease: "easeInOut"
+      }
+    },
+    tap: {
+      scale: 0.9,
+      transition: {
+        duration: 0.1
+      }
+    }
+  };
+
+  const messageVariants = {
+    initial: { opacity: 0, y: 10 },
+    animate: { 
+      opacity: 1, 
+      y: 0,
+      transition: {
+        duration: 0.3
+      }
+    },
+    exit: { 
+      opacity: 0, 
+      y: -10,
+      transition: {
+        duration: 0.2
+      }
+    }
+  };
 
   const [resources, setResources] = useState<Resource[]>([
     {
@@ -621,6 +668,17 @@ const Account = () => {
     });
   };
 
+  const handleHootsworthClick = () => {
+    const messages = [
+      "Hoot! Need help with your account settings? I'm here to guide you!",
+      "Want to update your profile? Let me show you how!",
+      "Need to manage your privacy settings? I can help with that!",
+      "Hoot hoot! Let's make your account more secure!",
+      "Need to add emergency contacts? I'll walk you through it!"
+    ];
+    setHootsworthMessage(messages[Math.floor(Math.random() * messages.length)]);
+  };
+
   if (!user) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
@@ -643,12 +701,56 @@ const Account = () => {
     <div className="container max-w-6xl py-6 space-y-6">
       <BackButton />
       
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between relative">
         <h1 className="text-3xl font-bold">{translate('account.settings')}</h1>
-        <Button variant="outline" onClick={handleSignOut}>
-          <LogOut className="w-4 h-4 mr-2" />
-          {translate('account.logout')}
-        </Button>
+        <div className="flex items-center gap-4">
+          <motion.div
+            className="cursor-pointer"
+            variants={hootsworthVariants}
+            initial="initial"
+            animate="animate"
+            whileHover="hover"
+            whileTap="tap"
+            onClick={handleHootsworthClick}
+          >
+            <img 
+              src="/mr-hootsworth.png" 
+              alt="Mr. Hootsworth" 
+              className="h-16 w-16 md:h-20 md:w-20"
+            />
+            <motion.div
+              className="absolute -top-2 -right-2"
+              animate={{ 
+                rotate: [0, 15, -15, 0],
+                scale: [1, 1.2, 1.2, 1]
+              }}
+              transition={{ 
+                duration: 2,
+                repeat: Infinity,
+                repeatType: "reverse"
+              }}
+            >
+              <Sparkles className="h-5 w-5 text-yellow-400" />
+            </motion.div>
+          </motion.div>
+          <Button variant="outline" onClick={handleSignOut}>
+            <LogOut className="w-4 h-4 mr-2" />
+            {translate('account.logout')}
+          </Button>
+        </div>
+        <AnimatePresence>
+          {hootsworthMessage && (
+            <motion.div
+              className="absolute right-0 top-24 bg-white p-4 rounded-lg shadow-lg max-w-xs z-50"
+              variants={messageVariants}
+              initial="initial"
+              animate="animate"
+              exit="exit"
+            >
+              <p className="text-sm text-sgc-neutral-dark">{hootsworthMessage}</p>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
 
       <Tabs defaultValue="profile" className="space-y-6">
@@ -1250,7 +1352,7 @@ const Account = () => {
               <CardHeader>
                 <CardTitle>Saved Resources</CardTitle>
                 <CardDescription>Access your bookmarked resources and information</CardDescription>
-        </CardHeader>
+              </CardHeader>
               <CardContent>
                 <div className="space-y-6">
                   <div className="flex items-center space-x-4">
@@ -1415,9 +1517,9 @@ const Account = () => {
                       </div>
                     ))}
                   </div>
-          </div>
-        </CardContent>
-      </Card>
+                </div>
+              </CardContent>
+            </Card>
           </div>
         </TabsContent>
       </Tabs>

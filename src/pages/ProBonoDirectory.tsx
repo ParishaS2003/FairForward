@@ -6,7 +6,7 @@ import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Badge } from '@/components/ui/badge';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Star, 
   MapPin, 
@@ -18,7 +18,8 @@ import {
   MessageSquare,
   Globe,
   Award,
-  CheckCircle
+  CheckCircle,
+  Sparkles
 } from 'lucide-react';
 
 const ProBonoDirectory = () => {
@@ -26,6 +27,8 @@ const ProBonoDirectory = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedSpecialty, setSelectedSpecialty] = useState<string>("");
   const [selectedLanguage, setSelectedLanguage] = useState<string>("");
+  const [isHootsworthVisible, setIsHootsworthVisible] = useState(true);
+  const [hootsworthMessage, setHootsworthMessage] = useState("");
 
   // Mock data for lawyers
   const lawyers = [
@@ -170,6 +173,61 @@ const ProBonoDirectory = () => {
     }
   };
 
+  const hootsworthVariants = {
+    initial: { scale: 0.8, opacity: 0 },
+    animate: { 
+      scale: 1, 
+      opacity: 1,
+      transition: {
+        duration: 0.5,
+        ease: "easeOut"
+      }
+    },
+    hover: {
+      scale: 1.1,
+      rotate: [0, -5, 5, -5, 0],
+      transition: {
+        duration: 0.5,
+        ease: "easeInOut"
+      }
+    },
+    tap: {
+      scale: 0.9,
+      transition: {
+        duration: 0.1
+      }
+    }
+  };
+
+  const messageVariants = {
+    initial: { opacity: 0, y: 10 },
+    animate: { 
+      opacity: 1, 
+      y: 0,
+      transition: {
+        duration: 0.3
+      }
+    },
+    exit: { 
+      opacity: 0, 
+      y: -10,
+      transition: {
+        duration: 0.2
+      }
+    }
+  };
+
+  const handleHootsworthClick = () => {
+    const messages = [
+      "Hoot! Need legal help? I'm here to guide you!",
+      "Looking for a lawyer? Let me help you find the perfect match!",
+      "Don't worry, I'll help you find the right legal support!",
+      "Hoot hoot! Let's find you the best pro bono lawyer!",
+      "Need legal assistance? I'm your wise owl guide!"
+    ];
+    setHootsworthMessage(messages[Math.floor(Math.random() * messages.length)]);
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-sgc-neutral-light/30 to-white">
       <motion.div 
@@ -187,7 +245,49 @@ const ProBonoDirectory = () => {
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back to Qualification
           </Button>
-          <div className="text-center mb-12">
+          <div className="text-center mb-12 relative">
+            <motion.div
+              className="absolute right-0 top-0 cursor-pointer"
+              variants={hootsworthVariants}
+              initial="initial"
+              animate="animate"
+              whileHover="hover"
+              whileTap="tap"
+              onClick={handleHootsworthClick}
+            >
+              <img 
+                src="/mr-hootsworth.png" 
+                alt="Mr. Hootsworth" 
+                className="h-24 w-24 md:h-32 md:w-32"
+              />
+              <motion.div
+                className="absolute -top-2 -right-2"
+                animate={{ 
+                  rotate: [0, 15, -15, 0],
+                  scale: [1, 1.2, 1.2, 1]
+                }}
+                transition={{ 
+                  duration: 2,
+                  repeat: Infinity,
+                  repeatType: "reverse"
+                }}
+              >
+                <Sparkles className="h-6 w-6 text-yellow-400" />
+              </motion.div>
+            </motion.div>
+            <AnimatePresence>
+              {hootsworthMessage && (
+                <motion.div
+                  className="absolute right-0 top-36 bg-white p-4 rounded-lg shadow-lg max-w-xs"
+                  variants={messageVariants}
+                  initial="initial"
+                  animate="animate"
+                  exit="exit"
+                >
+                  <p className="text-sm text-sgc-neutral-dark">{hootsworthMessage}</p>
+                </motion.div>
+              )}
+            </AnimatePresence>
             <h1 className="text-3xl font-bold mb-4">Pro Bono Legal Directory</h1>
             <p className="text-sgc-neutral max-w-2xl mx-auto">
               Connect with qualified pro bono lawyers who are ready to help. All listed attorneys have been verified 
